@@ -1,1 +1,22 @@
-<p>home works!</p>
+<div class="p-8">
+  <div class="mb-6">
+    <h1 class="text-2xl font-bold" style="color: #2C3E35">Liste des races</h1>
+    <p class="text-sm mt-1" style="color: #5A6B63">{{ listRace().length }} race(s) trouvée(s)</p>
+  </div>
+  <div class="rounded-xl border overflow-hidden" style="border-color: #E0DDD6; background: white">
+    <div class="grid grid-cols-2 px-6 py-3 text-xs font-semibold uppercase tracking-wide"
+         style="background: #F4F1EB; color: #5A6B63; border-bottom: 1px solid #E0DDD6">
+      <span>ID</span>
+      <span>Nom</span>
+    </div>
+    @for (race of listRace(); track $index) {
+      <div class="grid grid-cols-2 px-6 py-4 text-sm transition-colors cursor-default"
+           style="border-bottom: 1px solid #F0EDE7; color: #2C3E35"
+           onmouseenter="this.style.background='#F9F7F4'"
+           onmouseleave="this.style.background='white'">
+        <span class="font-mono text-xs font-medium" style="color: #5A6B63">{{ race.id }}</span>
+        <span class="font-medium">{{ race.nom }}</span>
+      </div>
+    }
+  </div>
+</div>
