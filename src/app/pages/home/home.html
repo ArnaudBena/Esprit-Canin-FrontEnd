@@ -1,21 +1,40 @@
-<div class="p-8">
-  <div class="mb-6">
-    <h1 class="text-2xl font-bold" style="color: #2C3E35">Liste des races</h1>
-    <p class="text-sm mt-1" style="color: #5A6B63">{{ listRace().length }} race(s) trouvée(s)</p>
+<div class="max-w-7xl mx-auto p-8">
+  <div class="mb-6 flex items-center justify-between">
+    <div>
+      <h1 class="text-2xl font-bold text-primaire">Liste des races</h1>
+      <p class="text-sm mt-1 text-muted">{{ listRace().length }} race(s) trouvée(s)</p>
+    </div>
+    <button class="flex items-center gap-2 bg-primaire text-blanc text-sm font-medium
+                   px-4 py-2 rounded-lg hover:opacity-90 transition-opacity">
+      + Ajouter une race
+    </button>
   </div>
-  <div class="rounded-xl border overflow-hidden" style="border-color: #E0DDD6; background: white">
-    <div class="grid grid-cols-2 px-6 py-3 text-xs font-semibold uppercase tracking-wide"
-         style="background: #F4F1EB; color: #5A6B63; border-bottom: 1px solid #E0DDD6">
+  <div class="rounded-xl border border-bordure overflow-hidden bg-blanc shadow-sm">
+    <div class="grid grid-cols-[80px_1fr_120px] px-6 py-3 text-xs font-semibold
+                uppercase tracking-wide bg-fond text-primaire border-b border-bordure">
       <span>ID</span>
       <span>Nom</span>
+      <span class="text-right">Actions</span>
     </div>
-    @for (race of listRace(); track $index) {
-      <div class="grid grid-cols-2 px-6 py-4 text-sm transition-colors cursor-default"
-           style="border-bottom: 1px solid #F0EDE7; color: #2C3E35"
-           onmouseenter="this.style.background='#F9F7F4'"
-           onmouseleave="this.style.background='white'">
-        <span class="font-mono text-xs font-medium" style="color: #5A6B63">{{ race.id }}</span>
-        <span class="font-medium">{{ race.nom }}</span>
+    @for (race of listRace(); track race.id) {
+      <div class="grid grid-cols-[80px_1fr_120px] px-6 py-4 text-sm text-texte
+                  border-b border-[#F0EDE7] last:border-0
+                  transition-colors cursor-default hover:bg-[#F9F7F4]">
+        <span class="font-mono text-xs font-medium text-muted self-center">
+          {{ race.id }}
+        </span>
+        <span class="font-medium self-center">{{ race.nom }}</span>
+        <div class="flex justify-end">
+          <button class="text-xs font-medium text-primaire border border-bordure
+                         px-3 py-1 rounded-md hover:bg-fond transition-colors">
+            Modifier
+          </button>
+        </div>
+      </div>
+    }
+    @empty {
+      <div class="px-6 py-10 text-center text-sm text-muted">
+        Aucune race enregistrée.
       </div>
     }
   </div>
