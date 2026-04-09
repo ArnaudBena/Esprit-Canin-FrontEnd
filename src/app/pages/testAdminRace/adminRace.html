@@ -24,10 +24,14 @@
           {{ race.id }}
         </span>
         <span class="font-medium self-center">{{ race.nom }}</span>
-        <div class="flex justify-end">
-          <button class="text-xs font-medium text-primaire border border-bordure
-                         px-3 py-1 rounded-md hover:bg-fond transition-colors">
-            <button (click)="ouvrirModal(race)">Modifier</button>
+        <div class="flex justify-end gap-2">
+          <button (click)="ouvrirModal(race)" class="text-xs font-medium text-primaire border border-bordure
+                       px-3 py-1 rounded-md hover:bg-fond transition-colors">
+            Modifier
+          </button>
+          <button (click)="ouvrirModalSuppression(race.id)" class="text-xs font-medium text-red-500 border border-red-200
+                     px-3 py-1 rounded-md hover:bg-red-50 transition-colors">
+            Supprimer
           </button>
         </div>
       </div>
@@ -78,6 +82,23 @@
         </button>
         <button (click)="onCreate()" class="text-sm px-4 py-2 rounded-md bg-primaire text-white hover:opacity-90">
           Valider
+        </button>
+      </div>
+    </div>
+  </div>
+}
+
+@if (modalSuppressionOuvert()) {
+  <div class="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+    <div class="bg-white rounded-xl p-6 w-80 shadow-xl">
+      <h2 class="text-base font-semibold mb-4">Confirmer la suppression</h2>
+      <p class="text-sm text-muted mb-6">Êtes-vous sûr de vouloir supprimer cette race ?</p>
+      <div class="flex justify-end gap-2">
+        <button (click)="fermerModalSuppression()" class="text-sm px-4 py-2 rounded-md border border-bordure hover:bg-fond">
+          Annuler
+        </button>
+        <button (click)="onDelete()" class="text-sm px-4 py-2 rounded-md bg-red-500 text-white hover:opacity-90">
+          Supprimer
         </button>
       </div>
     </div>

@@ -19,8 +19,10 @@ export class AdminRace implements OnInit {
   listRace = signal<Race[]>([])
   modalOuverte = signal(false);
   modalAjoutOuverte = signal(false);
+  modalSuppressionOuvert = signal(false);
   raceSelectionnee = signal<Race | null>(null);
   nouvelleRace = signal<Partial<Race>>({});
+  idASupprimer = signal<number | null>(null);
 
   ngOnInit() {
 
@@ -39,6 +41,11 @@ export class AdminRace implements OnInit {
     this.modalAjoutOuverte.set(true);
   }
 
+  ouvrirModalSuppression(id : number): void {
+    this.idASupprimer.set(id);
+    this.modalSuppressionOuvert.set(true)
+  }
+
   fermerModal(): void {
     this.raceSelectionnee.set(null)
     this.modalOuverte.set(false)
@@ -48,6 +55,12 @@ export class AdminRace implements OnInit {
     this.nouvelleRace.set({});
     this.modalAjoutOuverte.set(false);
   }
+
+  fermerModalSuppression(): void {
+    this.idASupprimer.set(null);
+    this.modalSuppressionOuvert.set(false)
+  }
+
 
   onUpdate(): void {
     const race = this.raceSelectionnee();
@@ -71,5 +84,17 @@ export class AdminRace implements OnInit {
       },
       error: (err) => console.error(err)
     })
+  }
+
+  onDelete(): void {
+    const id = this.idASupprimer();
+    if (!id) return;
+    this.raceService.deleteRace(id).subscribe({
+      next : () => {
+        this.listRace.update(list => list.filter(r => r.id !== id));
+        this.fermerModalSuppression();
+      },
+      error: (err) => console.error(err)
+    });
   }
 }

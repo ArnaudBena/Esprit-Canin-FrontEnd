@@ -19,4 +19,9 @@ export class RaceService {
   createRace(race: Race): Observable<Race> {
     return this.http.post<Race>(this.apiUrl, race)
   }
+
+  deleteRace(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
 }
