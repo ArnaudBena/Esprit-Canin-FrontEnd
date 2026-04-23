@@ -1,0 +1,11 @@
+<h1>Liste des races</h1>
+
+@if (races.length === 0) {
+  <p>Aucune race pour le moment.</p>
+} @else {
+  <ul>
+    @for (race of races; track race.id) {
+      <li>{{ race.id }} — {{ race.nom }}</li>
+    }
+  </ul>
+}
