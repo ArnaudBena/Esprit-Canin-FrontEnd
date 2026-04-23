@@ -3,29 +3,31 @@
 @theme {
 
   /* --- Couleurs principales --- */
-  --color-primaire:    #2D6A4F;
-  --color-secondaire:  #52B788;
-  --color-accent:      #D4A257;
-  --color-alerte:      #E76F51;
+  --color-primaire:       #2D6A4F;
+  --color-primaire-light: #EAF7F0;
+  --color-secondaire:     #52B788;
+  --color-accent:         #D4A257;
+  --color-alerte:         #E76F51;
 
   /* --- Fond, texte, surfaces --- */
   --color-fond:         #F4F1EB;
+  --color-blanc:        #FFFFFF;
   --color-texte:        #2C3E35;
   --color-muted:        #5A6B63;
   --color-subtle:       #888888;
-  --color-blanc:        #FFFFFF;
+  --color-image-bg:     #D4E8DC;
 
   /* --- Bordures & inputs --- */
   --color-bordure:      #E0DDD6;
   --color-input:        #C8C4BC;
   --color-placeholder:  #A0A0A0;
 
-  /* --- Surfaces spéciales --- */
-  --color-image-bg:     #D4E8DC;
+  /* --- Admin --- */
+  --color-admin-nav:    var(--color-texte);
 
   /* --- Badges --- */
-  --color-badge-dispo-bg:      #EAF7F0;
-  --color-badge-dispo-text:    #2D6A4F;
+  --color-badge-dispo-bg:      var(--color-primaire-light);
+  --color-badge-dispo-text:    var(--color-primaire);
   --color-badge-complet-bg:    #FDF3E3;
   --color-badge-complet-text:  #A0632A;
   --color-badge-annule-bg:     #FBF0EE;
@@ -53,11 +55,9 @@
   --radius-full: 9999px;
 
   /* --- Hauteurs fixes --- */
-  --height-navbar-desktop: 90px;
+  --height-navbar-desktop: 64px;
   --height-navbar-mobile:  56px;
   --height-input:          44px;
-
-
 
 }
 
