@@ -4,5 +4,5 @@ import { RaceListComponent } from './pages/race-list/race-list.component';
 
 
 export const routes: Routes = [
-  { path: 'races', component: RaceListComponent },
+  { path: 'race', component: RaceListComponent },
 ];
