@@ -1,0 +1,52 @@
+<aside class="w-60 bg-blanc border-r border-bordure py-6">
+  <nav class="flex flex-col">
+    <a
+      routerLink="/admin/dashboard"
+      routerLinkActive="bg-primaire-light text-primaire font-semibold border-r-[3px] border-primaire"
+      class="flex items-center gap-3 px-6 py-3 text-sm font-medium text-muted hover:bg-fond transition-colors"
+    >
+      <lucide-icon [img]="iconDashboard" class="w-5 h-5"></lucide-icon>
+      Dashboard
+    </a>
+    <a
+      routerLink="/admin/utilisateurs"
+      routerLinkActive="bg-primaire-light text-primaire font-semibold border-r-[3px] border-primaire"
+      class="flex items-center gap-3 px-6 py-3 text-sm font-medium text-muted hover:bg-fond transition-colors"
+    >
+      <lucide-icon [img]="iconUsers" class="w-5 h-5"></lucide-icon>
+      Utilisateurs
+    </a>
+    <a
+      routerLink="/admin/types-cours"
+      routerLinkActive="bg-primaire-light text-primaire font-semibold border-r-[3px] border-primaire"
+      class="flex items-center gap-3 px-6 py-3 text-sm font-medium text-muted hover:bg-fond transition-colors"
+    >
+      <lucide-icon [img]="iconTypes" class="w-5 h-5"></lucide-icon>
+      Types de cours
+    </a>
+    <a
+      routerLink="/admin/seances"
+      routerLinkActive="bg-primaire-light text-primaire font-semibold border-r-[3px] border-primaire"
+      class="flex items-center gap-3 px-6 py-3 text-sm font-medium text-muted hover:bg-fond transition-colors"
+    >
+      <lucide-icon [img]="iconSeances" class="w-5 h-5"></lucide-icon>
+      Séances
+    </a>
+    <a
+      routerLink="/admin/roles"
+      routerLinkActive="bg-primaire-light text-primaire font-semibold border-r-[3px] border-primaire"
+      class="flex items-center gap-3 px-6 py-3 text-sm font-medium text-muted hover:bg-fond transition-colors"
+    >
+      <lucide-icon [img]="iconRoles" class="w-5 h-5"></lucide-icon>
+      Rôles
+    </a>
+    <a
+      routerLink="/admin/races"
+      routerLinkActive="bg-primaire-light text-primaire font-semibold border-r-[3px] border-primaire"
+      class="flex items-center gap-3 px-6 py-3 text-sm font-medium text-muted hover:bg-fond transition-colors"
+    >
+      <lucide-icon [img]="iconRaces" class="w-5 h-5"></lucide-icon>
+      Races
+    </a>
+  </nav>
+</aside>
