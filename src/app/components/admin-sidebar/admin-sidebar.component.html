@@ -1,4 +1,5 @@
-<aside class="min-h-full w-60 bg-blanc border-r border-bordure py-6">
+<!-- Desktop: sidebar verticale -->
+<aside class="hidden md:block min-h-full w-60 bg-blanc border-r border-bordure py-6">
   <nav class="flex flex-col">
     <a
       routerLink="/admin/dashboard"
@@ -50,3 +51,48 @@
     </a>
   </nav>
 </aside>
+<!-- Mobile: onglets horizontaux scrollables -->
+<nav class="md:hidden flex gap-1 overflow-x-auto bg-blanc border-b border-bordure px-3 py-2 [&::-webkit-scrollbar]:hidden">
+  <a
+    routerLink="/admin/dashboard"
+    routerLinkActive="!bg-primaire !text-blanc"
+    class="flex-shrink-0 rounded-full bg-fond px-3 py-1.5 text-xs font-medium text-muted whitespace-nowrap transition-colors"
+  >
+    Dashboard
+  </a>
+  <a
+    routerLink="/admin/utilisateurs"
+    routerLinkActive="!bg-primaire !text-blanc"
+    class="flex-shrink-0 rounded-full bg-fond px-3 py-1.5 text-xs font-medium text-muted whitespace-nowrap transition-colors"
+  >
+    Utilisateurs
+  </a>
+  <a
+    routerLink="/admin/types-cours"
+    routerLinkActive="!bg-primaire !text-blanc"
+    class="flex-shrink-0 rounded-full bg-fond px-3 py-1.5 text-xs font-medium text-muted whitespace-nowrap transition-colors"
+  >
+    Types de cours
+  </a>
+  <a
+    routerLink="/admin/seances"
+    routerLinkActive="!bg-primaire !text-blanc"
+    class="flex-shrink-0 rounded-full bg-fond px-3 py-1.5 text-xs font-medium text-muted whitespace-nowrap transition-colors"
+  >
+    Séances
+  </a>
+  <a
+    routerLink="/admin/roles"
+    routerLinkActive="!bg-primaire !text-blanc"
+    class="flex-shrink-0 rounded-full bg-fond px-3 py-1.5 text-xs font-medium text-muted whitespace-nowrap transition-colors"
+  >
+    Rôles
+  </a>
+  <a
+    routerLink="/admin/races"
+    routerLinkActive="!bg-primaire !text-blanc"
+    class="flex-shrink-0 rounded-full bg-fond px-3 py-1.5 text-xs font-medium text-muted whitespace-nowrap transition-colors"
+  >
+    Races
+  </a>
+</nav>

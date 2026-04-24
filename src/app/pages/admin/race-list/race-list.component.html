@@ -1,14 +1,18 @@
-<div class="mb-8 flex items-center justify-between">
-  <h1 class="text-2xl font-semibold text-texte">Races</h1>
+<div class="mb-6 md:mb-8 flex items-center justify-between gap-3">
+  <h1 class="text-xl md:text-2xl font-semibold text-texte">Races</h1>
   <a routerLink="/admin/races/new"
-    class="rounded-md bg-primaire px-4 py-2 text-sm font-medium text-blanc transition hover:bg-primaire/90">
-    + Ajouter une race
+    class="flex-shrink-0 rounded-md bg-primaire px-3 md:px-4 py-2 text-xs md:text-sm font-medium text-blanc transition hover:bg-primaire/90">
+    + Ajouter
   </a>
 </div>
-<div class="overflow-hidden rounded-xl border border-bordure bg-blanc">
-  @if (races().length === 0) {
+
+@if (races().length === 0) {
+  <div class="overflow-hidden rounded-xl border border-bordure bg-blanc">
     <p class="p-6 text-sm text-muted">Aucune race pour le moment.</p>
-  } @else {
+  </div>
+} @else {
+  <!-- Desktop: tableau -->
+  <div class="hidden md:block overflow-hidden rounded-xl border border-bordure bg-blanc">
     <table class="w-full border-collapse">
       <thead class="bg-fond">
         <tr>
@@ -43,5 +47,26 @@
         }
       </tbody>
     </table>
-  }
-</div>
+  </div>
+  <!-- Mobile: cartes -->
+  <div class="md:hidden flex flex-col gap-3">
+    @for (race of races(); track race.id) {
+      <div class="rounded-xl border border-bordure bg-blanc p-4">
+        <p class="text-sm font-semibold text-texte">{{ race.nom }}</p>
+        <div class="mt-3 flex gap-2">
+          <button
+            type="button"
+            class="flex-1 rounded-md border border-bordure bg-blanc px-3 py-2 text-xs font-medium text-texte transition hover:bg-fond">
+            Modifier
+          </button>
+          <button
+            type="button"
+            (click)="onDelete(race)"
+            class="flex-1 rounded-md border border-alerte/30 bg-blanc px-3 py-2 text-xs font-medium text-alerte transition hover:bg-alerte/10">
+            Supprimer
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+}
