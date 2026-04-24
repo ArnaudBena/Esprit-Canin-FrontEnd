@@ -1,14 +1,51 @@
-<h1>Liste des races</h1>
-
-@if (races().length === 0) {
-  <p>Aucune race pour le moment.</p>
-} @else {
-  <ul>
-    @for (race of races(); track race.id) {
-      <li>
-        {{ race.id }} — {{ race.nom }}
-        <button (click)="onDelete(race)">Supprimer</button>
-      </li>
-    }
-  </ul>
-}
+<div class="mb-8 flex items-center justify-between">
+  <h1 class="text-2xl font-semibold text-texte">Races</h1>
+  <button
+    type="button"
+    class="rounded-md bg-primaire px-4 py-2 text-sm font-medium text-blanc transition hover:bg-primaire/90"
+  >
+    + Ajouter une race
+  </button>
+</div>
+<div class="overflow-hidden rounded-xl border border-bordure bg-blanc">
+  @if (races().length === 0) {
+    <p class="p-6 text-sm text-muted">Aucune race pour le moment.</p>
+  } @else {
+    <table class="w-full border-collapse">
+      <thead class="bg-fond">
+        <tr>
+          <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-muted">
+            Nom
+          </th>
+          <th class="px-5 py-3 text-right text-xs font-semibold uppercase tracking-wider text-muted">
+            Actions
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (race of races(); track race.id) {
+          <tr class="border-t border-bordure transition hover:bg-fond">
+            <td class="px-5 py-3.5 text-sm text-texte">{{ race.nom }}</td>
+            <td class="px-5 py-3.5">
+              <div class="flex justify-end gap-2">
+                <button
+                  type="button"
+                  class="rounded-md border border-bordure bg-blanc px-3 py-1.5 text-xs font-medium text-texte transition hover:bg-fond"
+                >
+                  Modifier
+                </button>
+                <button
+                  type="button"
+                  (click)="onDelete(race)"
+                  class="rounded-md border border-alerte/30 bg-blanc px-3 py-1.5 text-xs font-medium text-alerte transition hover:bg-alerte/10"
+                >
+                  Supprimer
+                </button>
+              </div>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</div>
