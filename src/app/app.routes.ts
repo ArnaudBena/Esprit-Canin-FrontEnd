@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { RaceListComponent } from './pages/race-list/race-list.component';
+import { RaceListComponent } from './pages/admin/race-list/race-list.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 
 

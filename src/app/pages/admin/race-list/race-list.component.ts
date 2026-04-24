@@ -1,6 +1,6 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { Race } from '../../models/race.model';
-import { RaceService } from '../../services/race.service';
+import { Race } from '../../../models/race.model';
+import { RaceService } from '../../../services/race.service';
 
 @Component({
   selector: 'app-race-list',
