@@ -1,6 +1,7 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { Race } from '../../../models/race.model';
 import { RaceService } from '../../../services/race.service';
+import { DialogService } from '../../../services/dialog.service';
 
 @Component({
   selector: 'app-race-list',
@@ -10,6 +11,7 @@ import { RaceService } from '../../../services/race.service';
 })
 export class RaceListComponent implements OnInit {
   private raceService = inject(RaceService);
+  private dialog = inject(DialogService);
   races = signal<Race[]>([]);
 
   ngOnInit(): void {
@@ -20,14 +22,20 @@ export class RaceListComponent implements OnInit {
   }
 
   onDelete(race: Race): void {
-    const confirmed = confirm(`Voulez-vous vraiment supprimer la race "${race.nom}" ?`);
-    if (!confirmed) return;
+    this.dialog.confirm({
+      titre: 'Supprimer la race',
+      message: `Voulez-vous vraiment supprimer la race "${race.nom}" ?`,
+      confirmationLabel: 'Supprimer',
+      danger: true,
+    }).subscribe(confirmed => {
+      if (!confirmed) return;
 
-    this.raceService.delete(race.id!).subscribe({
-      next: () => {
-        this.races.update(list => list.filter(r => r.id !== race.id));
-      },
-      error: (err) => console.error('Erreur de suppression', err)
+      this.raceService.delete(race.id!).subscribe({
+        next: () => {
+          this.races.update(list => list.filter(r => r.id !== race.id));
+        },
+        error: (err) => console.error('Erreur de suppression', err),
+      });
     });
   }
 }
