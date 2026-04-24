@@ -2,10 +2,13 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { Race } from '../../../models/race.model';
 import { RaceService } from '../../../services/race.service';
 import { DialogService } from '../../../services/dialog.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-race-list',
-  imports: [],
+  imports: [
+    RouterLink
+  ],
   templateUrl: './race-list.component.html',
   styleUrl: './race-list.component.css',
 })

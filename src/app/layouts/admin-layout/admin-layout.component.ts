@@ -6,7 +6,12 @@ import { ConfirmDialogComponent } from '../../components/confirm-dialog/confirm-
 
 @Component({
   selector: 'app-admin-layout',
-  imports: [RouterOutlet, NavbarComponent, AdminSidebarComponent, ConfirmDialogComponent],
+  imports: [
+    RouterOutlet,
+    NavbarComponent,
+    AdminSidebarComponent,
+    ConfirmDialogComponent
+  ],
   templateUrl: './admin-layout.component.html',
   styleUrl: './admin-layout.component.css',
 })
