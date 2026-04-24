@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { RaceListComponent } from './pages/admin/race-list/race-list.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { RaceCreateComponent } from './pages/admin/race-create/race-create.component';
+import { RaceEditComponent } from './pages/admin/race-edit/race-edit.component';
 
 
 
@@ -13,6 +14,7 @@ export const routes: Routes = [
       { path: '', redirectTo: 'races', pathMatch: 'full' },
       { path: 'races', component: RaceListComponent },
       { path: 'races/new', component: RaceCreateComponent },
+      { path: 'races/:id/edit', component: RaceEditComponent },
       // Plus tard #TODO : Utilisateurs, roles, types-cours, seances...
     ]
   },

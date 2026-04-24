@@ -19,7 +19,7 @@ export class RaceCreateComponent {
   private router = inject(Router);
 
   form = this.formBuilder.nonNullable.group({
-    nom: ['', [Validators.required, Validators.minLength(2)]],
+    nom: ['', [Validators.required, Validators.minLength(3)]],
   });
 
   onSubmit(): void {

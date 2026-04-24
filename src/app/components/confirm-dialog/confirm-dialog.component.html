@@ -1,7 +1,7 @@
 @if (config(); as cfg) {
   <div
     class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
-    (click)="onAnnuler()">
+    (click)="onCancel()">
     <div
       class="w-full max-w-md rounded-xl border border-bordure bg-blanc p-6 shadow-xl"
       (click)="$event.stopPropagation()">
@@ -10,13 +10,13 @@
       <div class="flex justify-end gap-2">
         <button
           type="button"
-          (click)="onAnnuler()"
+          (click)="onCancel()"
           class="rounded-md border border-bordure bg-blanc px-4 py-2 text-sm font-medium text-texte transition hover:bg-fond">
           {{ cfg.annulerLabel ?? 'Annuler' }}
         </button>
         <button
           type="button"
-          (click)="onConfirmer()"
+          (click)="onConfirm()"
           [class]="cfg.danger
             ? 'rounded-md bg-alerte px-4 py-2 text-sm font-medium text-blanc transition hover:bg-alerte/90'
             : 'rounded-md bg-primaire px-4 py-2 text-sm font-medium text-blanc transition hover:bg-primaire/90'">

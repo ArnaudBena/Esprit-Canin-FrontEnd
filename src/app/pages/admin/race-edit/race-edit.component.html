@@ -1,5 +1,5 @@
 <div class="mb-6 md:mb-8 flex items-center justify-between gap-3">
-  <h1 class="text-xl md:text-2xl font-semibold text-texte">Nouvelle race</h1>
+  <h1 class="text-xl md:text-2xl font-semibold text-texte">Modifier la race</h1>
   <a routerLink="/admin/races"
      class="hidden sm:inline-block rounded-md border border-bordure bg-blanc px-4 py-2 text-sm font-medium text-texte transition hover:bg-fond">
     Annuler
@@ -22,7 +22,7 @@
           @if (form.controls.nom.errors?.['required']) {
             Le nom est obligatoire.
           } @else if (form.controls.nom.errors?.['minlength']) {
-            Le nom doit contenir au moins 3 caractères.
+            Le nom doit contenir au moins 2 caractères.
           }
         </p>
       }
@@ -36,7 +36,7 @@
         type="submit"
         [disabled]="form.invalid"
         class="rounded-md bg-primaire px-4 py-2 text-sm font-medium text-blanc transition hover:bg-primaire/90 disabled:cursor-not-allowed disabled:opacity-50">
-        Créer
+        Enregistrer
       </button>
     </div>
   </form>

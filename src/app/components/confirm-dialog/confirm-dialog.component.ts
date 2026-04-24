@@ -12,11 +12,11 @@ export class ConfirmDialogComponent {
 
   readonly config = this.dialog.config;
 
-  onConfirmer(): void {
+  onConfirm(): void {
     this.dialog.respond(true);
   }
 
-  onAnnuler(): void {
+  onCancel(): void {
     this.dialog.respond(false);
   }
 }
