@@ -1,0 +1,80 @@
+<div class="mb-6 md:mb-8 flex items-center justify-between gap-3">
+  <h1 class="text-xl md:text-2xl font-semibold text-texte">Rôles</h1>
+  <a routerLink="/admin/roles/new"
+     class="flex-shrink-0 rounded-md bg-primaire px-3 md:px-4 py-2 text-xs md:text-sm font-medium text-blanc transition hover:bg-primaire/90">
+    + Ajouter
+  </a>
+</div>
+
+@if (roles().length === 0) {
+  <div class="overflow-hidden rounded-xl border border-bordure bg-blanc">
+    <p class="p-6 text-sm text-muted">Aucun rôle pour le moment.</p>
+  </div>
+} @else {
+  <!-- Desktop: tableau -->
+  <div class="hidden md:block overflow-hidden rounded-xl border border-bordure bg-blanc">
+    <table class="w-full border-collapse">
+      <thead class="bg-fond">
+      <tr>
+        <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-muted">
+          Nom
+        </th>
+        <th class="px-5 py-3 text-right text-xs font-semibold uppercase tracking-wider text-muted">
+          Actions
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+        @for (role of roles(); track role.id) {
+          <tr class="border-t border-bordure transition hover:bg-fond">
+            <td class="px-5 py-3.5 text-sm text-texte">
+              <p class="font-medium">{{ role.nom }}</p>
+              @if (role.description) {
+                <p class="text-xs text-muted mt-0.5">{{ role.description }}</p>
+              }
+            </td>
+            <td class="px-5 py-3.5">
+              <div class="flex justify-end gap-2">
+                <a
+                  [routerLink]="['/admin/roles', role.id, 'edit']"
+                  class="rounded-md border border-bordure bg-blanc px-3 py-1.5 text-xs font-medium text-texte transition hover:bg-fond">
+                  Modifier
+                </a>
+                <button
+                  type="button"
+                  (click)="onDelete(role)"
+                  class="rounded-md border border-alerte/30 bg-blanc px-3 py-1.5 text-xs font-medium text-alerte transition hover:bg-alerte/10">
+                  Supprimer
+                </button>
+              </div>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  <!-- Mobile: cartes -->
+  <div class="md:hidden flex flex-col gap-3">
+    @for (role of roles(); track role.id) {
+      <div class="rounded-xl border border-bordure bg-blanc p-4">
+        <p class="text-sm font-semibold text-texte">{{ role.nom }}</p>
+        @if (role.description) {
+          <p class="text-xs text-muted mt-1">{{ role.description }}</p>
+        }
+        <div class="mt-3 flex gap-2">
+          <a
+            [routerLink]="['/admin/roles', role.id, 'edit']"
+            class="flex-1 text-center rounded-md border border-bordure bg-blanc px-3 py-2 text-xs font-medium text-texte transition hover:bg-fond">
+            Modifier
+          </a>
+          <button
+            type="button"
+            (click)="onDelete(role)"
+            class="flex-1 rounded-md border border-alerte/30 bg-blanc px-3 py-2 text-xs font-medium text-alerte transition hover:bg-alerte/10">
+            Supprimer
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+}

@@ -1,0 +1,54 @@
+<div class="mb-6 md:mb-8 flex items-center justify-between gap-3">
+  <h1 class="text-xl md:text-2xl font-semibold text-texte">Nouveau rôle</h1>
+  <a routerLink="/admin/roles"
+     class="hidden sm:inline-block rounded-md border border-bordure bg-blanc px-4 py-2 text-sm font-medium text-texte transition hover:bg-fond">
+    Annuler
+  </a>
+</div>
+<div class="max-w-xl rounded-xl border border-bordure bg-blanc p-4 md:p-6">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-5">
+    <div class="flex flex-col gap-1.5">
+      <label for="nom" class="text-sm font-medium text-texte">
+        Nom du rôle
+      </label>
+      <input
+        id="nom"
+        type="text"
+        formControlName="nom"
+        placeholder="Ex. Administrateur"
+        class="rounded-md border border-bordure bg-blanc px-3 py-2 text-sm text-texte outline-none transition focus:border-primaire" />
+      @if (form.controls.nom.invalid && form.controls.nom.touched) {
+        <p class="text-xs text-alerte">
+          @if (form.controls.nom.errors?.['required']) {
+            Le nom est obligatoire.
+          } @else if (form.controls.nom.errors?.['minlength']) {
+            Le nom doit contenir au moins 3 caractères.
+          }
+        </p>
+      }
+    </div>
+    <div class="flex flex-col gap-1.5">
+      <label for="description" class="text-sm font-medium text-texte">
+        Description <span class="text-muted font-normal">(optionnelle)</span>
+      </label>
+      <textarea
+        id="description"
+        formControlName="description"
+        rows="3"
+        placeholder="Ex. Accès complet à l'administration"
+        class="rounded-md border border-bordure bg-blanc px-3 py-2 text-sm text-texte outline-none transition focus:border-primaire resize-y"></textarea>
+    </div>
+    <div class="flex flex-col-reverse sm:flex-row sm:justify-end gap-2 pt-2">
+      <a routerLink="/admin/roles"
+         class="text-center rounded-md border border-bordure bg-blanc px-4 py-2 text-sm font-medium text-texte transition hover:bg-fond">
+        Annuler
+      </a>
+      <button
+        type="submit"
+        [disabled]="form.invalid"
+        class="rounded-md bg-primaire px-4 py-2 text-sm font-medium text-blanc transition hover:bg-primaire/90 disabled:cursor-not-allowed disabled:opacity-50">
+        Créer
+      </button>
+    </div>
+  </form>
+</div>
