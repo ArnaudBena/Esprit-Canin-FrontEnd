@@ -1,0 +1,25 @@
+@let list = toasts();
+<div
+  class="fixed top-4 left-1/2 -translate-x-1/2 z-50 flex flex-col gap-2 w-[calc(100%-2rem)] sm:w-auto sm:min-w-sm sm:max-w-md"
+  aria-live="polite"
+  aria-atomic="true"
+>
+  @for (t of list; track t.id) {
+    <div
+      class="flex items-start gap-3 rounded-lg shadow-lg px-4 py-3 text-sm text-blanc"
+      [class.bg-primaire]="t.type === 'success'"
+      [class.bg-alerte]="t.type === 'error'"
+      role="alert"
+    >
+      <span class="flex-1 break-words">{{ t.message }}</span>
+      <button
+        type="button"
+        (click)="close(t.id)"
+        class="flex-shrink-0 text-blanc/80 hover:text-blanc transition"
+        aria-label="Fermer la notification"
+      >
+        ✕
+      </button>
+    </div>
+  }
+</div>
