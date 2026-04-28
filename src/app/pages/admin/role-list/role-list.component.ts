@@ -27,7 +27,7 @@ export class RoleListComponent implements OnInit {
   onDelete(role: Role): void {
     this.dialog.confirm({
       titre: 'Supprimer le rôle',
-      message: `Voulez-vous vraiment supprimer le rôle "${role.nom}" ?`,
+      message: `Voulez-vous vraiment supprimer le rôle "${role.nom}"\u00A0?`,
       confirmationLabel: 'Supprimer',
       danger: true,
     }).subscribe(confirmed => {

@@ -27,7 +27,7 @@ export class RaceListComponent implements OnInit {
   onDelete(race: Race): void {
     this.dialog.confirm({
       titre: 'Supprimer la race',
-      message: `Voulez-vous vraiment supprimer la race "${race.nom}" ?`,
+      message: `Voulez-vous vraiment supprimer la race "${race.nom}"\u00A0?`,
       confirmationLabel: 'Supprimer',
       danger: true,
     }).subscribe(confirmed => {
