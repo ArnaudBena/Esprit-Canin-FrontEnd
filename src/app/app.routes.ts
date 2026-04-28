@@ -8,6 +8,7 @@ import { RoleCreateComponent } from './pages/admin/role-create/role-create.compo
 import { RoleEditComponent } from './pages/admin/role-edit/role-edit.component';
 import { TypeSeanceListComponent } from './pages/admin/type-seance-list/type-seance-list.component';
 import { TypeSeanceCreateComponent } from './pages/admin/type-seance-create/type-seance-create.component';
+import { TypeSeanceEditComponent } from './pages/admin/type-seance-edit/type-seance-edit.component';
 
 
 
@@ -25,7 +26,7 @@ export const routes: Routes = [
       { path: 'roles/:id/edit', component: RoleEditComponent },
       { path: 'types-seances', component: TypeSeanceListComponent },
       { path: 'types-seances/new', component: TypeSeanceCreateComponent },
-      // { path: 'types-seances/:id/edit', component: TypeSeanceEditComponent },
+      { path: 'types-seances/:id/edit', component: TypeSeanceEditComponent },
       // Plus tard #TODO : Utilisateurs, seances...
     ]
   },

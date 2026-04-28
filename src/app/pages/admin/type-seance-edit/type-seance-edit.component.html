@@ -1,1 +1,121 @@
-<p>type-seance-edit works!</p>
+<div class="mb-6 md:mb-8 flex items-center justify-between gap-3">
+  <h1 class="text-xl md:text-2xl font-semibold text-texte">Modifier le type de séance</h1>
+  <a routerLink="/admin/types-seances"
+     class="hidden sm:inline-block rounded-md border border-bordure bg-blanc px-4 py-2 text-sm font-medium text-texte transition hover:bg-fond">
+    Annuler
+  </a>
+</div>
+<div class="max-w-2xl rounded-xl border border-bordure bg-blanc p-4 md:p-6">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-5">
+    <div class="flex flex-col gap-1.5">
+      <label for="libelle" class="text-sm font-medium text-texte">Libellé</label>
+      <input id="libelle" type="text" formControlName="libelle"
+             placeholder="Ex. Agility"
+             class="rounded-md border border-bordure bg-blanc px-3 py-2 text-sm text-texte outline-none transition focus:border-primaire" />
+      @if (form.controls.libelle.invalid && form.controls.libelle.touched) {
+        <p class="text-xs text-alerte">Le libellé est obligatoire.</p>
+      }
+    </div>
+    <div class="flex flex-col gap-1.5">
+      <label for="description" class="text-sm font-medium text-texte">
+        Description <span class="text-muted font-normal">(optionnelle)</span>
+      </label>
+      <textarea id="description" formControlName="description" rows="3"
+                placeholder="Ex. Parcours d'obstacles pour développer agilité et complicité."
+                class="rounded-md border border-bordure bg-blanc px-3 py-2 text-sm text-texte outline-none transition focus:border-primaire resize-y"></textarea>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div class="flex flex-col gap-1.5">
+        <label for="ageMin" class="text-sm font-medium text-texte">
+          Âge min <span class="text-muted font-normal">(optionnel)</span>
+        </label>
+        <input id="ageMin" type="number" formControlName="ageMinimum" min="0" max="30" placeholder="0"
+               class="rounded-md border border-bordure bg-blanc px-3 py-2 text-sm text-texte outline-none transition focus:border-primaire" />
+        @if (form.controls.ageMinimum.invalid && form.controls.ageMinimum.touched) {
+          <p class="text-xs text-alerte">L'âge minimum doit être entre 0 et 30.</p>
+        }
+      </div>
+      <div class="flex flex-col gap-1.5">
+        <label for="ageMax" class="text-sm font-medium text-texte">
+          Âge max <span class="text-muted font-normal">(optionnel)</span>
+        </label>
+        <input id="ageMax" type="number" formControlName="ageMaximum" min="0" max="30" placeholder="30"
+               class="rounded-md border border-bordure bg-blanc px-3 py-2 text-sm text-texte outline-none transition focus:border-primaire" />
+        @if (form.controls.ageMaximum.invalid && form.controls.ageMaximum.touched) {
+          <p class="text-xs text-alerte">L'âge maximum doit être entre 0 et 30.</p>
+        }
+      </div>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div class="flex flex-col gap-1.5">
+        <label for="dureeMin" class="text-sm font-medium text-texte">Durée min (minutes)</label>
+        <input id="dureeMin" type="number" formControlName="dureeMinimale" min="30" max="240" placeholder="30"
+               class="rounded-md border border-bordure bg-blanc px-3 py-2 text-sm text-texte outline-none transition focus:border-primaire" />
+        @if (form.controls.dureeMinimale.invalid && form.controls.dureeMinimale.touched) {
+          <p class="text-xs text-alerte">
+            @if (form.controls.dureeMinimale.errors?.['required']) { La durée minimale est obligatoire. }
+            @else { La durée minimale doit être entre 30 et 240 minutes. }
+          </p>
+        }
+      </div>
+      <div class="flex flex-col gap-1.5">
+        <label for="dureeMax" class="text-sm font-medium text-texte">Durée max (minutes)</label>
+        <input id="dureeMax" type="number" formControlName="dureeMaximale" min="30" max="240" placeholder="60"
+               class="rounded-md border border-bordure bg-blanc px-3 py-2 text-sm text-texte outline-none transition focus:border-primaire" />
+        @if (form.controls.dureeMaximale.invalid && form.controls.dureeMaximale.touched) {
+          <p class="text-xs text-alerte">
+            @if (form.controls.dureeMaximale.errors?.['required']) { La durée maximale est obligatoire. }
+            @else { La durée maximale doit être entre 30 et 240 minutes. }
+          </p>
+        }
+      </div>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div class="flex flex-col gap-1.5">
+        <label for="partMin" class="text-sm font-medium text-texte">Participants min</label>
+        <input id="partMin" type="number" formControlName="participantsMinimum" min="1" max="10" placeholder="1"
+               class="rounded-md border border-bordure bg-blanc px-3 py-2 text-sm text-texte outline-none transition focus:border-primaire" />
+        @if (form.controls.participantsMinimum.invalid && form.controls.participantsMinimum.touched) {
+          <p class="text-xs text-alerte">
+            @if (form.controls.participantsMinimum.errors?.['required']) { Obligatoire. }
+            @else { Entre 1 et 10. }
+          </p>
+        }
+      </div>
+      <div class="flex flex-col gap-1.5">
+        <label for="partMax" class="text-sm font-medium text-texte">Participants max</label>
+        <input id="partMax" type="number" formControlName="participantsMaximum" min="1" max="10" placeholder="6"
+               class="rounded-md border border-bordure bg-blanc px-3 py-2 text-sm text-texte outline-none transition focus:border-primaire" />
+        @if (form.controls.participantsMaximum.invalid && form.controls.participantsMaximum.touched) {
+          <p class="text-xs text-alerte">
+            @if (form.controls.participantsMaximum.errors?.['required']) { Obligatoire. }
+            @else { Entre 1 et 10. }
+          </p>
+        }
+      </div>
+    </div>
+    @if (form.errors && form.touched) {
+      <div class="rounded-md bg-alerte/10 border border-alerte/30 p-3 text-xs text-alerte flex flex-col gap-1">
+        @if (form.errors['ageIncoherent']) {
+          <p>L'âge minimum ne peut pas être supérieur à l'âge maximum.</p>
+        }
+        @if (form.errors['dureeIncoherente']) {
+          <p>La durée minimale ne peut pas être supérieure à la durée maximale.</p>
+        }
+        @if (form.errors['participantsIncoherents']) {
+          <p>Le nombre minimum de participants ne peut pas dépasser le maximum.</p>
+        }
+      </div>
+    }
+    <div class="flex flex-col-reverse sm:flex-row sm:justify-end gap-2 pt-2">
+      <a routerLink="/admin/types-seances"
+         class="text-center rounded-md border border-bordure bg-blanc px-4 py-2 text-sm font-medium text-texte transition hover:bg-fond">
+        Annuler
+      </a>
+      <button type="submit" [disabled]="form.invalid"
+              class="rounded-md bg-primaire px-4 py-2 text-sm font-medium text-blanc transition hover:bg-primaire/90 disabled:cursor-not-allowed disabled:opacity-50">
+        Enregistrer
+      </button>
+    </div>
+  </form>
+</div>
