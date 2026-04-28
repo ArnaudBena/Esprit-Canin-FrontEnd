@@ -6,6 +6,8 @@ import { RaceEditComponent } from './pages/admin/race-edit/race-edit.component';
 import { RoleListComponent } from './pages/admin/role-list/role-list.component';
 import { RoleCreateComponent } from './pages/admin/role-create/role-create.component';
 import { RoleEditComponent } from './pages/admin/role-edit/role-edit.component';
+import { TypeSeanceListComponent } from './pages/admin/type-seance-list/type-seance-list.component';
+import { TypeSeanceCreateComponent } from './pages/admin/type-seance-create/type-seance-create.component';
 
 
 
@@ -21,7 +23,10 @@ export const routes: Routes = [
       { path: 'roles', component: RoleListComponent },
       { path: 'roles/new', component: RoleCreateComponent },
       { path: 'roles/:id/edit', component: RoleEditComponent },
-      // Plus tard #TODO : Utilisateurs, types-cours, seances...
+      { path: 'types-seances', component: TypeSeanceListComponent },
+      { path: 'types-seances/new', component: TypeSeanceCreateComponent },
+      // { path: 'types-seances/:id/edit', component: TypeSeanceEditComponent },
+      // Plus tard #TODO : Utilisateurs, seances...
     ]
   },
 ];

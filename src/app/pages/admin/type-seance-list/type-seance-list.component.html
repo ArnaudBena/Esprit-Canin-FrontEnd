@@ -1,0 +1,45 @@
+<div class="mb-6 md:mb-8 flex items-center justify-between gap-3">
+  <h1 class="text-xl md:text-2xl font-semibold text-texte">Types de séances</h1>
+  <a routerLink="/admin/types-seances/new"
+     class="flex-shrink-0 rounded-md bg-accent px-3 md:px-4 py-2 text-xs md:text-sm font-semibold text-blanc transition hover:bg-accent/90">
+    + Créer un type de séance
+  </a>
+</div>
+@if (typeSeances().length === 0) {
+  <div class="overflow-hidden rounded-xl border border-bordure bg-blanc">
+    <p class="p-6 text-sm text-muted">Aucun type de séance pour le moment.</p>
+  </div>
+} @else {
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    @for (type of typeSeances(); track type.id) {
+      <div class="rounded-xl border border-bordure bg-blanc p-5 md:p-7 flex flex-col">
+        <h3 class="text-lg md:text-xl font-bold text-texte mb-3">{{ type.libelle }}</h3>
+
+        @if (type.description) {
+          <p class="text-sm text-muted mb-4 leading-relaxed">{{ type.description }}</p>
+        }
+        <div class="flex flex-wrap gap-x-4 gap-y-1 text-sm text-muted mb-4">
+          @if (type.ageMinimum != null) {
+            <span>Âge min : <strong class="text-texte">{{ type.ageMinimum }} an{{ type.ageMinimum > 1 ? 's' : '' }}</strong></span>
+          }
+          @if (type.ageMaximum != null) {
+            <span>Âge max : <strong class="text-texte">{{ type.ageMaximum }} ans</strong></span>
+          }
+          <span>Durée : <strong class="text-texte">{{ type.dureeMinimale }}-{{ type.dureeMaximale }} min</strong></span>
+          <span>Places max : <strong class="text-texte">{{ type.participantsMaximum }}</strong></span>
+        </div>
+        <div class="mt-auto flex gap-2 pt-4 border-t border-bordure">
+          <a [routerLink]="['/admin/types-seances', type.id, 'edit']"
+             class="rounded-md border border-bordure bg-blanc px-4 py-2 text-sm font-medium text-texte transition hover:bg-fond">
+            Modifier
+          </a>
+          <button type="button"
+                  (click)="onDelete(type)"
+                  class="rounded-md border border-alerte/50 bg-blanc px-4 py-2 text-sm font-medium text-alerte transition hover:bg-alerte/10">
+            Supprimer
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+}

@@ -18,12 +18,12 @@
       Utilisateurs
     </a>
     <a
-      routerLink="/admin/types-cours"
+      routerLink="/admin/types-seances"
       routerLinkActive="bg-primaire-light text-primaire font-semibold border-r-[3px] border-primaire"
       class="flex items-center gap-3 px-6 py-3 text-sm font-medium text-muted hover:bg-fond transition-colors"
     >
       <lucide-icon [img]="iconTypes" class="w-5 h-5"></lucide-icon>
-      Types de cours
+      Types de séances
     </a>
     <a
       routerLink="/admin/seances"
@@ -51,6 +51,7 @@
     </a>
   </nav>
 </aside>
+
 <!-- Mobile: onglets horizontaux scrollables -->
 <nav class="md:hidden flex gap-1 overflow-x-auto bg-blanc border-b border-bordure px-3 py-2 [&::-webkit-scrollbar]:hidden">
   <a
@@ -68,11 +69,11 @@
     Utilisateurs
   </a>
   <a
-    routerLink="/admin/types-cours"
+    routerLink="/admin/types-seances"
     routerLinkActive="!bg-primaire !text-blanc"
     class="flex-shrink-0 rounded-full bg-fond px-3 py-1.5 text-xs font-medium text-muted whitespace-nowrap transition-colors"
   >
-    Types de cours
+    Types de séance
   </a>
   <a
     routerLink="/admin/seances"
