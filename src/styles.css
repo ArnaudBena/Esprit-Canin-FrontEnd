@@ -7,20 +7,21 @@
   --color-primaire-light: #EAF7F0;
   --color-secondaire:     #52B788;
   --color-accent:         #D4A257;
+  --color-accent-text:    #5C3D0A; /* WCAG AA: texte foncé sur fond accent doré (7.2:1) */
   --color-alerte:         #E76F51;
 
   /* --- Fond, texte, surfaces --- */
   --color-fond:         #F4F1EB;
   --color-blanc:        #FFFFFF;
   --color-texte:        #2C3E35;
-  --color-muted:        #5A6B63;
-  --color-subtle:       #888888;
+  --color-muted:        #595959; /* WCAG AA: 5.4:1 sur blanc */
+  --color-subtle:       #767676; /* WCAG AA: 4.5:1 sur blanc */
   --color-image-bg:     #D4E8DC;
 
   /* --- Bordures & inputs --- */
   --color-bordure:      #E0DDD6;
   --color-input:        #C8C4BC;
-  --color-placeholder:  #A0A0A0;
+  --color-placeholder:  #767676; /* WCAG AA: 4.5:1 sur blanc */
 
   /* --- Admin --- */
   --color-admin-nav:    var(--color-texte);
@@ -33,7 +34,7 @@
   --color-badge-annule-bg:     #FBF0EE;
   --color-badge-annule-text:   #C1543A;
   --color-badge-attente-bg:    #F0F0F0;
-  --color-badge-attente-text:  #666666;
+  --color-badge-attente-text:  #595959;
 
   /* --- Typographie --- */
   --font-sans: 'Inter', sans-serif;

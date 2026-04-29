@@ -18,7 +18,7 @@
           type="button"
           (click)="onConfirm()"
           [class]="cfg.danger
-            ? 'rounded-md bg-alerte px-4 py-2 text-sm font-medium text-blanc transition hover:bg-alerte/90'
+            ? 'rounded-md bg-alerte px-4 py-2 text-sm font-bold text-blanc transition hover:bg-alerte/90'
             : 'rounded-md bg-primaire px-4 py-2 text-sm font-medium text-blanc transition hover:bg-primaire/90'">
           {{ cfg.confirmationLabel ?? 'Confirmer' }}
         </button>

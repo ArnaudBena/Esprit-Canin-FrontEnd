@@ -18,7 +18,7 @@
         placeholder="Ex. Berger Australien"
         class="rounded-md border border-bordure bg-blanc px-3 py-2 text-sm text-texte outline-none transition focus:border-primaire" />
       @if (form.controls.nom.invalid && form.controls.nom.touched) {
-        <p class="text-xs text-alerte">
+        <p class="text-sm font-bold text-alerte">
           @if (form.controls.nom.errors?.['required']) {
             Le nom est obligatoire.
           } @else if (form.controls.nom.errors?.['minlength']) {

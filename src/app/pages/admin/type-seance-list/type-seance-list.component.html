@@ -1,7 +1,7 @@
 <div class="mb-6 md:mb-8 flex items-center justify-between gap-3">
   <h1 class="text-xl md:text-2xl font-semibold text-texte">Types de séances</h1>
   <a routerLink="/admin/types-seances/new"
-     class="flex-shrink-0 rounded-md bg-accent px-3 md:px-4 py-2 text-xs md:text-sm font-semibold text-blanc transition hover:bg-accent/90">
+     class="flex-shrink-0 rounded-md bg-accent px-3 md:px-4 py-2 text-xs md:text-sm font-semibold text-accent-text transition hover:bg-accent/90">
     + Créer un type de séance
   </a>
 </div>
@@ -35,7 +35,7 @@
           </a>
           <button type="button"
                   (click)="onDelete(type)"
-                  class="rounded-md border border-alerte/50 bg-blanc px-4 py-2 text-sm font-medium text-alerte transition hover:bg-alerte/10">
+                  class="rounded-md border border-alerte/50 bg-blanc px-4 py-2 text-sm font-bold text-alerte transition hover:bg-alerte/10">
             Supprimer
           </button>
         </div>

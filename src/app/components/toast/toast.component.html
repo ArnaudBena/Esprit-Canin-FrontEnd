@@ -6,7 +6,7 @@
 >
   @for (t of list; track t.id) {
     <div
-      class="flex items-start gap-3 rounded-lg shadow-lg px-4 py-3 text-sm text-blanc"
+      class="flex items-start gap-3 rounded-lg shadow-lg px-4 py-3 text-sm font-bold text-blanc"
       [class.bg-primaire]="t.type === 'success'"
       [class.bg-alerte]="t.type === 'error'"
       role="alert"
