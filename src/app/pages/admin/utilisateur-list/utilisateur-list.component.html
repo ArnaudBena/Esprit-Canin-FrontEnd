@@ -1,0 +1,143 @@
+<div class="mb-6 md:mb-8">
+  <h1 class="text-xl md:text-2xl font-semibold text-texte">Utilisateurs</h1>
+</div>
+<!-- Barre de filtres -->
+<div class="mb-6 flex flex-col md:flex-row md:items-end gap-3 md:gap-4 rounded-xl border border-bordure bg-blanc p-4">
+  <div class="flex-1 min-w-0">
+    <label for="recherche" class="block text-xs font-semibold uppercase tracking-wider text-muted mb-1">
+      Rechercher
+    </label>
+    <input
+      id="recherche"
+      type="text"
+      [ngModel]="recherche()"
+      (ngModelChange)="recherche.set($event)"
+      placeholder="Nom, prénom, email..."
+      class="w-full rounded-md border border-bordure bg-blanc px-3 py-2 text-sm text-texte placeholder:text-placeholder focus:border-accent focus:outline-none transition" />
+  </div>
+  <div class="md:w-56">
+    <label for="role-filtre" class="block text-xs font-semibold uppercase tracking-wider text-muted mb-1">
+      Rôle
+    </label>
+    <div class="relative">
+      <select
+        id="role-filtre"
+        [ngModel]="roleFiltre()"
+        (ngModelChange)="roleFiltre.set($event)"
+        class="w-full appearance-none rounded-md border border-bordure bg-blanc pl-3 pr-9 py-2 text-sm text-texte focus:border-accent focus:outline-none transition">
+        <option value="">Tous les rôles</option>
+        @for (role of roles(); track role.id) {
+          <option [value]="role.nom">{{ role.nom }}</option>
+        }
+      </select>
+      <svg class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted"
+           xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.06l3.71-3.83a.75.75 0 1 1 1.08 1.04l-4.25 4.39a.75.75 0 0 1-1.08 0L5.21 8.27a.75.75 0 0 1 .02-1.06z" clip-rule="evenodd" />
+      </svg>
+    </div>
+  </div>
+</div>
+@if (utilisateursFiltres().length === 0) {
+  <div class="overflow-hidden rounded-xl border border-bordure bg-blanc">
+    <p class="p-6 text-sm text-muted">
+      @if (utilisateurs().length === 0) {
+        Aucun utilisateur pour le moment.
+      } @else {
+        Aucun utilisateur ne correspond à votre recherche.
+      }
+    </p>
+  </div>
+} @else {
+  <!-- Desktop : tableau -->
+  <div class="hidden md:block overflow-hidden rounded-xl border border-bordure bg-blanc">
+    <table class="w-full border-collapse">
+      <thead class="bg-fond">
+      <tr>
+        <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-muted">Nom</th>
+        <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-muted">Email</th>
+        <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-muted">Rôle</th>
+        <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-muted">Chiens</th>
+        <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-muted">Inscrit le</th>
+        <th class="px-5 py-3 text-right text-xs font-semibold uppercase tracking-wider text-muted">Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+        @for (user of utilisateursFiltres(); track user.id) {
+          <tr class="border-t border-bordure transition hover:bg-fond">
+            <td class="px-5 py-3.5 text-sm text-texte">
+              <div class="flex items-center gap-3">
+                <div class="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full text-xs font-bold"
+                     [class]="classesAvatar(user.role.nom)">
+                  {{ initiales(user) }}
+                </div>
+                <span class="font-medium">{{ user.prenom }} {{ user.nom }}</span>
+              </div>
+            </td>
+            <td class="px-5 py-3.5 text-sm text-texte">{{ user.email }}</td>
+            <td class="px-5 py-3.5">
+              <span class="inline-block rounded-full px-2.5 py-1 text-xs" [class]="classesBadgeRole(user.role.nom)">
+                {{ user.role.nom }}
+              </span>
+            </td>
+            <td class="px-5 py-3.5 text-sm text-texte">{{ user.chiens?.length ?? 0 }}</td>
+            <td class="px-5 py-3.5 text-sm text-muted">
+              @if (user.dateInscription) {
+                {{ user.dateInscription | date:'dd/MM/yyyy' }}
+              } @else {
+                —
+              }
+            </td>
+            <td class="px-5 py-3.5">
+              <div class="flex justify-end gap-2">
+                <a [routerLink]="['/admin/utilisateurs', user.id]"
+                   class="rounded-md border border-bordure bg-blanc px-3 py-1.5 text-sm font-bold text-texte text-center transition hover:bg-fond">
+                  Voir
+                </a>
+                <a [routerLink]="['/admin/utilisateurs', user.id, 'edit-role']"
+                   class="rounded-md border border-bordure bg-blanc px-3 py-1.5 text-sm font-bold text-texte text-center transition hover:bg-fond">
+                  Modifier rôle
+                </a>
+              </div>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  <!-- Mobile : cartes -->
+  <div class="md:hidden flex flex-col gap-3">
+    @for (user of utilisateursFiltres(); track user.id) {
+      <div class="rounded-xl border border-bordure bg-blanc p-4">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full text-sm font-bold"
+               [class]="classesAvatar(user.role.nom)">
+            {{ initiales(user) }}
+          </div>
+          <div class="min-w-0 flex-1">
+            <p class="text-sm font-semibold text-texte truncate">{{ user.prenom }} {{ user.nom }}</p>
+            <p class="text-xs text-muted truncate">{{ user.email }}</p>
+          </div>
+        </div>
+        <div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted mb-3">
+          <span class="inline-block rounded-full px-2.5 py-1" [class]="classesBadgeRole(user.role.nom)">
+            {{ user.role.nom }}
+          </span>
+          <span>Chiens : <strong class="text-texte">{{ user.chiens?.length ?? 0 }}</strong></span>
+          @if (user.dateInscription) {
+            <span>Inscrit le {{ user.dateInscription | date:'dd/MM/yyyy' }}</span>
+          }
+        </div>
+        <div class="flex gap-2">
+          <a [routerLink]="['/admin/utilisateurs', user.id]"
+             class="flex-1 text-center rounded-md border border-bordure bg-blanc px-3 py-2 text-sm font-bold text-texte transition hover:bg-fond">
+            Voir
+          </a>
+          <a [routerLink]="['/admin/utilisateurs', user.id, 'edit-role']"
+             class="flex-1 text-center rounded-md border border-bordure bg-blanc px-3 py-2 text-sm font-bold text-texte transition hover:bg-fond">
+            Modifier rôle
+          </a>
+        </div>
+      </div>
+    }
+  </div>
+}

@@ -36,6 +36,14 @@
   --color-badge-attente-bg:    #F0F0F0;
   --color-badge-attente-text:  #595959;
 
+  /* --- Badges rôle --- */
+  --color-badge-role-proprio-bg:   #EAF7F0;
+  --color-badge-role-proprio-text: var(--color-primaire);   /* vert foncé sur vert très clair */
+  --color-badge-role-coach-bg:     #E8F0FE;
+  --color-badge-role-coach-text:   #1967D2;                  /* bleu foncé sur bleu très clair, WCAG 8.5:1 */
+  --color-badge-role-admin-bg:     #FBF0EE;
+  --color-badge-role-admin-text:   #C1543A;                  /* rouge foncé sur rose très clair, WCAG 5.5:1 */
+
   /* --- Typographie --- */
   --font-sans: 'Inter', sans-serif;
 

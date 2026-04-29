@@ -9,6 +9,10 @@ import { RoleEditComponent } from './pages/admin/role-edit/role-edit.component';
 import { TypeSeanceListComponent } from './pages/admin/type-seance-list/type-seance-list.component';
 import { TypeSeanceCreateComponent } from './pages/admin/type-seance-create/type-seance-create.component';
 import { TypeSeanceEditComponent } from './pages/admin/type-seance-edit/type-seance-edit.component';
+import { UtilisateurPasswordComponent } from './pages/admin/utilisateur-password/utilisateur-password.component';
+import { UtilisateurEditRoleComponent } from './pages/admin/utilisateur-edit-role/utilisateur-edit-role.component';
+import { UtilisateurDetailComponent } from './pages/admin/utilisateur-detail/utilisateur-detail.component';
+import { UtilisateurListComponent } from './pages/admin/utilisateur-list/utilisateur-list.component';
 
 
 
@@ -27,7 +31,11 @@ export const routes: Routes = [
       { path: 'types-seances', component: TypeSeanceListComponent },
       { path: 'types-seances/new', component: TypeSeanceCreateComponent },
       { path: 'types-seances/:id/edit', component: TypeSeanceEditComponent },
-      // Plus tard #TODO : Utilisateurs, seances...
+      { path: 'utilisateurs', component: UtilisateurListComponent },
+      { path: 'utilisateurs/:id', component: UtilisateurDetailComponent },
+      { path: 'utilisateurs/:id/edit-role', component: UtilisateurEditRoleComponent },
+      { path: 'utilisateurs/:id/password', component: UtilisateurPasswordComponent },
+      // Plus tard #TODO : seances...
     ]
   },
 ];
