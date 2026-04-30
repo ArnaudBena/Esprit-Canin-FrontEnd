@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -18,7 +18,7 @@ import { Role } from '../../../models/role.model';
   templateUrl: './utilisateur-list.component.html',
   styleUrl: './utilisateur-list.component.css',
 })
-export class UtilisateurListComponent {
+export class UtilisateurListComponent implements OnInit {
   private utilisateurService = inject(UtilisateurService);
   private roleService = inject(RoleService);
 
@@ -41,9 +41,11 @@ export class UtilisateurListComponent {
     });
   });
 
-  constructor() {
-    this.utilisateurService.getAll().subscribe(users => this.utilisateurs.set(users));
-    this.roleService.getAll().subscribe(roles => this.roles.set(roles));
+  ngOnInit(): void {
+    this.utilisateurService.getAll().subscribe(
+      users => this.utilisateurs.set(users));
+    this.roleService.getAll().subscribe(
+      roles => this.roles.set(roles));
   }
 
   /** Initiales pour l'avatar (ex: "Arnaud Benacquista" → "AB"). */
@@ -75,5 +77,5 @@ export class UtilisateurListComponent {
       default:
         return 'bg-muted text-blanc';
     }
-}
+  }
 }

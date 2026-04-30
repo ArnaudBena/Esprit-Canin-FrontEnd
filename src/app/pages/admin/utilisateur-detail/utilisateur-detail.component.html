@@ -1,1 +1,107 @@
-<p>utilisateur-detail works!</p>
+<div class="mb-6 md:mb-8 flex items-center justify-between gap-3">
+  <h1 class="text-xl md:text-2xl font-semibold text-texte">Détail de l'utilisateur</h1>
+  <a routerLink="/admin/utilisateurs"
+     class="rounded-md border border-bordure bg-blanc px-4 py-2 text-sm font-medium text-texte transition hover:bg-fond">
+    ← Retour à la liste
+  </a>
+</div>
+@if (chargement()) {
+  <div class="rounded-xl border border-bordure bg-blanc p-6">
+    <p class="text-sm text-muted">Chargement...</p>
+  </div>
+} @else if (!utilisateur()) {
+  <div class="rounded-xl border border-bordure bg-blanc p-6">
+    <p class="text-sm text-muted">Utilisateur introuvable.</p>
+  </div>
+} @else {
+  @let user = utilisateur()!;
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <div class="lg:col-span-2 rounded-xl border border-bordure bg-blanc p-6">
+      <div class="flex items-start gap-4 mb-6 pb-6 border-b border-bordure">
+        <div class="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-full text-xl font-bold"
+             [class]="classesAvatar(user.role.nom)">
+          {{ initiales(user) }}
+        </div>
+        <div class="min-w-0 flex-1">
+          <h2 class="text-lg md:text-xl font-bold text-texte mb-1">
+            {{ user.prenom }} {{ user.nom }}
+          </h2>
+          <p class="text-sm text-muted mb-2">{{ user.email }}</p>
+          <span class="inline-block rounded-full px-2.5 py-1 text-xs"
+                [class]="classesBadgeRole(user.role.nom)">
+            {{ user.role.nom }}
+          </span>
+        </div>
+      </div>
+      <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+        <div>
+          <dt class="text-xs font-semibold uppercase tracking-wider text-muted mb-1">Prénom</dt>
+          <dd class="text-sm text-texte">{{ user.prenom }}</dd>
+        </div>
+        <div>
+          <dt class="text-xs font-semibold uppercase tracking-wider text-muted mb-1">Nom</dt>
+          <dd class="text-sm text-texte">{{ user.nom }}</dd>
+        </div>
+        <div>
+          <dt class="text-xs font-semibold uppercase tracking-wider text-muted mb-1">Email</dt>
+          <dd class="text-sm text-texte break-all">{{ user.email }}</dd>
+        </div>
+        <div>
+          <dt class="text-xs font-semibold uppercase tracking-wider text-muted mb-1">Téléphone</dt>
+          <dd class="text-sm text-texte">
+            @if (user.telephone) {
+              {{ user.telephone }}
+            } @else {
+              <span class="text-muted">Non renseigné</span>
+            }
+          </dd>
+        </div>
+        <div>
+          <dt class="text-xs font-semibold uppercase tracking-wider text-muted mb-1">Inscrit le</dt>
+          <dd class="text-sm text-texte">
+            @if (user.dateInscription) {
+              {{ user.dateInscription | date:'dd/MM/yyyy' }}
+            } @else {
+              —
+            }
+          </dd>
+        </div>
+        <div>
+          <dt class="text-xs font-semibold uppercase tracking-wider text-muted mb-1">Rôle</dt>
+          <dd class="text-sm text-texte">{{ user.role.nom }}</dd>
+        </div>
+      </dl>
+    </div>
+    <div class="rounded-xl border border-bordure bg-blanc p-6">
+      <h3 class="text-sm font-semibold uppercase tracking-wider text-muted mb-4">
+        Actions administrateur
+      </h3>
+      <div class="flex flex-col gap-3">
+        <a [routerLink]="['/admin/utilisateurs', user.id, 'edit-role']"
+           class="rounded-md border border-bordure bg-blanc px-4 py-2.5 text-sm font-bold text-texte text-center transition hover:bg-fond">
+          Modifier le rôle
+        </a>
+        <a [routerLink]="['/admin/utilisateurs', user.id, 'password']"
+           class="rounded-md border border-bordure bg-blanc px-4 py-2.5 text-sm font-bold text-texte text-center transition hover:bg-fond">
+          Réinitialiser le mot de passe
+        </a>
+      </div>
+    </div>
+    <div class="lg:col-span-3 rounded-xl border border-bordure bg-blanc p-6">
+      <h3 class="text-base md:text-lg font-bold text-texte mb-4">
+        Chiens
+        <span class="text-sm font-normal text-muted">
+          ({{ user.chiens?.length ?? 0 }})
+        </span>
+      </h3>
+      @if (!user.chiens || user.chiens.length === 0) {
+        <p class="text-sm text-muted">Cet utilisateur n'a pas encore enregistré de chien.</p>
+      } @else {
+        <p class="text-sm text-muted">
+          Le détail des chiens sera disponible quand le CRUD Chien sera codé côté front.
+        </p>
+        <!-- TODO : afficher la liste des chiens quand le CRUD Chien sera fait -->
+      }
+    </div>
+  </div>
+}
