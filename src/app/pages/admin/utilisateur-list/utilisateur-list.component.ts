@@ -29,15 +29,15 @@ export class UtilisateurListComponent implements OnInit {
 
   /** Liste filtrée par recherche (nom / prénom / email) et par rôle sélectionné. */
   utilisateursFiltres = computed(() => {
-    const recherche = this.recherche().trim().toLowerCase();
+    const termeRecherche = this.recherche().trim().toLowerCase();
     const role = this.roleFiltre();
     return this.utilisateurs().filter(utilisateur => {
       const matchRole = !role || utilisateur.role.nom === role;
-      const matchQ = !recherche
-        || utilisateur.nom.toLowerCase().includes(recherche)
-        || utilisateur.prenom.toLowerCase().includes(recherche)
-        || utilisateur.email.toLowerCase().includes(recherche);
-      return matchRole && matchQ;
+      const matchTermeRecherche = !termeRecherche
+        || utilisateur.nom.toLowerCase().includes(termeRecherche)
+        || utilisateur.prenom.toLowerCase().includes(termeRecherche)
+        || utilisateur.email.toLowerCase().includes(termeRecherche);
+      return matchRole && matchTermeRecherche;
     });
   });
 

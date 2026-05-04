@@ -13,6 +13,7 @@ import { UtilisateurPasswordComponent } from './pages/admin/utilisateur-password
 import { UtilisateurEditRoleComponent } from './pages/admin/utilisateur-edit-role/utilisateur-edit-role.component';
 import { UtilisateurDetailComponent } from './pages/admin/utilisateur-detail/utilisateur-detail.component';
 import { UtilisateurListComponent } from './pages/admin/utilisateur-list/utilisateur-list.component';
+import { ChienListComponent } from './pages/admin/chien-list/chien-list.component';
 
 
 
@@ -35,6 +36,7 @@ export const routes: Routes = [
       { path: 'utilisateurs/:id', component: UtilisateurDetailComponent },
       { path: 'utilisateurs/:id/edit-role', component: UtilisateurEditRoleComponent },
       { path: 'utilisateurs/:id/password', component: UtilisateurPasswordComponent },
+      { path: 'chiens', component: ChienListComponent },
       // Plus tard #TODO : seances...
     ]
   },

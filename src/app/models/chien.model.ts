@@ -1,4 +1,5 @@
 import { Race } from './race.model';
+import { Utilisateur } from './utilisateur.model';
 
 export enum Sexe {
   MALE = 'MALE',
@@ -14,4 +15,5 @@ export interface Chien {
   dateNaissance: string;
   numeroPuce?: string;
   race: Race;
+  utilisateur?: Utilisateur;
 }
