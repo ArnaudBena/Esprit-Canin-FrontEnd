@@ -100,15 +100,11 @@
         <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
           @for (chien of user.chiens; track chien.id) {
             <li class="rounded-lg border border-bordure bg-fond p-4 flex flex-col gap-1">
-              <div class="flex items-baseline justify-between gap-2">
-                <span class="text-sm font-semibold text-texte truncate">{{ chien.nom }}</span>
-                <span class="text-xs text-muted shrink-0" aria-label="Sexe">
-                  {{ chien.sexe === 'MALE' ? '♂' : '♀' }}
-                </span>
-              </div>
+              <p class="text-sm font-semibold text-texte truncate">{{ chien.nom }}</p>
               <p class="text-xs text-muted">{{ chien.race.nom }}</p>
               <div class="flex flex-wrap gap-x-3 gap-y-0.5 text-xs text-muted mt-1">
-                <span>Né le {{ chien.dateNaissance | date:'dd/MM/yyyy' }}</span>
+                <span>{{ chien.sexe === Sexe.MALE ? 'Mâle' : 'Femelle' }}</span>
+                <span>{{ chien.sexe === Sexe.MALE ? 'Né' : 'Née' }} le {{ chien.dateNaissance | date:'dd/MM/yyyy' }}</span>
                 <span>{{ chien.poids }} kg</span>
                 <span>{{ chien.taille }} cm</span>
               </div>

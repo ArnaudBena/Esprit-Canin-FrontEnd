@@ -1,4 +1,5 @@
 import { Role } from './role.model';
+import { Chien } from './chien.model';
 
 export interface Utilisateur {
   id?: number;
@@ -9,5 +10,5 @@ export interface Utilisateur {
   dateInscription?: string; // format ISO yyyy-MM-dd généré côté back par @CreatedDate
   telephone?: string;
   role: Role;
-  chiens?: unknown[];   // TODO: remplacer par Chien[] quand le modèle sera créé
+  chiens?: Chien[];
 }

@@ -3,6 +3,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { UtilisateurService } from '../../../services/utilisateur.service';
 import { Utilisateur } from '../../../models/utilisateur.model';
+import { Sexe } from '../../../models/chien.model';
 
 @Component({
   selector: 'app-utilisateur-detail',
@@ -21,6 +22,8 @@ export class UtilisateurDetailComponent implements OnInit {
 
   utilisateur = signal<Utilisateur | null>(null);
   chargement = signal(true);
+
+  protected readonly Sexe = Sexe;
 
   ngOnInit(): void {
     const id =
