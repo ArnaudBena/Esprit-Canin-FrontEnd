@@ -1,11 +1,11 @@
-<div class="mb-6 md:mb-8 flex items-center justify-between gap-3">
-  <h1 class="text-xl md:text-2xl font-semibold text-texte">Nouveau type de séance</h1>
+<div class="mb-6 lg:mb-8 flex items-center justify-between gap-3">
+  <h1 class="text-xl lg:text-2xl font-semibold text-texte">Nouveau type de séance</h1>
   <a routerLink="/admin/types-seances"
      class="hidden sm:inline-block rounded-md border border-bordure bg-blanc px-4 py-2 text-sm font-medium text-texte transition hover:bg-fond">
     Annuler
   </a>
 </div>
-<div class="max-w-2xl rounded-xl border border-bordure bg-blanc p-4 md:p-6">
+<div class="max-w-2xl rounded-xl border border-bordure bg-blanc p-4 lg:p-6">
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-5">
 
     <div class="flex flex-col gap-1.5">

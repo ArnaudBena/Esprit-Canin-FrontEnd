@@ -1,7 +1,7 @@
-<div class="mb-6 md:mb-8 flex items-center justify-between gap-3">
-  <h1 class="text-xl md:text-2xl font-semibold text-texte">Races</h1>
+<div class="mb-6 lg:mb-8 flex items-center justify-between gap-3">
+  <h1 class="text-xl lg:text-2xl font-semibold text-texte">Races</h1>
   <a routerLink="/admin/races/new"
-    class="flex-shrink-0 rounded-md bg-accent px-3 md:px-4 py-2 text-xs md:text-sm font-semibold text-accent-text transition hover:bg-accent/90">
+    class="flex-shrink-0 rounded-md bg-accent px-3 lg:px-4 py-2 text-xs lg:text-sm font-semibold text-accent-text transition hover:bg-accent/90">
     + Ajouter une race
   </a>
 </div>
@@ -12,7 +12,7 @@
   </div>
 } @else {
   <!-- Desktop: tableau -->
-  <div class="hidden md:block overflow-hidden rounded-xl border border-bordure bg-blanc">
+  <div class="hidden lg:block overflow-hidden rounded-xl border border-bordure bg-blanc">
     <table class="w-full border-collapse">
       <thead class="bg-fond">
         <tr>
@@ -49,7 +49,7 @@
     </table>
   </div>
   <!-- Mobile: cartes -->
-  <div class="md:hidden flex flex-col gap-3">
+  <div class="lg:hidden flex flex-col gap-3">
     @for (race of races(); track race.id) {
       <div class="rounded-xl border border-bordure bg-blanc p-4">
         <p class="text-sm font-semibold text-texte">{{ race.nom }}</p>
