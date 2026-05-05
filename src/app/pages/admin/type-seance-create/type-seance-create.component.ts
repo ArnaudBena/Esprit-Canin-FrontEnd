@@ -22,15 +22,15 @@ export class TypeSeanceCreateComponent {
   form = this.formBuilder.group({
     libelle: ['', [Validators.required]],
     description: [''],
-    ageMinimum: [null as number | null, [Validators.min(0), Validators.max(30)]],
-    ageMaximum: [null as number | null, [Validators.min(0), Validators.max(30)]],
+    ageMinimumMois: [null as number | null, [Validators.min(0), Validators.max(360)]],
+    ageMaximumMois: [null as number | null, [Validators.min(0), Validators.max(360)]],
     dureeMinimale: [null as number | null, [Validators.required, Validators.min(30), Validators.max(240)]],
     dureeMaximale: [null as number | null, [Validators.required, Validators.min(30), Validators.max(240)]],
     participantsMinimum: [null as number | null, [Validators.required, Validators.min(1), Validators.max(10)]],
     participantsMaximum: [null as number | null, [Validators.required, Validators.min(1), Validators.max(10)]],
   }, {
     validators: [
-      minMaxValidator('ageMinimum', 'ageMaximum', 'ageIncoherent'),
+      minMaxValidator('ageMinimumMois', 'ageMaximumMois', 'ageIncoherent'),
       minMaxValidator('dureeMinimale', 'dureeMaximale', 'dureeIncoherente'),
       minMaxValidator('participantsMinimum', 'participantsMaximum', 'participantsIncoherents'),
     ]

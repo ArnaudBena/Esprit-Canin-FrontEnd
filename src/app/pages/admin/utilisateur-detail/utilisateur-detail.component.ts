@@ -4,6 +4,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { UtilisateurService } from '../../../services/utilisateur.service';
 import { Utilisateur } from '../../../models/utilisateur.model';
 import { Sexe } from '../../../models/chien.model';
+import { ageAffichage, ageEnMois } from '../../../utils/age.utils';
 
 @Component({
   selector: 'app-utilisateur-detail',
@@ -24,6 +25,8 @@ export class UtilisateurDetailComponent implements OnInit {
   chargement = signal(true);
 
   protected readonly Sexe = Sexe;
+  protected readonly ageAffichage = ageAffichage;
+  protected readonly ageEnMois = ageEnMois;
 
   ngOnInit(): void {
     const id =

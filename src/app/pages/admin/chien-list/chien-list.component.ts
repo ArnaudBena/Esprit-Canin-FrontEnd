@@ -5,6 +5,7 @@ import { RouterLink } from '@angular/router';
 import { ChienService } from '../../../services/chien.service';
 import { DialogService } from '../../../services/dialog.service';
 import { Chien, Sexe } from '../../../models/chien.model';
+import { ageAffichage, ageEnMois } from '../../../utils/age.utils';
 
 @Component({
   selector: 'app-chien-list',
@@ -26,6 +27,8 @@ export class ChienListComponent implements OnInit {
   sexeFiltre = signal<string>('');
 
   protected readonly Sexe = Sexe;
+  protected readonly ageAffichage = ageAffichage;
+  protected readonly ageEnMois = ageEnMois;
 
   // Liste filtrée par recherche (nom du chien, nom/prénom du propriétaire) et par sexe.
   chiensFiltres = computed(() => {
@@ -66,17 +69,5 @@ export class ChienListComponent implements OnInit {
         error:(err) => console.error('Erreur de suppression', err),
       });
     });
-  }
-
-  /** Calcule l'âge en années à partir de la date de naissance. */
-  age(dateNaissance: string): number {
-    const naissance = new Date(dateNaissance);
-    const maintenant = new Date();
-    let age = maintenant.getFullYear() - naissance.getFullYear();
-    const m = maintenant.getMonth() - naissance.getMonth();
-    if (m < 0 || (m === 0 && maintenant.getDate() < naissance.getDate())) {
-      age--;
-    }
-    return age;
   }
 }

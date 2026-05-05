@@ -19,13 +19,21 @@
           <p class="text-sm text-muted mb-4 leading-relaxed">{{ type.description }}</p>
         }
         <div class="flex flex-wrap gap-x-4 gap-y-1 text-sm text-muted mb-4">
-          @if (type.ageMinimum != null) {
-            <span>Âge min : <strong class="text-texte">{{ type.ageMinimum }} an{{ type.ageMinimum > 1 ? 's' : '' }}</strong></span>
+          @if (type.ageMinimumMois != null || type.ageMaximumMois != null) {
+            <span>
+              Âge :
+              <strong class="text-texte">
+                @if (type.ageMinimumMois != null && type.ageMaximumMois != null) {
+                  {{ ageAffichage(type.ageMinimumMois) }} – {{ ageAffichage(type.ageMaximumMois) }}
+                } @else if (type.ageMinimumMois != null) {
+                  {{ ageAffichage(type.ageMinimumMois) }} minimum
+                } @else {
+                  jusqu'à {{ ageAffichage(type.ageMaximumMois!) }}
+                }
+              </strong>
+            </span>
           }
-          @if (type.ageMaximum != null) {
-            <span>Âge max : <strong class="text-texte">{{ type.ageMaximum }} ans</strong></span>
-          }
-          <span>Durée : <strong class="text-texte">{{ type.dureeMinimale }}-{{ type.dureeMaximale }} min</strong></span>
+          <span>Durée : <strong class="text-texte">{{ dureeAffichage(type.dureeMinimale) }} – {{ dureeAffichage(type.dureeMaximale) }}</strong></span>
           <span>Places max : <strong class="text-texte">{{ type.participantsMaximum }}</strong></span>
         </div>
         <div class="mt-auto flex gap-2 pt-4 border-t border-bordure">

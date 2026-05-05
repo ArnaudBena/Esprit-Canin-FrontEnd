@@ -6,6 +6,7 @@ import { UtilisateurService } from '../../../services/utilisateur.service';
 import { RoleService } from '../../../services/role.service';
 import { Utilisateur } from '../../../models/utilisateur.model';
 import { Role } from '../../../models/role.model';
+import { ageAffichage, ageEnMois } from '../../../utils/age.utils';
 
 @Component({
   selector: 'app-utilisateur-list',
@@ -26,6 +27,9 @@ export class UtilisateurListComponent implements OnInit {
   roles = signal<Role[]>([]);
   recherche = signal('');
   roleFiltre = signal<string>('');
+
+  protected readonly ageAffichage = ageAffichage;
+  protected readonly ageEnMois = ageEnMois;
 
   /** Liste filtrée par recherche (nom / prénom / email) et par rôle sélectionné. */
   utilisateursFiltres = computed(() => {

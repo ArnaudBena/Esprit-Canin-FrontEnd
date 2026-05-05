@@ -3,6 +3,8 @@ import { RouterLink } from '@angular/router';
 import { TypeSeanceService } from '../../../services/type-seance.service';
 import { DialogService } from '../../../services/dialog.service';
 import { TypeSeance } from '../../../models/type-seance.model';
+import { ageAffichage, ageEnMois } from '../../../utils/age.utils';
+import { dureeAffichage } from '../../../utils/duree.utils';
 
 @Component({
   selector: 'app-type-seance-list',
@@ -16,6 +18,10 @@ export class TypeSeanceListComponent implements OnInit {
   private typeSeanceService = inject(TypeSeanceService);
   private dialog = inject(DialogService);
   typeSeances = signal<TypeSeance[]>([]);
+
+  protected readonly ageAffichage = ageAffichage;
+  protected readonly ageEnMois = ageEnMois;
+  protected readonly dureeAffichage = dureeAffichage;
 
   ngOnInit() {
     this.typeSeanceService.getAll().subscribe({

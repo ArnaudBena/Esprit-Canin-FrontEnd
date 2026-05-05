@@ -27,22 +27,24 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
       <div class="flex flex-col gap-1.5">
         <label for="ageMin" class="text-sm font-medium text-texte">
-          Âge min <span class="text-muted font-normal">(optionnel)</span>
+          Âge min <span class="text-muted font-normal">(en mois, optionnel)</span>
         </label>
-        <input id="ageMin" type="number" formControlName="ageMinimum" min="0" max="30" placeholder="0"
+        <input id="ageMin" type="number" formControlName="ageMinimumMois" min="0" max="360" placeholder="0"
                class="rounded-md border border-bordure bg-blanc px-3 py-2 text-sm text-texte outline-none transition focus:border-primaire" />
-        @if (form.controls.ageMinimum.invalid && form.controls.ageMinimum.touched) {
-          <p class="text-sm font-bold text-alerte">L'âge minimum doit être entre 0 et 30.</p>
+        <p class="text-xs text-muted">Ex : 6 = 6 mois · 12 = 1 an · 24 = 2 ans</p>
+        @if (form.controls.ageMinimumMois.invalid && form.controls.ageMinimumMois.touched) {
+          <p class="text-sm font-bold text-alerte">L'âge minimum doit être entre 0 et 360 mois.</p>
         }
       </div>
       <div class="flex flex-col gap-1.5">
         <label for="ageMax" class="text-sm font-medium text-texte">
-          Âge max <span class="text-muted font-normal">(optionnel)</span>
+          Âge max <span class="text-muted font-normal">(en mois, optionnel)</span>
         </label>
-        <input id="ageMax" type="number" formControlName="ageMaximum" min="0" max="30" placeholder="30"
+        <input id="ageMax" type="number" formControlName="ageMaximumMois" min="0" max="360" placeholder="360"
                class="rounded-md border border-bordure bg-blanc px-3 py-2 text-sm text-texte outline-none transition focus:border-primaire" />
-        @if (form.controls.ageMaximum.invalid && form.controls.ageMaximum.touched) {
-          <p class="text-sm font-bold text-alerte">L'âge maximum doit être entre 0 et 30.</p>
+        <p class="text-xs text-muted">Ex : 6 = 6 mois · 12 = 1 an · 360 = 30 ans</p>
+        @if (form.controls.ageMaximumMois.invalid && form.controls.ageMaximumMois.touched) {
+          <p class="text-sm font-bold text-alerte">L'âge maximum doit être entre 0 et 360 mois.</p>
         }
       </div>
     </div>
