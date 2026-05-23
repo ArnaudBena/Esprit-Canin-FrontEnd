@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UtilisateurService } from '../../../services/utilisateur.service';
@@ -20,10 +20,10 @@ type PeriodeFiltre = '' | 'jour' | 'semaine'| 'mois'| 'futures'| 'passees'
   templateUrl: './seance-list.component.html',
   styleUrl: './seance-list.component.css',
 })
-export class SeanceListComponent {
+export class SeanceListComponent implements OnInit {
   private seanceService = inject(SeanceService);
   private utilisateurService = inject(UtilisateurService);
-  private dialog = inject(DialogService)
+  private dialog = inject(DialogService);
 
   seances = signal<Seance[]>([]);
   coachs = signal<Utilisateur[]>([]);
@@ -31,7 +31,7 @@ export class SeanceListComponent {
 
   recherche = signal('');
   statutFiltre = signal<string>(''); // Active , annulee , complet ou termine
-  pertiodeFiltre = signal<PeriodeFiltre>(''); // string union plus leger qu'un enum car utilisé uniquement dans ce composant
+  periodeFiltre = signal<PeriodeFiltre>(''); // string union plus leger qu'un enum car utilisé uniquement dans ce composant
   coachFiltre = signal<string>(''); // string vide ou id du coach
   membreFiltre = signal<string>(''); // string vide ou id du membre
 
@@ -40,10 +40,10 @@ export class SeanceListComponent {
 
   seancesFiltrees = computed(() => {
     const saisie = this.recherche().trim().toLowerCase();
-    const statut = this.statutFiltre;
-    const periode = this.pertiodeFiltre;
-    const coachId = this.coachFiltre;
-    const membreId = this.membreFiltre;
+    const statut = this.statutFiltre();
+    const periode = this.periodeFiltre();
+    const coachId = this.coachFiltre();
+    const membreId = this.membreFiltre();
     const now = new Date();
     now.setHours(0, 0, 0, 0)
 
@@ -114,7 +114,7 @@ export class SeanceListComponent {
 
   onAnnuler(seance: Seance): void {
     this.dialog.confirm({
-      titre: `Annuler la seance ${seance.typeSeance} du ${seance.date} ?`,
+      titre: `Annuler la seance ${seance.typeSeance.libelle} du ${seance.date} ?`,
       message: 'Cette action passera la séance en statut "Annulée". Les inscrits devront être prevenus séparement.', // TODO Feature de mail ou message pour prevenir d'une annulation de séance a tout les utilisateurs incrits
       confirmationLabel: 'Annuler la séance',
       danger: true,
@@ -134,9 +134,9 @@ export class SeanceListComponent {
 
   onDelete(seance: Seance): void {
     this.dialog.confirm({
-      titre: `Supprimer la seance ${seance.typeSeance} du ${seance.date} ?`,
+      titre: `Supprimer la seance ${seance.typeSeance.libelle} du ${seance.date} ?`,
       message: "Cette action est définitive. Si la séance a des inscriptions, vous devez d'abord l'annuler et desinscrire les chiens.",
-      confirmationLabel: 'Supprimer définitivement,
+      confirmationLabel: 'Supprimer définitivement',
       danger: true,
     }).subscribe(confirmed => {
       if (!confirmed) return;
