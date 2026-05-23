@@ -15,6 +15,7 @@ import { UtilisateurDetailComponent } from './pages/admin/utilisateur-detail/uti
 import { UtilisateurListComponent } from './pages/admin/utilisateur-list/utilisateur-list.component';
 import { ChienListComponent } from './pages/admin/chien-list/chien-list.component';
 import { SeanceListComponent } from './pages/admin/seance-list/seance-list.component';
+import { SeanceCreateComponent } from './pages/admin/seance-create/seance-create.component';
 
 
 
@@ -39,6 +40,7 @@ export const routes: Routes = [
       { path: 'utilisateurs/:id/password', component: UtilisateurPasswordComponent },
       { path: 'chiens', component: ChienListComponent },
       { path: 'seances', component: SeanceListComponent },
+      { path: 'seances/new', component: SeanceCreateComponent },
       // Plus tard #TODO : seances...
     ]
   },
