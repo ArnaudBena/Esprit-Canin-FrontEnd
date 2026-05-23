@@ -8,6 +8,7 @@ import { TypeSeance } from '../../../models/type-seance.model';
 import { Utilisateur } from '../../../models/utilisateur.model';
 import { Seance } from '../../../models/seance.model';
 import { StatutSeance } from '../../../models/statut-seance.model';
+import { timeRangeValidator } from '../../../validators/time-range.validator';
 
 @Component({
   selector: 'app-seance-create',
@@ -28,9 +29,12 @@ export class SeanceCreateComponent implements OnInit {
   typeSeances: TypeSeance[] = [];
   coachs: Utilisateur[] = [];
 
+  // Date du jour au format yyyy-MM-dd pour borner l'input date (pas de séance dans le passé)
+  protected today = new Date().toISOString().split('T')[0];
+
   form = this.formBuilder.nonNullable.group({
     date: ['', [Validators.required]],
-    heureDebut: ['', [Validators.required]],
+    heureDebut: ['', [Validators.required, timeRangeValidator('09:00', '19:00')]],
     dureeMinutes: [null as number | null, [Validators.required, Validators.min(1)]],
     typeSeanceId: [null as number | null, [Validators.required]],
     coachId: [null as number | null, [Validators.required]],

@@ -10,7 +10,7 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
       <div class="flex flex-col gap-1.5">
         <label for="date" class="text-sm font-medium text-texte">Date</label>
-        <input id="date" type="date" formControlName="date"
+        <input id="date" type="date" formControlName="date" [min]="today"
                class="rounded-md border border-bordure bg-blanc px-3 py-2 text-sm text-texte outline-none transition focus:border-primaire" />
         @if (form.controls.date.invalid && form.controls.date.touched) {
           <p class="text-sm font-bold text-alerte">La date est obligatoire.</p>
@@ -18,10 +18,17 @@
       </div>
       <div class="flex flex-col gap-1.5">
         <label for="heureDebut" class="text-sm font-medium text-texte">Heure de début</label>
-        <input id="heureDebut" type="time" formControlName="heureDebut"
+        <input id="heureDebut" type="time" formControlName="heureDebut" min="09:00" max="19:00"
                class="rounded-md border border-bordure bg-blanc px-3 py-2 text-sm text-texte outline-none transition focus:border-primaire" />
+        <p class="text-xs text-muted">Horaires du club : 09h00 – 19h00</p>
         @if (form.controls.heureDebut.invalid && form.controls.heureDebut.touched) {
-          <p class="text-sm font-bold text-alerte">L'heure de début est obligatoire.</p>
+          <p class="text-sm font-bold text-alerte">
+            @if (form.controls.heureDebut.errors?.['required']) {
+              L'heure de début est obligatoire.
+            } @else if (form.controls.heureDebut.errors?.['timeOutOfRange']) {
+              L'heure doit être comprise entre 09h00 et 19h00.
+            }
+          </p>
         }
       </div>
     </div>

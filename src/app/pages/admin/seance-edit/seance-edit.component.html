@@ -1,0 +1,179 @@
+<div class="mb-6 lg:mb-8 flex items-center justify-between gap-3">
+  <h1 class="text-xl lg:text-2xl font-semibold text-texte">Modifier la séance</h1>
+  <a routerLink="/admin/seances"
+     class="hidden sm:inline-block rounded-md border border-bordure bg-blanc px-4 py-2 text-sm font-medium text-texte transition hover:bg-fond">
+    Retour
+  </a>
+</div>
+@let s = seance();
+@if (!s) {
+  <div class="max-w-2xl rounded-xl border border-bordure bg-blanc p-6">
+    <p class="text-sm text-muted">Chargement...</p>
+  </div>
+} @else {
+  <div class="max-w-2xl flex flex-col gap-6">
+    <!-- Badge statut courant -->
+    <div class="rounded-xl border border-bordure bg-blanc p-4 flex items-center justify-between gap-3">
+      <div>
+        <p class="text-xs font-semibold uppercase tracking-wider text-muted mb-1">Statut actuel</p>
+        <div class="flex flex-wrap gap-1.5">
+          @if (s.statut === StatutSeance.ANNULEE) {
+            <span class="inline-block rounded-full bg-alerte/15 px-2.5 py-1 text-xs font-bold text-alerte">
+              Annulée
+            </span>
+          } @else {
+            <span class="inline-block rounded-full bg-secondaire/15 px-2.5 py-1 text-xs font-semibold text-secondaire">
+              Active
+            </span>
+            @if (s.complet) {
+              <span class="inline-block rounded-full bg-accent/20 px-2.5 py-1 text-xs font-semibold text-accent-text">
+                Complète
+              </span>
+            }
+            @if (s.terminee) {
+              <span class="inline-block rounded-full bg-fond px-2.5 py-1 text-xs font-semibold text-muted">
+                Terminée
+              </span>
+            }
+          }
+        </div>
+      </div>
+      @if (s.statut === StatutSeance.ACTIVE && !s.terminee) {
+        <button type="button"
+                (click)="onAnnuler()"
+                class="rounded-md border border-alerte/30 bg-blanc px-3 py-1.5 text-sm font-bold text-alerte transition hover:bg-alerte/10">
+          Annuler la séance
+        </button>
+      }
+    </div>
+    <!-- Formulaire d'édition -->
+    <div class="rounded-xl border border-bordure bg-blanc p-4 lg:p-6">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-5">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="flex flex-col gap-1.5">
+            <label for="date" class="text-sm font-medium text-texte">Date</label>
+            <input id="date" type="date" formControlName="date"
+                   class="rounded-md border border-bordure bg-blanc px-3 py-2 text-sm text-texte outline-none transition focus:border-primaire" />
+            @if (form.controls.date.invalid && form.controls.date.touched) {
+              <p class="text-sm font-bold text-alerte">La date est obligatoire.</p>
+            }
+          </div>
+          <div class="flex flex-col gap-1.5">
+            <label for="heureDebut" class="text-sm font-medium text-texte">Heure de début</label>
+            <input id="heureDebut" type="time" formControlName="heureDebut" min="09:00" max="19:00"
+                   class="rounded-md border border-bordure bg-blanc px-3 py-2 text-sm text-texte outline-none transition focus:border-primaire" />
+            <p class="text-xs text-muted">Horaires du club : 09h00 – 19h00</p>
+            @if (form.controls.heureDebut.invalid && form.controls.heureDebut.touched) {
+              <p class="text-sm font-bold text-alerte">
+                @if (form.controls.heureDebut.errors?.['required']) {
+                  L'heure de début est obligatoire.
+                } @else if (form.controls.heureDebut.errors?.['timeOutOfRange']) {
+                  L'heure doit être comprise entre 09h00 et 19h00.
+                }
+              </p>
+            }
+          </div>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <label for="typeSeanceId" class="text-sm font-medium text-texte">Type de séance</label>
+          <div class="relative">
+            <select id="typeSeanceId" formControlName="typeSeanceId"
+                    class="w-full appearance-none rounded-md border border-bordure bg-blanc pl-3 pr-9 py-2 text-sm text-texte outline-none transition focus:border-primaire">
+              <option [ngValue]="null" disabled>-- Sélectionner un type --</option>
+              @for (type of typeSeances; track type.id) {
+                <option [ngValue]="type.id">
+                  {{ type.libelle }} ({{ type.dureeMinimale }}–{{ type.dureeMaximale }} min)
+                </option>
+              }
+            </select>
+            <svg class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted"
+                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.06l3.71-3.83a.75.75 0 1 1 1.08 1.04l-4.25 4.39a.75.75 0 0 1-1.08 0L5.21 8.27a.75.75 0 0 1 .02-1.06z" clip-rule="evenodd" />
+            </svg>
+          </div>
+          @if (form.controls.typeSeanceId.invalid && form.controls.typeSeanceId.touched) {
+            <p class="text-sm font-bold text-alerte">Le type de séance est obligatoire.</p>
+          }
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <label for="dureeMinutes" class="text-sm font-medium text-texte">
+            Durée <span class="text-muted font-normal">(en minutes)</span>
+          </label>
+          <input id="dureeMinutes" type="number" formControlName="dureeMinutes" min="1" placeholder="60"
+                 class="rounded-md border border-bordure bg-blanc px-3 py-2 text-sm text-texte outline-none transition focus:border-primaire" />
+          <p class="text-xs text-muted">Doit être comprise dans les bornes du type de séance choisi.</p>
+          @if (form.controls.dureeMinutes.invalid && form.controls.dureeMinutes.touched) {
+            <p class="text-sm font-bold text-alerte">
+              @if (form.controls.dureeMinutes.errors?.['required']) { La durée est obligatoire. }
+              @else { La durée doit être positive. }
+            </p>
+          }
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <label for="coachId" class="text-sm font-medium text-texte">Coach</label>
+          <div class="relative">
+            <select id="coachId" formControlName="coachId"
+                    class="w-full appearance-none rounded-md border border-bordure bg-blanc pl-3 pr-9 py-2 text-sm text-texte outline-none transition focus:border-primaire">
+              <option [ngValue]="null" disabled>-- Sélectionner un coach --</option>
+              @for (coach of coachs; track coach.id) {
+                <option [ngValue]="coach.id">{{ coach.prenom }} {{ coach.nom }}</option>
+              }
+            </select>
+            <svg class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted"
+                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.06l3.71-3.83a.75.75 0 1 1 1.08 1.04l-4.25 4.39a.75.75 0 0 1-1.08 0L5.21 8.27a.75.75 0 0 1 .02-1.06z" clip-rule="evenodd" />
+            </svg>
+          </div>
+          @if (form.controls.coachId.invalid && form.controls.coachId.touched) {
+            <p class="text-sm font-bold text-alerte">Le coach est obligatoire.</p>
+          }
+        </div>
+        <div class="flex flex-col-reverse sm:flex-row sm:justify-end gap-2 pt-2">
+          <a routerLink="/admin/seances"
+             class="text-center rounded-md border border-bordure bg-blanc px-4 py-2 text-sm font-medium text-texte transition hover:bg-fond">
+            Annuler
+          </a>
+          <button type="submit" [disabled]="form.invalid"
+                  class="rounded-md bg-primaire px-4 py-2 text-sm font-medium text-blanc transition hover:bg-primaire/90 disabled:cursor-not-allowed disabled:opacity-50">
+            Enregistrer
+          </button>
+        </div>
+      </form>
+    </div>
+    <!-- Liste des inscrits (read-only) -->
+    <div class="rounded-xl border border-bordure bg-blanc p-4 lg:p-6">
+      <h2 class="text-base lg:text-lg font-bold text-texte mb-1">
+        Inscrits
+        <span class="text-sm font-normal text-muted">
+          ({{ s.inscriptions?.length ?? 0 }} / {{ s.typeSeance.participantsMaximum }})
+        </span>
+      </h2>
+      <p class="text-xs text-muted italic mb-4">
+        Lecture seule — la gestion des inscriptions sera ajoutée plus tard.
+      </p>
+      @if (!s.inscriptions || s.inscriptions.length === 0) {
+        <p class="text-sm text-muted">Aucun chien inscrit pour le moment.</p>
+      } @else {
+        <ul class="flex flex-col gap-2">
+          @for (inscription of s.inscriptions; track inscription.chien.id) {
+            <li class="flex items-center justify-between gap-3 rounded-lg border border-bordure bg-fond p-3">
+              <div class="min-w-0 flex-1">
+                <p class="text-sm font-semibold text-texte truncate">
+                  {{ inscription.chien.nom }}
+                </p>
+                @if (inscription.chien.utilisateur; as proprio) {
+                  <p class="text-xs text-muted">
+                    Propriétaire : {{ proprio.prenom }} {{ proprio.nom }}
+                  </p>
+                }
+              </div>
+              <span class="flex-shrink-0 text-xs text-muted">
+                Inscrit le {{ inscription.dateInscription | date:'dd/MM/yyyy' }}
+              </span>
+            </li>
+          }
+        </ul>
+      }
+    </div>
+  </div>
+}
