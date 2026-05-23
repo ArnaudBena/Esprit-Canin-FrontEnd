@@ -14,6 +14,7 @@ import { UtilisateurEditRoleComponent } from './pages/admin/utilisateur-edit-rol
 import { UtilisateurDetailComponent } from './pages/admin/utilisateur-detail/utilisateur-detail.component';
 import { UtilisateurListComponent } from './pages/admin/utilisateur-list/utilisateur-list.component';
 import { ChienListComponent } from './pages/admin/chien-list/chien-list.component';
+import { SeanceListComponent } from './pages/admin/seance-list/seance-list.component';
 
 
 
@@ -37,6 +38,7 @@ export const routes: Routes = [
       { path: 'utilisateurs/:id/edit-role', component: UtilisateurEditRoleComponent },
       { path: 'utilisateurs/:id/password', component: UtilisateurPasswordComponent },
       { path: 'chiens', component: ChienListComponent },
+      { path: 'seances', component: SeanceListComponent },
       // Plus tard #TODO : seances...
     ]
   },
