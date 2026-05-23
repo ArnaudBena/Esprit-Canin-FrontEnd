@@ -1,0 +1,284 @@
+<div class="mb-6 lg:mb-8 flex items-center justify-between gap-3">
+  <div>
+    <h1 class="text-xl lg:text-2xl font-semibold text-texte">Séances</h1>
+    <p class="text-sm text-muted mt-1">
+      Planning, création, annulation et suppression des séances.
+    </p>
+  </div>
+  <a routerLink="/admin/seances/new"
+     class="flex-shrink-0 rounded-md bg-accent px-3 lg:px-4 py-2 text-xs lg:text-sm font-semibold text-accent-text transition hover:bg-accent/90">
+    + Créer une séance
+  </a>
+</div>
+<!-- Barre de filtres -->
+<div class="mb-6 rounded-xl border border-bordure bg-blanc p-4 flex flex-col gap-3">
+  <!-- Recherche libre -->
+  <div>
+    <label for="recherche" class="block text-xs font-semibold uppercase tracking-wider text-muted mb-1">
+      Rechercher
+    </label>
+    <input
+      id="recherche"
+      type="text"
+      [ngModel]="recherche()"
+      (ngModelChange)="recherche.set($event)"
+      placeholder="Type de séance, coach, chien, propriétaire..."
+      class="w-full rounded-md border border-bordure bg-blanc px-3 py-2 text-sm text-texte placeholder:text-placeholder focus:border-accent focus:outline-none transition" />
+  </div>
+  <!-- Dropdowns -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+    <!-- Statut -->
+    <div>
+      <label for="statut-filtre" class="block text-xs font-semibold uppercase tracking-wider text-muted mb-1">
+        Statut
+      </label>
+      <div class="relative">
+        <select
+          id="statut-filtre"
+          [ngModel]="statutFiltre()"
+          (ngModelChange)="statutFiltre.set($event)"
+          class="w-full appearance-none rounded-md border border-bordure bg-blanc pl-3 pr-9 py-2 text-sm text-texte focus:border-accent focus:outline-none transition">
+          <option value="">Tous les statuts</option>
+          <option value="ACTIVE">Active</option>
+          <option value="ANNULEE">Annulée</option>
+          <option value="COMPLET">Complète</option>
+          <option value="TERMINEE">Terminée</option>
+        </select>
+        <svg class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted"
+             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+          <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.06l3.71-3.83a.75.75 0 1 1 1.08 1.04l-4.25 4.39a.75.75 0 0 1-1.08 0L5.21 8.27a.75.75 0 0 1 .02-1.06z" clip-rule="evenodd" />
+        </svg>
+      </div>
+    </div>
+    <!-- Période -->
+    <div>
+      <label for="periode-filtre" class="block text-xs font-semibold uppercase tracking-wider text-muted mb-1">
+        Période
+      </label>
+      <div class="relative">
+        <select
+          id="periode-filtre"
+          [ngModel]="periodeFiltre()"
+          (ngModelChange)="periodeFiltre.set($event)"
+          class="w-full appearance-none rounded-md border border-bordure bg-blanc pl-3 pr-9 py-2 text-sm text-texte focus:border-accent focus:outline-none transition">
+          <option value="">Toutes</option>
+          <option value="jour">Aujourd'hui</option>
+          <option value="semaine">Cette semaine</option>
+          <option value="mois">Ce mois</option>
+          <option value="futures">À venir</option>
+          <option value="passees">Passées</option>
+        </select>
+        <svg class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted"
+             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+          <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.06l3.71-3.83a.75.75 0 1 1 1.08 1.04l-4.25 4.39a.75.75 0 0 1-1.08 0L5.21 8.27a.75.75 0 0 1 .02-1.06z" clip-rule="evenodd" />
+        </svg>
+      </div>
+    </div>
+    <!-- Coach -->
+    <div>
+      <label for="coach-filtre" class="block text-xs font-semibold uppercase tracking-wider text-muted mb-1">
+        Coach
+      </label>
+      <div class="relative">
+        <select
+          id="coach-filtre"
+          [ngModel]="coachFiltre()"
+          (ngModelChange)="coachFiltre.set($event)"
+          class="w-full appearance-none rounded-md border border-bordure bg-blanc pl-3 pr-9 py-2 text-sm text-texte focus:border-accent focus:outline-none transition">
+          <option value="">Tous les coachs</option>
+          @for (coach of coachs(); track coach.id) {
+            <option [value]="coach.id">{{ coach.prenom }} {{ coach.nom }}</option>
+          }
+        </select>
+        <svg class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted"
+             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+          <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.06l3.71-3.83a.75.75 0 1 1 1.08 1.04l-4.25 4.39a.75.75 0 0 1-1.08 0L5.21 8.27a.75.75 0 0 1 .02-1.06z" clip-rule="evenodd" />
+        </svg>
+      </div>
+    </div>
+    <!-- Membre -->
+    <div>
+      <label for="membre-filtre" class="block text-xs font-semibold uppercase tracking-wider text-muted mb-1">
+        Membre
+      </label>
+      <div class="relative">
+        <select
+          id="membre-filtre"
+          [ngModel]="membreFiltre()"
+          (ngModelChange)="membreFiltre.set($event)"
+          class="w-full appearance-none rounded-md border border-bordure bg-blanc pl-3 pr-9 py-2 text-sm text-texte focus:border-accent focus:outline-none transition">
+          <option value="">Tous les membres</option>
+          @for (membre of membres(); track membre.id) {
+            <option [value]="membre.id">{{ membre.prenom }} {{ membre.nom }}</option>
+          }
+        </select>
+        <svg class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted"
+             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+          <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.06l3.71-3.83a.75.75 0 1 1 1.08 1.04l-4.25 4.39a.75.75 0 0 1-1.08 0L5.21 8.27a.75.75 0 0 1 .02-1.06z" clip-rule="evenodd" />
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+@if (seancesFiltrees().length === 0) {
+  <div class="overflow-hidden rounded-xl border border-bordure bg-blanc">
+    <p class="p-6 text-sm text-muted">
+      @if (seances().length === 0) {
+        Aucune séance planifiée pour le moment.
+      } @else {
+        Aucune séance ne correspond à vos filtres.
+      }
+    </p>
+  </div>
+} @else {
+  <!-- Desktop : tableau -->
+  <div class="hidden lg:block overflow-hidden rounded-xl border border-bordure bg-blanc">
+    <table class="w-full border-collapse">
+      <thead class="bg-fond">
+      <tr>
+        <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-muted">Date</th>
+        <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-muted">Horaire</th>
+        <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-muted">Type</th>
+        <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-muted">Coach</th>
+        <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-muted">Inscrits</th>
+        <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-muted">Statut</th>
+        <th class="px-5 py-3 text-right text-xs font-semibold uppercase tracking-wider text-muted">Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+        @for (seance of seancesFiltrees(); track seance.id) {
+          <tr class="border-t border-bordure transition hover:bg-fond">
+            <td class="px-5 py-3.5 text-sm text-texte font-medium">
+              {{ seance.date | date:'EEE d MMM yyyy':'':'fr' }}
+            </td>
+            <td class="px-5 py-3.5 text-sm text-muted">
+              {{ seance.heureDebut.substring(0, 5) }}
+              <span class="text-xs text-muted">·</span>
+              <span class="text-xs">{{ dureeAffichage(seance.dureeMinutes) }}</span>
+            </td>
+            <td class="px-5 py-3.5 text-sm text-texte">{{ seance.typeSeance.libelle }}</td>
+            <td class="px-5 py-3.5 text-sm text-texte">
+              {{ seance.coach.prenom }} {{ seance.coach.nom }}
+            </td>
+            <td class="px-5 py-3.5 text-sm text-muted">
+              {{ seance.inscriptions?.length ?? 0 }} / {{ seance.typeSeance.participantsMaximum }}
+            </td>
+            <td class="px-5 py-3.5">
+              <div class="flex flex-wrap gap-1.5">
+                @if (seance.statut === StatutSeance.ANNULEE) {
+                  <span class="inline-block rounded-full bg-alerte/15 px-2.5 py-1 text-xs font-bold text-alerte">
+                    Annulée
+                  </span>
+                } @else {
+                  <span class="inline-block rounded-full bg-secondaire/15 px-2.5 py-1 text-xs font-semibold text-secondaire">
+                    Active
+                  </span>
+                  @if (seance.complet) {
+                    <span class="inline-block rounded-full bg-accent/20 px-2.5 py-1 text-xs font-semibold text-accent-text">
+                      Complète
+                    </span>
+                  }
+                  @if (seance.terminee) {
+                    <span class="inline-block rounded-full bg-fond px-2.5 py-1 text-xs font-semibold text-muted">
+                      Terminée
+                    </span>
+                  }
+                }
+              </div>
+            </td>
+            <td class="px-5 py-3.5">
+              <div class="flex justify-end gap-2">
+                <a [routerLink]="['/admin/seances', seance.id, 'edit']"
+                   class="rounded-md border border-bordure bg-blanc px-3 py-1.5 text-sm font-bold text-texte transition hover:bg-fond">
+                  Modifier
+                </a>
+                @if (seance.statut === StatutSeance.ACTIVE && !seance.terminee) {
+                  <button type="button"
+                          (click)="onAnnuler(seance)"
+                          class="rounded-md border border-bordure bg-blanc px-3 py-1.5 text-sm font-bold text-muted transition hover:bg-fond">
+                    Annuler
+                  </button>
+                }
+                <button type="button"
+                        (click)="onDelete(seance)"
+                        class="rounded-md border border-alerte/30 bg-blanc px-3 py-1.5 text-sm font-bold text-alerte transition hover:bg-alerte/10">
+                  Supprimer
+                </button>
+              </div>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  <!-- Mobile/tablette : cartes -->
+  <div class="lg:hidden flex flex-col gap-3">
+    @for (seance of seancesFiltrees(); track seance.id) {
+      <div class="rounded-xl border border-bordure bg-blanc p-4">
+        <div class="flex items-start justify-between gap-3 mb-3">
+          <div class="min-w-0 flex-1">
+            <p class="text-sm font-semibold text-texte">
+              {{ seance.date | date:'EEE d MMM yyyy':'':'fr' }}
+            </p>
+            <p class="text-xs text-muted mt-0.5">
+              {{ seance.heureDebut.substring(0, 5) }} · {{ dureeAffichage(seance.dureeMinutes) }}
+            </p>
+          </div>
+          <div class="flex flex-col items-end gap-1">
+            @if (seance.statut === StatutSeance.ANNULEE) {
+              <span class="inline-block rounded-full bg-alerte/15 px-2.5 py-1 text-xs font-bold text-alerte">
+                Annulée
+              </span>
+            } @else {
+              <span class="inline-block rounded-full bg-secondaire/15 px-2.5 py-1 text-xs font-semibold text-secondaire">
+                Active
+              </span>
+              @if (seance.complet) {
+                <span class="inline-block rounded-full bg-accent/20 px-2.5 py-1 text-xs font-semibold text-accent-text">
+                  Complète
+                </span>
+              }
+              @if (seance.terminee) {
+                <span class="inline-block rounded-full bg-fond px-2.5 py-1 text-xs font-semibold text-muted">
+                  Terminée
+                </span>
+              }
+            }
+          </div>
+        </div>
+        <div class="flex flex-col gap-1 text-sm text-texte mb-3">
+          <p>
+            <span class="text-muted">Type :</span>
+            <span class="font-medium">{{ seance.typeSeance.libelle }}</span>
+          </p>
+          <p>
+            <span class="text-muted">Coach :</span>
+            {{ seance.coach.prenom }} {{ seance.coach.nom }}
+          </p>
+          <p>
+            <span class="text-muted">Inscrits :</span>
+            {{ seance.inscriptions?.length ?? 0 }} / {{ seance.typeSeance.participantsMaximum }}
+          </p>
+        </div>
+        <div class="flex flex-wrap gap-2 pt-3 border-t border-bordure">
+          <a [routerLink]="['/admin/seances', seance.id, 'edit']"
+             class="flex-1 text-center rounded-md border border-bordure bg-blanc px-3 py-2 text-sm font-bold text-texte transition hover:bg-fond">
+            Modifier
+          </a>
+          @if (seance.statut === StatutSeance.ACTIVE && !seance.terminee) {
+            <button type="button"
+                    (click)="onAnnuler(seance)"
+                    class="flex-1 rounded-md border border-bordure bg-blanc px-3 py-2 text-sm font-bold text-muted transition hover:bg-fond">
+              Annuler
+            </button>
+          }
+          <button type="button"
+                  (click)="onDelete(seance)"
+                  class="flex-1 rounded-md border border-alerte/30 bg-blanc px-3 py-2 text-sm font-bold text-alerte transition hover:bg-alerte/10">
+            Supprimer
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+}

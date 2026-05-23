@@ -8,6 +8,7 @@ import { Seance } from '../../../models/seance.model';
 import { Utilisateur } from '../../../models/utilisateur.model';
 import { StatutSeance } from '../../../models/statut-seance.model';
 import { dureeAffichage } from '../../../utils/duree.utils';
+import { RouterLink } from '@angular/router';
 
 type PeriodeFiltre = '' | 'jour' | 'semaine'| 'mois'| 'futures'| 'passees'
 
@@ -15,7 +16,8 @@ type PeriodeFiltre = '' | 'jour' | 'semaine'| 'mois'| 'futures'| 'passees'
   selector: 'app-seance-list',
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    RouterLink
   ],
   templateUrl: './seance-list.component.html',
   styleUrl: './seance-list.component.css',
