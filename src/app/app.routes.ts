@@ -17,9 +17,7 @@ import { ChienListComponent } from './pages/admin/chien-list/chien-list.componen
 import { SeanceListComponent } from './pages/admin/seance-list/seance-list.component';
 import { SeanceCreateComponent } from './pages/admin/seance-create/seance-create.component';
 import { SeanceEditComponent } from './pages/admin/seance-edit/seance-edit.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
-
-
+import { DashboardComponent } from './pages/admin/dashboard/dashboard.component';
 
 export const routes: Routes = [
   {
