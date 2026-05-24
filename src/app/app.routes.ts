@@ -17,6 +17,7 @@ import { ChienListComponent } from './pages/admin/chien-list/chien-list.componen
 import { SeanceListComponent } from './pages/admin/seance-list/seance-list.component';
 import { SeanceCreateComponent } from './pages/admin/seance-create/seance-create.component';
 import { SeanceEditComponent } from './pages/admin/seance-edit/seance-edit.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 
 
@@ -26,6 +27,7 @@ export const routes: Routes = [
     component: AdminLayoutComponent,
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: 'dashboard', component: DashboardComponent },
       { path: 'races', component: RaceListComponent },
       { path: 'races/new', component: RaceCreateComponent },
       { path: 'races/:id/edit', component: RaceEditComponent },
