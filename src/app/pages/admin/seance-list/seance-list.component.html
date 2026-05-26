@@ -10,39 +10,24 @@
     + Créer une séance
   </a>
 </div>
-<!-- Barre de filtres -->
-<div class="mb-6 rounded-xl border border-bordure bg-blanc p-4 flex flex-col gap-3">
-  <!-- Recherche libre -->
-  <div>
-    <label for="recherche" class="block text-xs font-semibold uppercase tracking-wider text-muted mb-1">
-      Rechercher
-    </label>
-    <input
-      id="recherche"
-      type="text"
-      [ngModel]="recherche()"
-      (ngModelChange)="recherche.set($event)"
-      placeholder="Type de séance, coach, chien, propriétaire..."
-      class="w-full rounded-md border border-bordure bg-blanc px-3 py-2 text-sm text-texte placeholder:text-placeholder focus:border-accent focus:outline-none transition" />
-  </div>
-  <!-- Dropdowns -->
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-    <!-- Statut -->
+<!-- Barre de filtres alignée sur la maquette ecran-15 : Type / Date / Coach -->
+<div class="mb-6 rounded-xl border border-bordure bg-blanc p-4">
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+    <!-- Type de séance -->
     <div>
-      <label for="statut-filtre" class="block text-xs font-semibold uppercase tracking-wider text-muted mb-1">
-        Statut
+      <label for="type-filtre" class="block text-xs font-semibold uppercase tracking-wider text-muted mb-1">
+        Type de séance
       </label>
       <div class="relative">
         <select
-          id="statut-filtre"
-          [ngModel]="statutFiltre()"
-          (ngModelChange)="statutFiltre.set($event)"
+          id="type-filtre"
+          [ngModel]="typeSeanceFiltre()"
+          (ngModelChange)="typeSeanceFiltre.set($event); applyFilters()"
           class="w-full appearance-none rounded-md border border-bordure bg-blanc pl-3 pr-9 py-2 text-sm text-texte focus:border-accent focus:outline-none transition">
-          <option value="">Tous les statuts</option>
-          <option value="ACTIVE">Active</option>
-          <option value="ANNULEE">Annulée</option>
-          <option value="COMPLET">Complète</option>
-          <option value="TERMINEE">Terminée</option>
+          <option value="">Tous les types</option>
+          @for (type of typeSeances(); track type.id) {
+            <option [value]="type.id">{{ type.libelle }}</option>
+          }
         </select>
         <svg class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted"
              xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -50,29 +35,17 @@
         </svg>
       </div>
     </div>
-    <!-- Période -->
+    <!-- Date -->
     <div>
-      <label for="periode-filtre" class="block text-xs font-semibold uppercase tracking-wider text-muted mb-1">
-        Période
+      <label for="date-filtre" class="block text-xs font-semibold uppercase tracking-wider text-muted mb-1">
+        Date
       </label>
-      <div class="relative">
-        <select
-          id="periode-filtre"
-          [ngModel]="periodeFiltre()"
-          (ngModelChange)="periodeFiltre.set($event)"
-          class="w-full appearance-none rounded-md border border-bordure bg-blanc pl-3 pr-9 py-2 text-sm text-texte focus:border-accent focus:outline-none transition">
-          <option value="">Toutes</option>
-          <option value="jour">Aujourd'hui</option>
-          <option value="semaine">Cette semaine</option>
-          <option value="mois">Ce mois</option>
-          <option value="futures">À venir</option>
-          <option value="passees">Passées</option>
-        </select>
-        <svg class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted"
-             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-          <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.06l3.71-3.83a.75.75 0 1 1 1.08 1.04l-4.25 4.39a.75.75 0 0 1-1.08 0L5.21 8.27a.75.75 0 0 1 .02-1.06z" clip-rule="evenodd" />
-        </svg>
-      </div>
+      <input
+        id="date-filtre"
+        type="date"
+        [ngModel]="dateFiltre()"
+        (ngModelChange)="dateFiltre.set($event); applyFilters()"
+        class="w-full rounded-md border border-bordure bg-blanc px-3 py-2 text-sm text-texte focus:border-accent focus:outline-none transition" />
     </div>
     <!-- Coach -->
     <div>
@@ -83,7 +56,7 @@
         <select
           id="coach-filtre"
           [ngModel]="coachFiltre()"
-          (ngModelChange)="coachFiltre.set($event)"
+          (ngModelChange)="coachFiltre.set($event); applyFilters()"
           class="w-full appearance-none rounded-md border border-bordure bg-blanc pl-3 pr-9 py-2 text-sm text-texte focus:border-accent focus:outline-none transition">
           <option value="">Tous les coachs</option>
           @for (coach of coachs(); track coach.id) {
@@ -96,38 +69,12 @@
         </svg>
       </div>
     </div>
-    <!-- Membre -->
-    <div>
-      <label for="membre-filtre" class="block text-xs font-semibold uppercase tracking-wider text-muted mb-1">
-        Membre
-      </label>
-      <div class="relative">
-        <select
-          id="membre-filtre"
-          [ngModel]="membreFiltre()"
-          (ngModelChange)="membreFiltre.set($event)"
-          class="w-full appearance-none rounded-md border border-bordure bg-blanc pl-3 pr-9 py-2 text-sm text-texte focus:border-accent focus:outline-none transition">
-          <option value="">Tous les membres</option>
-          @for (membre of membres(); track membre.id) {
-            <option [value]="membre.id">{{ membre.prenom }} {{ membre.nom }}</option>
-          }
-        </select>
-        <svg class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted"
-             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-          <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.06l3.71-3.83a.75.75 0 1 1 1.08 1.04l-4.25 4.39a.75.75 0 0 1-1.08 0L5.21 8.27a.75.75 0 0 1 .02-1.06z" clip-rule="evenodd" />
-        </svg>
-      </div>
-    </div>
   </div>
 </div>
-@if (seancesFiltrees().length === 0) {
+@if (seances().length === 0) {
   <div class="overflow-hidden rounded-xl border border-bordure bg-blanc">
     <p class="p-6 text-sm text-muted">
-      @if (seances().length === 0) {
-        Aucune séance planifiée pour le moment.
-      } @else {
-        Aucune séance ne correspond à vos filtres.
-      }
+      Aucune séance ne correspond à vos critères.
     </p>
   </div>
 } @else {
@@ -146,7 +93,7 @@
       </tr>
       </thead>
       <tbody>
-        @for (seance of seancesFiltrees(); track seance.id) {
+        @for (seance of seances(); track seance.id) {
           <tr class="border-t border-bordure transition hover:bg-fond">
             <td class="px-5 py-3.5 text-sm text-texte font-medium">
               {{ seance.date | date:'EEE d MMM yyyy':'':'fr' }}
@@ -213,7 +160,7 @@
   </div>
   <!-- Mobile/tablette : cartes -->
   <div class="lg:hidden flex flex-col gap-3">
-    @for (seance of seancesFiltrees(); track seance.id) {
+    @for (seance of seances(); track seance.id) {
       <div class="rounded-xl border border-bordure bg-blanc p-4">
         <div class="flex items-start justify-between gap-3 mb-3">
           <div class="min-w-0 flex-1">
