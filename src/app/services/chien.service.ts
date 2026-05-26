@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { Chien } from '../models/chien.model';
@@ -13,6 +13,20 @@ export class ChienService {
 
   getAll(): Observable<Chien[]> {
     return this.http.get<Chien[]>(`${this.apiUrl}/list`);
+  }
+
+  /**
+   * Recherche serveur avec filtres optionnels (recherche libre + sexe).
+   * Le back renvoie la liste déjà triée par nom asc.
+   */
+  search(filtres: {
+    recherche?: string;
+    sexe?: string;  // 'MALE' ou 'FEMELLE'
+  }): Observable<Chien[]> {
+    let params = new HttpParams();
+    if (filtres.recherche) params = params.set('recherche', filtres.recherche);
+    if (filtres.sexe) params = params.set('sexe', filtres.sexe);
+    return this.http.get<Chien[]>(`${this.apiUrl}/search`, { params });
   }
 
   getById(id: number): Observable<Chien> {

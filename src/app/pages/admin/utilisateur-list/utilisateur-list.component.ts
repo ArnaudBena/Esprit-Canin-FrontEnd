@@ -1,4 +1,4 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -25,31 +25,29 @@ export class UtilisateurListComponent implements OnInit {
 
   utilisateurs = signal<Utilisateur[]>([]);
   roles = signal<Role[]>([]);
+
   recherche = signal('');
-  roleFiltre = signal<string>('');
+  roleFiltre = signal<string>('');  // '' ou id du rôle
 
   protected readonly ageAffichage = ageAffichage;
   protected readonly ageEnMois = ageEnMois;
 
-  /** Liste filtrée par recherche (nom / prénom / email) et par rôle sélectionné. */
-  utilisateursFiltres = computed(() => {
-    const termeRecherche = this.recherche().trim().toLowerCase();
-    const role = this.roleFiltre();
-    return this.utilisateurs().filter(utilisateur => {
-      const matchRole = !role || utilisateur.role.nom === role;
-      const matchTermeRecherche = !termeRecherche
-        || utilisateur.nom.toLowerCase().includes(termeRecherche)
-        || utilisateur.prenom.toLowerCase().includes(termeRecherche)
-        || utilisateur.email.toLowerCase().includes(termeRecherche);
-      return matchRole && matchTermeRecherche;
-    });
-  });
-
   ngOnInit(): void {
-    this.utilisateurService.getAll().subscribe(
-      users => this.utilisateurs.set(users));
-    this.roleService.getAll().subscribe(
-      roles => this.roles.set(roles));
+    this.roleService.getAll().subscribe(roles => this.roles.set(roles));
+    this.applyFilters();
+  }
+
+  /**
+   * Appelle le back avec les filtres courants. Appelé à chaque changement de filtre.
+   */
+  applyFilters(): void {
+    this.utilisateurService.search({
+      recherche: this.recherche() || undefined,
+      roleId: this.roleFiltre() || undefined,
+    }).subscribe({
+      next: (data) => this.utilisateurs.set(data),
+      error: (err) => console.error('Erreur de recherche utilisateurs', err),
+    });
   }
 
   /** Initiales pour l'avatar (ex: "Arnaud Benacquista" → "AB"). */

@@ -11,7 +11,7 @@
       id="recherche"
       type="text"
       [ngModel]="recherche()"
-      (ngModelChange)="recherche.set($event)"
+      (ngModelChange)="recherche.set($event); applyFilters()"
       placeholder="Nom, prénom, email..."
       class="w-full rounded-md border border-bordure bg-blanc px-3 py-2 text-sm text-texte placeholder:text-placeholder focus:border-accent focus:outline-none transition" />
   </div>
@@ -23,11 +23,11 @@
       <select
         id="role-filtre"
         [ngModel]="roleFiltre()"
-        (ngModelChange)="roleFiltre.set($event)"
+        (ngModelChange)="roleFiltre.set($event); applyFilters()"
         class="w-full appearance-none rounded-md border border-bordure bg-blanc pl-3 pr-9 py-2 text-sm text-texte focus:border-accent focus:outline-none transition">
         <option value="">Tous les rôles</option>
         @for (role of roles(); track role.id) {
-          <option [value]="role.nom">{{ role.nom }}</option>
+          <option [value]="role.id">{{ role.nom }}</option>
         }
       </select>
       <svg class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted"
@@ -37,14 +37,10 @@
     </div>
   </div>
 </div>
-@if (utilisateursFiltres().length === 0) {
+@if (utilisateurs().length === 0) {
   <div class="overflow-hidden rounded-xl border border-bordure bg-blanc">
     <p class="p-6 text-sm text-muted">
-      @if (utilisateurs().length === 0) {
-        Aucun utilisateur pour le moment.
-      } @else {
-        Aucun utilisateur ne correspond à votre recherche.
-      }
+      Aucun utilisateur ne correspond à vos critères.
     </p>
   </div>
 } @else {
@@ -62,7 +58,7 @@
       </tr>
       </thead>
       <tbody>
-        @for (user of utilisateursFiltres(); track user.id) {
+        @for (user of utilisateurs(); track user.id) {
           <tr class="border-t border-bordure transition hover:bg-fond">
             <td class="px-5 py-3.5 text-sm text-texte">
               <div class="flex items-center gap-3">
@@ -106,7 +102,7 @@
   </div>
   <!-- Mobile : cartes -->
   <div class="lg:hidden flex flex-col gap-3">
-    @for (user of utilisateursFiltres(); track user.id) {
+    @for (user of utilisateurs(); track user.id) {
       <div class="rounded-xl border border-bordure bg-blanc p-4">
         <div class="flex items-center gap-3 mb-3">
           <div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full text-sm font-bold"

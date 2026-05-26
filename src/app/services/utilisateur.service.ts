@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { Utilisateur } from '../models/utilisateur.model';
@@ -14,6 +14,20 @@ export class UtilisateurService {
 
   getAll(): Observable<Utilisateur[]> {
     return this.http.get<Utilisateur[]>(`${this.apiUrl}/list`);
+  }
+
+  /**
+   * Recherche serveur avec filtres optionnels (recherche libre + rôle).
+   * Le back renvoie la liste déjà triée par nom asc + prénom asc.
+   */
+  search(filtres: {
+    recherche?: string;
+    roleId?: string;
+  }): Observable<Utilisateur[]> {
+    let params = new HttpParams();
+    if (filtres.recherche) params = params.set('recherche', filtres.recherche);
+    if (filtres.roleId) params = params.set('roleId', filtres.roleId);
+    return this.http.get<Utilisateur[]>(`${this.apiUrl}/search`, { params });
   }
 
   getById(id: number): Observable<Utilisateur> {

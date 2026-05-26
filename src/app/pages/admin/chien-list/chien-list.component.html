@@ -14,7 +14,7 @@
       id="recherche"
       type="text"
       [ngModel]="recherche()"
-      (ngModelChange)="recherche.set($event)"
+      (ngModelChange)="recherche.set($event); applyFilters()"
       placeholder="Nom du chien, race, propriétaire..."
       class="w-full rounded-md border border-bordure bg-blanc px-3 py-2 text-sm text-texte placeholder:text-placeholder focus:border-accent focus:outline-none transition" />
   </div>
@@ -26,7 +26,7 @@
       <select
         id="sexe-filtre"
         [ngModel]="sexeFiltre()"
-        (ngModelChange)="sexeFiltre.set($event)"
+        (ngModelChange)="sexeFiltre.set($event); applyFilters()"
         class="w-full appearance-none rounded-md border border-bordure bg-blanc pl-3 pr-9 py-2 text-sm text-texte focus:border-accent focus:outline-none transition">
         <option value="">Tous les sexes</option>
         <option [value]="Sexe.MALE">Mâle</option>
@@ -39,14 +39,10 @@
     </div>
   </div>
 </div>
-@if (chiensFiltres().length === 0) {
+@if (chiens().length === 0) {
   <div class="overflow-hidden rounded-xl border border-bordure bg-blanc">
     <p class="p-6 text-sm text-muted">
-      @if (chiens().length === 0) {
-        Aucun chien enregistré pour le moment.
-      } @else {
-        Aucun chien ne correspond à votre recherche.
-      }
+      Aucun chien ne correspond à vos critères.
     </p>
   </div>
 } @else {
@@ -64,7 +60,7 @@
         </tr>
       </thead>
       <tbody>
-        @for (chien of chiensFiltres(); track chien.id) {
+        @for (chien of chiens(); track chien.id) {
           <tr class="border-t border-bordure transition hover:bg-fond">
             <td class="px-5 py-3.5 text-sm text-texte">
               <p class="font-medium">{{ chien.nom }}</p>
@@ -105,7 +101,7 @@
   </div>
   <!-- Mobile/tablette : cartes -->
   <div class="lg:hidden flex flex-col gap-3">
-    @for (chien of chiensFiltres(); track chien.id) {
+    @for (chien of chiens(); track chien.id) {
       <div class="rounded-xl border border-bordure bg-blanc p-4">
         <div class="flex items-start justify-between gap-3 mb-2">
           <div class="min-w-0">

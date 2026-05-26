@@ -1,4 +1,4 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -23,33 +23,29 @@ export class ChienListComponent implements OnInit {
   private dialog = inject(DialogService);
 
   chiens = signal<Chien[]>([]);
+
+  // 2 filtres serveur
   recherche = signal('');
-  sexeFiltre = signal<string>('');
+  sexeFiltre = signal<string>('');  // '' | 'MALE' | 'FEMELLE'
 
   protected readonly Sexe = Sexe;
   protected readonly ageAffichage = ageAffichage;
   protected readonly ageEnMois = ageEnMois;
 
-  // Liste filtrée par recherche (nom du chien, nom/prénom du propriétaire) et par sexe.
-  chiensFiltres = computed(() => {
-    const termeRecherche = this.recherche().trim().toLowerCase();
-    const sexe = this.sexeFiltre();
-    return this.chiens().filter(chien => {
-      const matchSexe = !sexe || chien.sexe === sexe;
-      const proprio = chien.utilisateur;
-      const matchTermeRecherche = !termeRecherche
-        || chien.nom.toLowerCase().includes(termeRecherche)
-        || chien.race.nom.toLowerCase().includes(termeRecherche)
-        || (proprio?.nom.toLowerCase().includes(termeRecherche) ?? false)
-        || (proprio?.prenom.toLowerCase().includes(termeRecherche) ?? false);
-      return matchSexe && matchTermeRecherche;
-    });
-  });
-
   ngOnInit(): void {
-    this.chienService.getAll().subscribe({
-      next: (chiens) => this.chiens.set(chiens),
-      error: (err) => console.error('Erreur de chargement chiens', err),
+    this.applyFilters();
+  }
+
+  /**
+   * Appelle le back avec les filtres courants. Appelé à chaque changement de filtre.
+   */
+  applyFilters(): void {
+    this.chienService.search({
+      recherche: this.recherche() || undefined,
+      sexe: this.sexeFiltre() || undefined,
+    }).subscribe({
+      next: (data) => this.chiens.set(data),
+      error: (err) => console.error('Erreur de recherche chiens', err),
     });
   }
 
@@ -66,7 +62,7 @@ export class ChienListComponent implements OnInit {
         next: () => {
           this.chiens.update(list => list.filter(c => c.id !== chien.id));
         },
-        error:(err) => console.error('Erreur de suppression', err),
+        error: (err) => console.error('Erreur de suppression', err),
       });
     });
   }
