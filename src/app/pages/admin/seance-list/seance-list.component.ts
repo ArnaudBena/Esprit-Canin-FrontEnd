@@ -32,7 +32,7 @@ export class SeanceListComponent implements OnInit {
   typeSeances = signal<TypeSeance[]>([]);
   coachs = signal<Utilisateur[]>([]);
 
-  // 3 filtres alignés sur la maquette ecran-15
+  // 3 filtres
   typeSeanceFiltre = signal<string>('');  // '' ou id du type
   dateFiltre = signal<string>('');         // '' ou yyyy-MM-dd
   coachFiltre = signal<string>('');        // '' ou id du coach
