@@ -20,9 +20,19 @@ import { SeanceEditComponent } from './pages/admin/seance-edit/seance-edit.compo
 import { DashboardComponent } from './pages/admin/dashboard/dashboard.component';
 import { LoginComponent } from './pages/login/login.component';
 import { adminGuard } from './guards/admin.guard';
+import { PublicLayoutComponent } from './layouts/public-layout/public-layout.component';
+import { HomeComponent } from './pages/home/home.component';
 
 export const routes: Routes = [
-  { path: 'login', component: LoginComponent },
+  {
+    path: '',
+    component: PublicLayoutComponent,
+    children: [
+      { path: '', component: HomeComponent },
+    ],
+  },
+  { path: 'login',
+    component: LoginComponent },
   {
     path: 'admin',
     component: AdminLayoutComponent,
