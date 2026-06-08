@@ -44,7 +44,7 @@ export const routes: Routes = [
     canActivate: [adherentGuard],
     children: [
       { path: '', redirectTo: 'mes-chiens', pathMatch: 'full' },
-      { path: 'mes-chiens', component: MesChiensComponent },
+      { path: 'mes-chiens', component: MesChiensComponent, data: { breadcrumb: 'Mes chiens' } },
     ],
   },
   {
