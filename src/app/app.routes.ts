@@ -22,6 +22,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { adminGuard } from './guards/admin.guard';
 import { PublicLayoutComponent } from './layouts/public-layout/public-layout.component';
 import { HomeComponent } from './pages/home/home.component';
+import { InscriptionComponent } from './pages/inscription/inscription.component';
 
 export const routes: Routes = [
   {
@@ -33,6 +34,7 @@ export const routes: Routes = [
   },
   { path: 'login',
     component: LoginComponent },
+  { path: 'inscription', component: InscriptionComponent },
   {
     path: 'admin',
     component: AdminLayoutComponent,
