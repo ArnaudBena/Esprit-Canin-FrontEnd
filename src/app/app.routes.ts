@@ -18,11 +18,15 @@ import { SeanceListComponent } from './pages/admin/seance-list/seance-list.compo
 import { SeanceCreateComponent } from './pages/admin/seance-create/seance-create.component';
 import { SeanceEditComponent } from './pages/admin/seance-edit/seance-edit.component';
 import { DashboardComponent } from './pages/admin/dashboard/dashboard.component';
+import { LoginComponent } from './pages/login/login.component';
+import { adminGuard } from './guards/admin.guard';
 
 export const routes: Routes = [
+  { path: 'login', component: LoginComponent },
   {
     path: 'admin',
     component: AdminLayoutComponent,
+    canActivate: [adminGuard],
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: DashboardComponent },
