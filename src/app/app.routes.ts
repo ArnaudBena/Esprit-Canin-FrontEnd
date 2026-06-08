@@ -23,6 +23,9 @@ import { adminGuard } from './guards/admin.guard';
 import { PublicLayoutComponent } from './layouts/public-layout/public-layout.component';
 import { HomeComponent } from './pages/home/home.component';
 import { InscriptionComponent } from './pages/inscription/inscription.component';
+import { AdherentLayoutComponent } from './layouts/adherent-layout/adherent-layout.component';
+import { adherentGuard } from './guards/adherent.guard';
+import { MesChiensComponent } from './pages/mon-espace/mes-chiens/mes-chiens.component';
 
 export const routes: Routes = [
   {
@@ -35,6 +38,15 @@ export const routes: Routes = [
   { path: 'login',
     component: LoginComponent },
   { path: 'inscription', component: InscriptionComponent },
+  {
+    path: 'mon-espace',
+    component: AdherentLayoutComponent,
+    canActivate: [adherentGuard],
+    children: [
+      { path: '', redirectTo: 'mes-chiens', pathMatch: 'full' },
+      { path: 'mes-chiens', component: MesChiensComponent },
+    ],
+  },
   {
     path: 'admin',
     component: AdminLayoutComponent,

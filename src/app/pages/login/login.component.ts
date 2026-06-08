@@ -35,7 +35,8 @@ export class LoginComponent {
     this.authService.login(this.form.getRawValue()).subscribe({
       next: () => {
         this.toastService.show('Connexion réussie', 'success');
-        this.router.navigateByUrl('/admin');
+        const role = this.authService.jwtInfo()?.role;
+        this.router.navigateByUrl(role === 'ADMIN' ? '/admin' : '/mon-espace');
       },
       error: () => this.toastService.show('Email ou mot de passe incorrect', 'error'),
     });

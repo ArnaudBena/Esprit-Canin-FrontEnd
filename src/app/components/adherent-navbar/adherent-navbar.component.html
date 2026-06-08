@@ -1,0 +1,61 @@
+<nav class="bg-primaire">
+  <div class="flex h-[72px] items-center justify-between px-6 lg:h-[90px] lg:px-20">
+    <!-- Logo -->
+    <a routerLink="/mon-espace" class="flex flex-shrink-0 items-center" aria-label="Accueil espace adhérent">
+      <img src="/logo.svg" alt="" class="h-9 w-auto lg:h-11" />
+    </a>
+
+    <!-- Liens (desktop) -->
+    <div class="hidden items-center gap-8 md:flex">
+      <a routerLink="/mon-espace/tableau-de-bord" routerLinkActive="text-blanc" class="text-white/85 hover:text-blanc">Tableau de bord</a>
+      <a routerLink="/mon-espace/seances" routerLinkActive="text-blanc" class="text-white/85 hover:text-blanc">Séances</a>
+      <a routerLink="/mon-espace/mes-chiens" routerLinkActive="text-blanc" class="text-white/85 hover:text-blanc">Mes chiens</a>
+    </div>
+
+    <!-- Avatar + menu (desktop) -->
+    <div class="relative hidden md:block">
+      <button type="button" (click)="toggleMenu($event)" aria-haspopup="menu" [attr.aria-expanded]="menuOuvert()"
+              class="flex items-center gap-2 rounded-full py-1 pl-1 pr-2 text-blanc hover:bg-white/10">
+        <span class="flex h-9 w-9 items-center justify-center rounded-full bg-accent text-sm font-bold text-accent-text">
+          {{ jwtInfo()?.sub?.charAt(0)?.toUpperCase() }}
+        </span>
+        <lucide-icon [img]="iconChevron" class="h-4 w-4"></lucide-icon>
+      </button>
+      @if (menuOuvert()) {
+        <div role="menu" class="absolute right-0 mt-2 w-56 overflow-hidden rounded-md border border-bordure bg-blanc text-texte shadow-lg">
+          <div class="border-b border-bordure px-4 py-3">
+            <p class="truncate text-sm font-medium">{{ jwtInfo()?.sub }}</p>
+            <p class="text-xs text-muted">Adhérent</p>
+          </div>
+          <button type="button" role="menuitem" (click)="logout()" class="flex w-full items-center gap-2 px-4 py-3 text-left text-sm hover:bg-fond">
+            <lucide-icon [img]="iconLogout" class="h-4 w-4"></lucide-icon>
+            Déconnexion
+          </button>
+        </div>
+      }
+    </div>
+
+    <!-- Burger (mobile) -->
+    <button type="button" (click)="toggleMenuMobile()" class="text-blanc md:hidden"
+            [attr.aria-label]="menuMobileOuvert() ? 'Fermer le menu' : 'Ouvrir le menu'" [attr.aria-expanded]="menuMobileOuvert()" aria-controls="menu-adherent-mobile">
+      <lucide-icon [img]="menuMobileOuvert() ? iconClose : iconMenu" class="h-6 w-6"></lucide-icon>
+    </button>
+  </div>
+
+  <!-- Panneau mobile -->
+  @if (menuMobileOuvert()) {
+    <div id="menu-adherent-mobile" class="border-t border-white/15 px-6 py-4 md:hidden">
+      <div class="flex flex-col">
+        <a routerLink="/mon-espace/tableau-de-bord" (click)="fermerMenuMobile()" class="py-2 text-white/85 hover:text-blanc">Tableau de bord</a>
+        <a routerLink="/mon-espace/seances" (click)="fermerMenuMobile()" class="py-2 text-white/85 hover:text-blanc">Séances</a>
+        <a routerLink="/mon-espace/mes-chiens" (click)="fermerMenuMobile()" class="py-2 text-white/85 hover:text-blanc">Mes chiens</a>
+      </div>
+      <div class="mt-3 border-t border-white/15 pt-3">
+        <button type="button" (click)="logout()" class="flex items-center gap-2 py-2 text-white/85 hover:text-blanc">
+          <lucide-icon [img]="iconLogout" class="h-4 w-4"></lucide-icon>
+          Déconnexion
+        </button>
+      </div>
+    </div>
+  }
+</nav>
