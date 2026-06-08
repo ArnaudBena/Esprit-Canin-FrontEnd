@@ -3,6 +3,7 @@ import { AbstractControl, FormBuilder, ReactiveFormsModule, ValidationErrors, Va
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { ToastService } from '../../services/toast.service';
+import { AuthNavbarComponent } from '../../components/auth-navbar/auth-navbar.component';
 
 // Validateur de groupe : password === confirmation
 function motsDePasseIdentiques(group: AbstractControl): ValidationErrors | null {
@@ -13,10 +14,7 @@ function motsDePasseIdentiques(group: AbstractControl): ValidationErrors | null 
 
 @Component({
   selector: 'app-inscription',
-  imports: [
-    ReactiveFormsModule,
-    RouterLink
-  ],
+  imports: [ReactiveFormsModule, RouterLink, AuthNavbarComponent],
   templateUrl: './inscription.component.html',
   styleUrl: './inscription.component.css',
 })

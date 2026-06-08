@@ -1,0 +1,17 @@
+<nav class="flex h-[72px] items-center justify-between bg-primaire px-6 lg:h-[90px] lg:px-20">
+  <a routerLink="/" class="flex flex-shrink-0 items-center" aria-label="Accueil Esprit Canin">
+    <img src="/logo.svg" alt="" class="h-9 w-auto lg:h-11" />
+  </a>
+
+  @if (cta()) {
+    <a [routerLink]="lien()"
+       class="rounded-sm bg-accent px-5 py-2 font-medium text-accent-text hover:opacity-90">
+      {{ libelle() }}
+    </a>
+  } @else {
+    <a [routerLink]="lien()"
+       class="rounded-sm border-[1.5px] border-white/80 px-5 py-2 font-medium text-blanc hover:bg-white/10">
+      {{ libelle() }}
+    </a>
+  }
+</nav>

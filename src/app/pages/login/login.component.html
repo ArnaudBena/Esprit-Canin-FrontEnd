@@ -1,67 +1,71 @@
-<div class="flex min-h-screen items-center justify-center bg-fond p-4">
-  <form
-    [formGroup]="form"
-    (ngSubmit)="onSubmit()"
-    class="w-full max-w-[440px] rounded-lg border border-bordure bg-blanc p-10 shadow-sm"
-  >
-    <h2 class="text-center text-2xl font-bold text-texte">Connexion</h2>
-    <p class="mb-8 mt-2 text-center text-muted">Connectez-vous à votre espace membre</p>
+<div class="flex min-h-screen flex-col bg-fond">
+  <app-auth-navbar lien="/inscription" libelle="S'inscrire" [cta]="true" />
 
-    <!-- Email -->
-    <div class="mb-5">
-      <label for="email" class="mb-1.5 block text-sm font-medium text-texte">Adresse email</label>
-      <input
-        id="email"
-        type="email"
-        formControlName="email"
-        placeholder="exemple@email.com"
-        class="h-input w-full rounded-sm border border-input px-3.5 text-texte placeholder:text-placeholder"
-      />
-      @if (form.get('email')?.touched && form.get('email')?.invalid) {
-        <p class="mt-1 text-sm text-alerte">Adresse email valide obligatoire</p>
-      }
-    </div>
-
-    <!-- Mot de passe -->
-    <div class="mb-5">
-      <label for="password" class="mb-1.5 block text-sm font-medium text-texte">Mot de passe</label>
-      <div class="relative">
-        <input
-          id="password"
-          [type]="motDePasseVisible() ? 'text' : 'password'"
-          formControlName="password"
-          placeholder="Votre mot de passe"
-          class="h-input w-full rounded-sm border border-input px-3.5 pr-11 text-texte placeholder:text-placeholder"
-        />
-        <button
-          type="button"
-          (click)="motDePasseVisible.set(!motDePasseVisible())"
-          [attr.aria-label]="motDePasseVisible() ? 'Masquer le mot de passe' : 'Afficher le mot de passe'"
-          class="absolute right-3 top-1/2 -translate-y-1/2 text-subtle"
-        >
-          <lucide-icon [img]="motDePasseVisible() ? iconEyeOff : iconEye" class="h-5 w-5"></lucide-icon>
-        </button>
-      </div>
-      @if (form.get('password')?.touched && form.get('password')?.invalid) {
-        <p class="mt-1 text-sm text-alerte">Mot de passe obligatoire</p>
-      }
-    </div>
-
-    <button
-      type="submit"
-      [disabled]="form.invalid"
-      class="mt-2 w-full rounded-sm bg-primaire py-3 font-semibold text-blanc disabled:opacity-50"
+  <div class="flex flex-1 items-center justify-center p-4">
+    <form
+      [formGroup]="form"
+      (ngSubmit)="onSubmit()"
+      class="w-full max-w-[440px] rounded-lg border border-bordure bg-blanc p-10 shadow-sm"
     >
-      Se connecter
-    </button>
+      <h2 class="text-center text-2xl font-bold text-texte">Connexion</h2>
+      <p class="mb-8 mt-2 text-center text-muted">Connectez-vous à votre espace membre</p>
 
-    <div class="my-6 flex items-center gap-4 text-sm text-subtle">
-      <span class="h-px flex-1 bg-bordure"></span>ou<span class="h-px flex-1 bg-bordure"></span>
-    </div>
+      <!-- Email -->
+      <div class="mb-5">
+        <label for="email" class="mb-1.5 block text-sm font-medium text-texte">Adresse email</label>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          placeholder="exemple@email.com"
+          class="h-input w-full rounded-sm border border-input px-3.5 text-texte placeholder:text-placeholder"
+        />
+        @if (form.get('email')?.touched && form.get('email')?.invalid) {
+          <p class="mt-1 text-sm text-alerte">Adresse email valide obligatoire</p>
+        }
+      </div>
 
-    <p class="text-center text-sm text-muted">
-      Pas encore de compte ?
-      <a routerLink="/inscription" class="font-semibold text-primaire">Créer un compte</a>
-    </p>
-  </form>
+      <!-- Mot de passe -->
+      <div class="mb-5">
+        <label for="password" class="mb-1.5 block text-sm font-medium text-texte">Mot de passe</label>
+        <div class="relative">
+          <input
+            id="password"
+            [type]="motDePasseVisible() ? 'text' : 'password'"
+            formControlName="password"
+            placeholder="Votre mot de passe"
+            class="h-input w-full rounded-sm border border-input px-3.5 pr-11 text-texte placeholder:text-placeholder"
+          />
+          <button
+            type="button"
+            (click)="motDePasseVisible.set(!motDePasseVisible())"
+            [attr.aria-label]="motDePasseVisible() ? 'Masquer le mot de passe' : 'Afficher le mot de passe'"
+            class="absolute right-3 top-1/2 -translate-y-1/2 text-subtle"
+          >
+            <lucide-icon [img]="motDePasseVisible() ? iconEyeOff : iconEye" class="h-5 w-5"></lucide-icon>
+          </button>
+        </div>
+        @if (form.get('password')?.touched && form.get('password')?.invalid) {
+          <p class="mt-1 text-sm text-alerte">Mot de passe obligatoire</p>
+        }
+      </div>
+
+      <button
+        type="submit"
+        [disabled]="form.invalid"
+        class="mt-2 w-full rounded-sm bg-primaire py-3 font-semibold text-blanc disabled:opacity-50"
+      >
+        Se connecter
+      </button>
+
+      <div class="my-6 flex items-center gap-4 text-sm text-subtle">
+        <span class="h-px flex-1 bg-bordure"></span>ou<span class="h-px flex-1 bg-bordure"></span>
+      </div>
+
+      <p class="text-center text-sm text-muted">
+        Pas encore de compte ?
+        <a routerLink="/inscription" class="font-semibold text-primaire">Créer un compte</a>
+      </p>
+    </form>
+  </div>
 </div>

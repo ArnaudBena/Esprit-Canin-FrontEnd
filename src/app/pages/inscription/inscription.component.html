@@ -1,84 +1,93 @@
-<div class="flex min-h-screen items-center justify-center bg-fond p-4">
-  <form [formGroup]="form" (ngSubmit)="onSubmit()"
-        class="w-full max-w-[480px] rounded-lg border border-bordure bg-blanc p-8 shadow-sm">
-    <h2 class="text-center text-2xl font-bold text-texte">Créer un compte</h2>
-    <p class="mb-6 mt-2 text-center text-muted">Rejoignez la communauté Esprit Canin</p>
+<div class="flex min-h-screen flex-col bg-fond">
+  <app-auth-navbar lien="/login" libelle="Connexion" [cta]="false" />
 
-    <!-- Prénom + Nom -->
-    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-      <div>
-        <label for="prenom" class="mb-1.5 block text-sm font-medium text-texte">Prénom</label>
-        <input id="prenom" type="text" formControlName="prenom" placeholder="Votre prénom"
+  <div class="flex flex-1 items-center justify-center p-4">
+    <form
+      [formGroup]="form"
+      (ngSubmit)="onSubmit()"
+      class="w-full max-w-[480px] rounded-lg border border-bordure bg-blanc p-8 shadow-sm"
+    >
+      <h2 class="text-center text-2xl font-bold text-texte">Créer un compte</h2>
+      <p class="mb-6 mt-2 text-center text-muted">Rejoignez la communauté Esprit Canin</p>
+
+      <!-- Prénom + Nom -->
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div>
+          <label for="prenom" class="mb-1.5 block text-sm font-medium text-texte">Prénom</label>
+          <input id="prenom" type="text" formControlName="prenom" placeholder="Votre prénom"
+                 class="h-input w-full rounded-sm border border-input px-3.5 text-texte placeholder:text-placeholder" />
+          @if (form.get('prenom')?.touched && form.get('prenom')?.invalid) {
+            <p class="mt-1 text-sm text-alerte">Prénom obligatoire</p>
+          }
+        </div>
+        <div>
+          <label for="nom" class="mb-1.5 block text-sm font-medium text-texte">Nom</label>
+          <input id="nom" type="text" formControlName="nom" placeholder="Votre nom"
+                 class="h-input w-full rounded-sm border border-input px-3.5 text-texte placeholder:text-placeholder" />
+          @if (form.get('nom')?.touched && form.get('nom')?.invalid) {
+            <p class="mt-1 text-sm text-alerte">Nom obligatoire</p>
+          }
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="mt-4">
+        <label for="email" class="mb-1.5 block text-sm font-medium text-texte">Adresse email</label>
+        <input id="email" type="email" formControlName="email" placeholder="exemple@email.com"
                class="h-input w-full rounded-sm border border-input px-3.5 text-texte placeholder:text-placeholder" />
-        @if (form.get('prenom')?.touched && form.get('prenom')?.invalid) {
-          <p class="mt-1 text-sm text-alerte">Prénom obligatoire</p>
+        @if (form.get('email')?.touched && form.get('email')?.invalid) {
+          <p class="mt-1 text-sm text-alerte">Adresse email valide obligatoire</p>
         }
       </div>
-      <div>
-        <label for="nom" class="mb-1.5 block text-sm font-medium text-texte">Nom</label>
-        <input id="nom" type="text" formControlName="nom" placeholder="Votre nom"
+
+      <!-- Téléphone (optionnel) -->
+      <div class="mt-4">
+        <label for="telephone" class="mb-1.5 block text-sm font-medium text-texte">
+          Téléphone <span class="text-muted">(optionnel)</span>
+        </label>
+        <input id="telephone" type="tel" formControlName="telephone" placeholder="06 12 34 56 78"
                class="h-input w-full rounded-sm border border-input px-3.5 text-texte placeholder:text-placeholder" />
-        @if (form.get('nom')?.touched && form.get('nom')?.invalid) {
-          <p class="mt-1 text-sm text-alerte">Nom obligatoire</p>
-        }
       </div>
-    </div>
 
-    <!-- Email -->
-    <div class="mt-4">
-      <label for="email" class="mb-1.5 block text-sm font-medium text-texte">Adresse email</label>
-      <input id="email" type="email" formControlName="email" placeholder="exemple@email.com"
-             class="h-input w-full rounded-sm border border-input px-3.5 text-texte placeholder:text-placeholder" />
-      @if (form.get('email')?.touched && form.get('email')?.invalid) {
-        <p class="mt-1 text-sm text-alerte">Adresse email valide obligatoire</p>
-      }
-    </div>
-
-    <!-- Téléphone (optionnel) -->
-    <div class="mt-4">
-      <label for="telephone" class="mb-1.5 block text-sm font-medium text-texte">
-        Téléphone <span class="text-muted">(optionnel)</span>
-      </label>
-      <input id="telephone" type="tel" formControlName="telephone" placeholder="06 12 34 56 78"
-             class="h-input w-full rounded-sm border border-input px-3.5 text-texte placeholder:text-placeholder" />
-    </div>
-
-    <!-- Mot de passe + Confirmation -->
-    <div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
-      <div>
-        <label for="password" class="mb-1.5 block text-sm font-medium text-texte">Mot de passe</label>
-        <input id="password" type="password" formControlName="password" placeholder="Min. 8 caractères"
-               class="h-input w-full rounded-sm border border-input px-3.5 text-texte placeholder:text-placeholder" />
-        @if (form.get('password')?.touched && form.get('password')?.invalid) {
-          <p class="mt-1 text-sm text-alerte">8 caractères minimum</p>
-        }
+      <!-- Mot de passe + Confirmation -->
+      <div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div>
+          <label for="password" class="mb-1.5 block text-sm font-medium text-texte">Mot de passe</label>
+          <input id="password" type="password" formControlName="password" placeholder="Min. 8 caractères"
+                 class="h-input w-full rounded-sm border border-input px-3.5 text-texte placeholder:text-placeholder" />
+          @if (form.get('password')?.touched && form.get('password')?.invalid) {
+            <p class="mt-1 text-sm text-alerte">8 caractères minimum</p>
+          }
+        </div>
+        <div>
+          <label for="confirmation" class="mb-1.5 block text-sm font-medium text-texte">Confirmer</label>
+          <input id="confirmation" type="password" formControlName="confirmation" placeholder="Confirmez"
+                 class="h-input w-full rounded-sm border border-input px-3.5 text-texte placeholder:text-placeholder" />
+          @if (form.get('confirmation')?.touched && form.hasError('motsDePasseDifferents')) {
+            <p class="mt-1 text-sm text-alerte">Les mots de passe diffèrent</p>
+          }
+        </div>
       </div>
-      <div>
-        <label for="confirmation" class="mb-1.5 block text-sm font-medium text-texte">Confirmer</label>
-        <input id="confirmation" type="password" formControlName="confirmation" placeholder="Confirmez"
-               class="h-input w-full rounded-sm border border-input px-3.5 text-texte placeholder:text-placeholder" />
-        @if (form.get('confirmation')?.touched && form.hasError('motsDePasseDifferents')) {
-          <p class="mt-1 text-sm text-alerte">Les mots de passe diffèrent</p>
-        }
-      </div>
-    </div>
 
-    <!-- RGPD -->
-    <div class="mt-5 flex items-start gap-2.5">
-      <input id="rgpd" type="checkbox" formControlName="rgpd" class="mt-0.5 h-4 w-4" />
-      <label for="rgpd" class="text-sm text-muted">
-        J'accepte les
-        <a routerLink="/confidentialite" class="text-primaire underline">conditions d'utilisation</a>
-        et la politique de confidentialité.
-      </label>
-    </div>
-    <button type="submit" [disabled]="form.invalid"
-            class="mt-6 w-full rounded-sm bg-accent py-3 font-semibold text-accent-text disabled:opacity-50">
-      Créer mon compte
-    </button>
-    <p class="mt-5 text-center text-sm text-muted">
-      Déjà un compte ?
-      <a routerLink="/login" class="font-semibold text-primaire">Se connecter</a>
-    </p>
-  </form>
+      <!-- RGPD -->
+      <div class="mt-5 flex items-start gap-2.5">
+        <input id="rgpd" type="checkbox" formControlName="rgpd" class="mt-0.5 h-4 w-4" />
+        <label for="rgpd" class="text-sm text-muted">
+          J'accepte les
+          <a routerLink="/confidentialite" class="text-primaire underline">conditions d'utilisation</a>
+          et la politique de confidentialité.
+        </label>
+      </div>
+
+      <button type="submit" [disabled]="form.invalid"
+              class="mt-6 w-full rounded-sm bg-accent py-3 font-semibold text-accent-text disabled:opacity-50">
+        Créer mon compte
+      </button>
+
+      <p class="mt-5 text-center text-sm text-muted">
+        Déjà un compte ?
+        <a routerLink="/login" class="font-semibold text-primaire">Se connecter</a>
+      </p>
+    </form>
+  </div>
 </div>
