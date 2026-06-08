@@ -41,4 +41,16 @@ export class ChienService {
   getMesChiens(): Observable<Chien[]> {
     return this.http.get<Chien[]>(`${this.apiUrl}/mes-chiens`);
   }
+
+  getMonChien(id: number): Observable<Chien> {
+    return this.http.get<Chien>(`${this.apiUrl}/mes-chiens/${id}`);
+  }
+
+  createMonChien(chien: Chien): Observable<Chien> {
+    return this.http.post<Chien>(`${this.apiUrl}/mes-chiens`, chien);
+  }
+
+  updateMonChien(id: number, chien: Chien): Observable<void> {
+    return this.http.put<void>(`${this.apiUrl}/mes-chiens/${id}`, chien);
+  }
 }
