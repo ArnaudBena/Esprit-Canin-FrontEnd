@@ -19,6 +19,8 @@
         <div class="p-5">
           <h3 class="text-lg font-bold text-texte">{{ chien.nom }}</h3>
           <p class="text-sm text-muted">{{ chien.race.nom }} • {{ ageAffichage(ageEnMois(chien.dateNaissance)) }}</p>
+          @let nb = nbSeancesRealisees(chien);
+          <p class="mt-0.5 text-sm text-subtle">{{ nb }} séance{{ nb > 1 ? 's' : '' }} réalisée{{ nb > 1 ? 's' : '' }}</p>
           <a [routerLink]="['/mon-espace/mes-chiens', chien.id]"
              class="mt-3 inline-block rounded-sm bg-primaire px-4 py-2 text-sm font-medium text-blanc hover:opacity-90">
             Voir le profil

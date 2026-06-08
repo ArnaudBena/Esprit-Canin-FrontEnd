@@ -4,6 +4,7 @@ import { LucideAngularModule, PawPrint } from 'lucide-angular';
 import { ChienService } from '../../../services/chien.service';
 import { Chien } from '../../../models/chien.model';
 import { ageAffichage, ageEnMois } from '../../../utils/age.utils';
+import { StatutPresence } from '../../../models/statut-presence.model';
 
 @Component({
   selector: 'app-mes-chiens',
@@ -28,5 +29,11 @@ export class MesChiensComponent implements OnInit {
       next: (data) => this.chiens.set(data),
       error: (err) => console.error('Erreur chargement mes chiens', err),
     });
+  }
+
+  nbSeancesRealisees(chien: Chien): number {
+    return (chien.inscriptions ?? []).filter(
+      (i) => i.statutPresence === StatutPresence.PRESENT,
+    ).length;
   }
 }
