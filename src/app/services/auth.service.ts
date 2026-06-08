@@ -51,4 +51,14 @@ export class AuthService {
     const payloadJson = atob(payloadBase64); // base64 -> texte
     this.jwtInfo.set(JSON.parse(payloadJson));
   }
+
+  inscription(payload: {
+    prenom: string;
+    nom: string;
+    email: string;
+    telephone: string;
+    password: string;
+  }) {
+    return this.http.post(`${this.apiUrl}/inscription`, payload);
+  }
 }
