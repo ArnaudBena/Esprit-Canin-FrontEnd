@@ -6,7 +6,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "front": {
+    "esprit-canin-frontend": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:service": {
@@ -72,10 +72,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "front:build:production"
+              "buildTarget": "esprit-canin-frontend:build:production"
             },
             "development": {
-              "buildTarget": "front:build:development"
+              "buildTarget": "esprit-canin-frontend:build:development"
             }
           },
           "defaultConfiguration": "development"
