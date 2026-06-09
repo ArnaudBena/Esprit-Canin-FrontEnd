@@ -27,6 +27,7 @@ import { AdherentLayoutComponent } from './layouts/adherent-layout/adherent-layo
 import { adherentGuard } from './guards/adherent.guard';
 import { MesChiensComponent } from './pages/mon-espace/mes-chiens/mes-chiens.component';
 import { ChienCreateComponent } from './pages/mon-espace/chien-create/chien-create.component';
+import { ChienEditComponent } from './pages/mon-espace/chien-edit/chien-edit.component';
 
 export const routes: Routes = [
   {
@@ -47,6 +48,7 @@ export const routes: Routes = [
       { path: '', redirectTo: 'mes-chiens', pathMatch: 'full' },
       { path: 'mes-chiens', component: MesChiensComponent, data: { breadcrumb: 'Mes chiens' } },
       { path: 'mes-chiens/new', component: ChienCreateComponent, data: { breadcrumb: 'Ajouter un chien' } },
+      { path: 'mes-chiens/:id/edit', component: ChienEditComponent, data: { breadcrumb: 'Modifier un chien' } },
     ],
   },
   {
