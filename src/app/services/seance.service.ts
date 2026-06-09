@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { Seance } from '../models/seance.model';
+import { SeanceCatalogue } from '../models/seance-catalogue.model';
 
 @Injectable({
   providedIn: 'root',
@@ -45,5 +46,22 @@ export class SeanceService {
 
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
+  // --- Catalogue adhérent ---
+  getCatalogue(filtres: {
+    typeSeanceId?: string;
+    date?: string;
+    disponible?: string;  // 'true' | 'false'
+  }): Observable<SeanceCatalogue[]> {
+    let params = new HttpParams();
+    if (filtres.typeSeanceId) params = params.set('typeSeanceId', filtres.typeSeanceId);
+    if (filtres.date) params = params.set('date', filtres.date);
+    if (filtres.disponible) params = params.set('disponible', filtres.disponible);
+    return this.http.get<SeanceCatalogue[]>(`${this.apiUrl}/catalogue`, { params });
+  }
+
+  getCatalogueDetail(id: number): Observable<SeanceCatalogue> {
+    return this.http.get<SeanceCatalogue>(`${this.apiUrl}/catalogue/${id}`);
   }
 }
