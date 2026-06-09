@@ -53,4 +53,8 @@ export class ChienService {
   updateMonChien(id: number, chien: Chien): Observable<void> {
     return this.http.put<void>(`${this.apiUrl}/mes-chiens/${id}`, chien);
   }
+
+  deleteMonChien(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/mes-chiens/${id}`);
+  }
 }

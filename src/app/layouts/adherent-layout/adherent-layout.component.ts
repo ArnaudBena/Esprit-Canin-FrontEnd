@@ -2,13 +2,15 @@ import { Component, inject, signal } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs';
 import { AdherentNavbarComponent } from '../../components/adherent-navbar/adherent-navbar.component';
+import { ConfirmDialogComponent } from '../../components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-adherent-layout',
   imports: [
     RouterOutlet,
     RouterLink,
-    AdherentNavbarComponent
+    AdherentNavbarComponent,
+    ConfirmDialogComponent
   ],
   templateUrl: './adherent-layout.component.html',
   styleUrl: './adherent-layout.component.css',
