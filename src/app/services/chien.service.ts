@@ -36,5 +36,25 @@ export class ChienService {
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
-  // TODO : create() et update() viendront avec la partie publique (owner connecté)
+
+  // --- Espace adhérent ---
+  getMesChiens(): Observable<Chien[]> {
+    return this.http.get<Chien[]>(`${this.apiUrl}/mes-chiens`);
+  }
+
+  getMonChien(id: number): Observable<Chien> {
+    return this.http.get<Chien>(`${this.apiUrl}/mes-chiens/${id}`);
+  }
+
+  createMonChien(chien: Chien): Observable<Chien> {
+    return this.http.post<Chien>(`${this.apiUrl}/mes-chiens`, chien);
+  }
+
+  updateMonChien(id: number, chien: Chien): Observable<void> {
+    return this.http.put<void>(`${this.apiUrl}/mes-chiens/${id}`, chien);
+  }
+
+  deleteMonChien(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/mes-chiens/${id}`);
+  }
 }
