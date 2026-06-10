@@ -4,6 +4,7 @@ import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { Seance } from '../models/seance.model';
 import { SeanceCatalogue } from '../models/seance-catalogue.model';
+import { Prerequis } from '../models/prerequis.model';
 
 @Injectable({
   providedIn: 'root',
@@ -63,5 +64,9 @@ export class SeanceService {
 
   getCatalogueDetail(id: number): Observable<SeanceCatalogue> {
     return this.http.get<SeanceCatalogue>(`${this.apiUrl}/catalogue/${id}`);
+  }
+
+  getPrerequis(id: number): Observable<Prerequis[]> {
+    return this.http.get<Prerequis[]>(`${this.apiUrl}/catalogue/${id}/prerequis`);
   }
 }

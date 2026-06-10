@@ -1,0 +1,119 @@
+@if (confirmation(); as confirm) {
+  <div class="mx-auto mt-8 max-w-md rounded-lg border border-bordure bg-blanc p-8 text-center">
+    <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-image-bg text-primaire">
+      <lucide-icon [img]="iconCheck" class="h-7 w-7"></lucide-icon>
+    </div>
+    <h1 class="mt-4 text-2xl font-bold text-texte">Inscription confirmée !</h1>
+    <p class="mt-2 text-sm text-muted">Votre chien a bien été inscrit à la séance.</p>
+    <dl class="mt-6 space-y-2 rounded-sm bg-fond p-4 text-left">
+      <div class="flex justify-between gap-3">
+        <dt class="text-sm text-muted">Séance</dt>
+        <dd class="text-sm font-medium text-texte">{{ confirm.seance }}</dd>
+      </div>
+      <div class="flex justify-between gap-3">
+        <dt class="text-sm text-muted">Date</dt>
+        <dd class="text-sm font-medium text-texte">{{ confirm.date | date:'EEEE d MMMM yyyy':'':'fr' }}</dd>
+      </div>
+      <div class="flex justify-between gap-3">
+        <dt class="text-sm text-muted">Chien inscrit</dt>
+        <dd class="text-sm font-medium text-texte">{{ confirm.chien }}</dd>
+      </div>
+    </dl>
+    <div class="mt-6 flex flex-col gap-2">
+      <a routerLink="/mon-espace/mes-chiens"
+         class="rounded-sm bg-primaire px-5 py-2.5 font-medium text-blanc hover:opacity-90">Voir mes chiens</a>
+      <a routerLink="/mon-espace/seances"
+         class="text-sm font-medium text-primaire hover:underline">Retour aux séances</a>
+    </div>
+  </div>
+} @else if (seance(); as seance) {
+  <!-- Fil d'Ariane -->
+  <nav aria-label="Fil d'Ariane" class="mb-4 flex items-center gap-1.5 text-sm text-subtle">
+    <a routerLink="/mon-espace/seances" class="font-medium text-primaire hover:underline">Séances</a>
+    <span aria-hidden="true">›</span>
+    <span class="text-texte">{{ seance.typeLibelle }}</span>
+  </nav>
+  <div class="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_340px]">
+    <!-- Détail -->
+    <div class="rounded-lg border border-bordure bg-blanc p-6">
+      <h1 class="text-2xl font-bold text-texte lg:text-3xl">{{ seance.typeLibelle }}</h1>
+      <dl class="mt-5 space-y-3">
+        <div class="flex items-center gap-2 text-sm">
+          <lucide-icon [img]="iconCalendar" class="h-4 w-4 text-primaire"></lucide-icon>
+          <dt class="text-muted">Date :</dt>
+          <dd class="font-medium text-texte">{{ seance.date | date:'EEEE d MMMM yyyy':'':'fr' }}</dd>
+        </div>
+        <div class="flex items-center gap-2 text-sm">
+          <lucide-icon [img]="iconClock" class="h-4 w-4 text-primaire"></lucide-icon>
+          <dt class="text-muted">Horaire :</dt>
+          <dd class="font-medium text-texte">{{ seance.heureDebut.substring(0, 5) }}</dd>
+        </div>
+        <div class="flex items-center gap-2 text-sm">
+          <lucide-icon [img]="iconClock" class="h-4 w-4 text-primaire"></lucide-icon>
+          <dt class="text-muted">Durée :</dt>
+          <dd class="font-medium text-texte">{{ dureeAffichage(seance.dureeMinutes) }}</dd>
+        </div>
+      </dl>
+      @if (seance.typeDescription) {
+        <div class="mt-6">
+          <h2 class="text-sm font-bold text-texte">Description</h2>
+          <p class="mt-1 text-sm text-muted">{{ seance.typeDescription }}</p>
+        </div>
+      }
+      <div class="mt-6">
+        <h2 class="text-sm font-bold text-texte">Prérequis</h2>
+        <ul class="mt-2 list-disc space-y-1 pl-5 text-sm text-muted">
+          <li>Âge du chien : {{ seance.ageMinimumMois ?? 0 }} – {{ seance.ageMaximumMois ?? '∞' }} mois</li>
+          @for (p of prerequis(); track p.competence) {
+            <li>Compétence : <span class="font-medium text-texte">{{ p.competence }}</span> — niveau {{ niveauLabel(p.niveauMinimumRequis) }}</li>
+          }
+          @if (prerequis().length === 0) {
+            <li>Aucune compétence prérequise</li>
+          }
+        </ul>
+      </div>
+      <!-- Coach  -->
+      <div class="mt-6">
+        <h2 class="text-sm font-bold text-texte">Coach</h2>
+        <div class="mt-2 flex items-center gap-3">
+          <span class="flex h-10 w-10 items-center justify-center rounded-full bg-image-bg text-primaire">
+            <lucide-icon [img]="iconCoach" class="h-5 w-5"></lucide-icon>
+          </span>
+          <span class="text-sm font-medium text-texte">{{ seance.coachPrenom }} {{ seance.coachNom }}</span>
+        </div>
+      </div>
+    </div>
+    <!-- Encart inscription -->
+    <div class="rounded-lg border border-bordure bg-blanc p-6">
+      <h2 class="text-lg font-bold text-texte">Inscription</h2>
+      <div class="mt-4 text-center">
+        <p class="text-sm text-muted">Places disponibles</p>
+        <p class="text-2xl font-bold text-primaire">{{ seance.nbInscrits }} / {{ seance.participantsMaximum }}</p>
+      </div>
+      <div class="mt-2 h-2 w-full overflow-hidden rounded-full bg-fond">
+        <div class="h-full rounded-full bg-primaire"
+             [style.width.%]="seance.participantsMaximum ? (seance.nbInscrits / seance.participantsMaximum) * 100 : 0"></div>
+      </div>
+      @if (seance.complet) {
+        <p class="mt-4 rounded-sm bg-fond p-3 text-center text-sm font-medium text-muted">Cette séance est complète.</p>
+      } @else {
+        <form [formGroup]="form" (ngSubmit)="onInscrire()" class="mt-4">
+          <label for="chien" class="mb-1.5 block text-sm font-medium text-texte">Choisir un chien</label>
+          <select id="chien" formControlName="chienId"
+                  class="h-input w-full rounded-sm border border-input px-3 text-texte">
+            <option [ngValue]="null" disabled>Sélectionnez un chien</option>
+            @for (chien of mesChiens(); track chien.id) {
+              <option [ngValue]="chien.id">{{ chien.nom }} — {{ chien.race.nom }}</option>
+            }
+          </select>
+          <button type="submit" [disabled]="form.invalid"
+                  class="mt-4 w-full rounded-sm bg-accent px-5 py-2.5 font-medium text-accent-text hover:opacity-90 disabled:opacity-50">
+            Inscrire ce chien
+          </button>
+        </form>
+      }
+    </div>
+  </div>
+} @else {
+  <p class="text-muted">Chargement…</p>
+}
