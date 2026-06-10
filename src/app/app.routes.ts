@@ -29,6 +29,8 @@ import { MesChiensComponent } from './pages/mon-espace/mes-chiens/mes-chiens.com
 import { ChienCreateComponent } from './pages/mon-espace/chien-create/chien-create.component';
 import { ChienEditComponent } from './pages/mon-espace/chien-edit/chien-edit.component';
 import { ChienDetailComponent } from './pages/mon-espace/chien-detail/chien-detail.component';
+import { CatalogueComponent } from './pages/mon-espace/catalogue/catalogue.component';
+import { SeanceDetailComponent } from './pages/mon-espace/seance-detail/seance-detail.component';
 
 export const routes: Routes = [
   {
@@ -51,6 +53,8 @@ export const routes: Routes = [
       { path: 'mes-chiens/new', component: ChienCreateComponent, data: { breadcrumb: 'Ajouter un chien' } },
       { path: 'mes-chiens/:id', component: ChienDetailComponent },
       { path: 'mes-chiens/:id/edit', component: ChienEditComponent, data: { breadcrumb: 'Modifier un chien' } },
+      { path: 'seances', component: CatalogueComponent, data: { breadcrumb: 'Séances' } },
+      { path: 'seances/:id', component: SeanceDetailComponent },
     ],
   },
   {
