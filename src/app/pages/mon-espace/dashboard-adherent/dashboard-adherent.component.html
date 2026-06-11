@@ -1,0 +1,109 @@
+@if (prenom()) {
+  <!-- Bienvenue -->
+  <div class="mb-6">
+    <h1 class="text-2xl font-bold text-texte">Bonjour {{ prenom() }}</h1>
+    <p class="mt-1 text-sm text-muted">Bienvenue dans votre espace membre. Voici un résumé de votre activité.</p>
+  </div>
+
+  <!-- Stats -->
+  <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+    <div class="flex items-center gap-4 rounded-lg border border-bordure bg-blanc p-5">
+      <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-image-bg text-primaire">
+        <lucide-icon [img]="iconChien" class="h-6 w-6"></lucide-icon>
+      </div>
+      <div>
+        <div class="text-2xl font-bold text-texte">{{ chiens().length }}</div>
+        <div class="text-sm text-muted">Mes chiens</div>
+      </div>
+    </div>
+    <div class="flex items-center gap-4 rounded-lg border border-bordure bg-blanc p-5">
+      <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-accent text-accent-text">
+        <lucide-icon [img]="iconCalendar" class="h-6 w-6"></lucide-icon>
+      </div>
+      <div>
+        <div class="text-2xl font-bold text-texte">{{ prochaines().length }}</div>
+        <div class="text-sm text-muted">Prochaines séances</div>
+      </div>
+    </div>
+    <div class="flex items-center gap-4 rounded-lg border border-bordure bg-blanc p-5">
+      <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-image-bg text-primaire">
+        <lucide-icon [img]="iconCheck" class="h-6 w-6"></lucide-icon>
+      </div>
+      <div>
+        <div class="text-2xl font-bold text-texte">{{ passees().length }}</div>
+        <div class="text-sm text-muted">Séances passées</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Prochaines séances -->
+  <section class="mt-8">
+    <h2 class="text-lg font-bold text-texte">Prochaines séances</h2>
+    @if (prochaines().length === 0) {
+      <p class="mt-3 text-sm text-muted">
+        Aucune séance à venir.
+        <a routerLink="/mon-espace/seances" class="font-medium text-primaire hover:underline">Voir le catalogue</a>
+      </p>
+    } @else {
+      <div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        @for (insc of prochainesApercu(); track insc.chien.id + '-' + insc.seance.id) {
+          <div class="flex flex-col rounded-lg border border-bordure bg-blanc p-5">
+            <span class="self-start rounded-full bg-image-bg px-2.5 py-0.5 text-xs font-medium text-primaire">
+              {{ insc.seance.typeSeance.libelle }}
+            </span>
+            <div class="mt-3 space-y-1.5 text-sm text-muted">
+              <p class="flex items-center gap-2">
+                <lucide-icon [img]="iconCalendar" class="h-4 w-4 flex-shrink-0"></lucide-icon>
+                {{ insc.seance.date | date:'EEE d MMM yyyy':'':'fr' }} — {{ insc.seance.heureDebut.substring(0, 5) }}
+              </p>
+              <p class="flex items-center gap-2">
+                <lucide-icon [img]="iconUser" class="h-4 w-4 flex-shrink-0"></lucide-icon>
+                Coach : {{ insc.seance.coach.prenom }} {{ insc.seance.coach.nom }}
+              </p>
+              <p class="flex items-center gap-2">
+                <lucide-icon [img]="iconChien" class="h-4 w-4 flex-shrink-0"></lucide-icon>
+                Chien : {{ insc.chien.nom }}
+              </p>
+            </div>
+            <a [routerLink]="['/mon-espace/seances', insc.seance.id]"
+               class="mt-4 self-start text-sm font-medium text-primaire hover:underline">
+              Voir les détails →
+            </a>
+          </div>
+        }
+      </div>
+    }
+  </section>
+
+  <!-- Mes chiens -->
+  <section class="mt-8">
+    <div class="flex items-center justify-between">
+      <h2 class="text-lg font-bold text-texte">Mes chiens</h2>
+      <a routerLink="/mon-espace/mes-chiens" class="text-sm font-medium text-primaire hover:underline">Gérer mes chiens →</a>
+    </div>
+    @if (chiens().length === 0) {
+      <p class="mt-3 text-sm text-muted">Vous n'avez pas encore de chien enregistré.</p>
+    } @else {
+      <div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+        @for (chien of chiens(); track chien.id) {
+          @let nb = nbSeancesRealisees(chien.id!);
+          <div class="flex items-center gap-4 rounded-lg border border-bordure bg-blanc p-5">
+            <div class="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-full bg-image-bg text-primaire">
+              <lucide-icon [img]="iconChien" class="h-7 w-7"></lucide-icon>
+            </div>
+            <div class="min-w-0">
+              <h3 class="font-bold text-texte">{{ chien.nom }}</h3>
+              <p class="text-sm text-muted">{{ chien.race.nom }} • {{ ageAffichage(ageEnMois(chien.dateNaissance)) }}</p>
+              <p class="text-sm text-muted">{{ nb }} séance{{ nb > 1 ? 's' : '' }} réalisée{{ nb > 1 ? 's' : '' }}</p>
+              <a [routerLink]="['/mon-espace/mes-chiens', chien.id]" class="text-sm font-medium text-primaire hover:underline">
+                Voir le profil →
+              </a>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </section>
+} @else {
+  <p class="text-muted">Chargement…</p>
+}

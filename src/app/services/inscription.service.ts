@@ -14,4 +14,8 @@ export class InscriptionService {
   inscrireMonChien(chienId: number, seanceId: number): Observable<Inscription> {
     return this.http.post<Inscription>(`${this.apiUrl}/mes-inscriptions`, { chienId, seanceId });
   }
+
+  getMesInscriptions(): Observable<Inscription[]> {
+    return this.http.get<Inscription[]>(`${this.apiUrl}/mes-inscriptions`);
+  }
 }
