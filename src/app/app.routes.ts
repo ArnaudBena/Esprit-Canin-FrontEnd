@@ -31,6 +31,7 @@ import { ChienEditComponent } from './pages/mon-espace/chien-edit/chien-edit.com
 import { ChienDetailComponent } from './pages/mon-espace/chien-detail/chien-detail.component';
 import { CatalogueComponent } from './pages/mon-espace/catalogue/catalogue.component';
 import { SeanceDetailComponent } from './pages/mon-espace/seance-detail/seance-detail.component';
+import { MonProfilComponent } from './pages/mon-espace/mon-profil/mon-profil.component';
 
 export const routes: Routes = [
   {
@@ -55,6 +56,7 @@ export const routes: Routes = [
       { path: 'mes-chiens/:id/edit', component: ChienEditComponent, data: { breadcrumb: 'Modifier un chien' } },
       { path: 'seances', component: CatalogueComponent, data: { breadcrumb: 'Séances' } },
       { path: 'seances/:id', component: SeanceDetailComponent },
+      { path: 'mon-profil', component: MonProfilComponent, data: { breadcrumb: 'Mon profil' } },
     ],
   },
   {

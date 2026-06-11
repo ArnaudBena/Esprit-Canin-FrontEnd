@@ -1,0 +1,155 @@
+@if (profil(); as profil) {
+  <div class="mb-6">
+    <h1 class="text-2xl font-bold text-texte">Mon profil</h1>
+  </div>
+
+  <!-- Informations personnelles -->
+  <div class="rounded-lg border border-bordure bg-blanc p-6">
+    <div class="flex items-center justify-between">
+      <h2 class="text-lg font-bold text-texte">Informations personnelles</h2>
+      @if (!enEdition()) {
+        <button type="button" (click)="ouvrirEdition()"
+                class="rounded-sm bg-primaire px-4 py-2 text-sm font-medium text-blanc hover:opacity-90">
+          Modifier
+        </button>
+      }
+    </div>
+
+    @if (!enEdition()) {
+      <!-- Lecture -->
+      <dl class="mt-4 divide-y divide-bordure">
+        <div class="flex justify-between py-2.5">
+          <dt class="text-sm text-muted">Prénom</dt>
+          <dd class="text-sm font-medium text-texte">{{ profil.prenom }}</dd>
+        </div>
+        <div class="flex justify-between py-2.5">
+          <dt class="text-sm text-muted">Nom</dt>
+          <dd class="text-sm font-medium text-texte">{{ profil.nom }}</dd>
+        </div>
+        <div class="flex justify-between py-2.5">
+          <dt class="text-sm text-muted">Email</dt>
+          <dd class="text-sm font-medium text-texte">{{ profil.email }}</dd>
+        </div>
+        <div class="flex justify-between py-2.5">
+          <dt class="text-sm text-muted">Téléphone</dt>
+          <dd class="text-sm font-medium text-texte">{{ profil.telephone || '—' }}</dd>
+        </div>
+      </dl>
+    } @else {
+      <!-- Édition -->
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="mt-4 space-y-4">
+        <div>
+          <label for="prenom" class="block text-sm font-medium text-texte">Prénom</label>
+          <input id="prenom" type="text" formControlName="prenom"
+                 class="mt-1 w-full rounded-sm border border-bordure px-3 py-2 text-sm focus:border-primaire focus:outline-none" />
+          @if (form.get('prenom')?.touched && form.get('prenom')?.invalid) {
+            <p class="mt-1 text-xs text-alerte">Prénom requis (50 caractères max).</p>
+          }
+        </div>
+        <div>
+          <label for="nom" class="block text-sm font-medium text-texte">Nom</label>
+          <input id="nom" type="text" formControlName="nom"
+                 class="mt-1 w-full rounded-sm border border-bordure px-3 py-2 text-sm focus:border-primaire focus:outline-none" />
+          @if (form.get('nom')?.touched && form.get('nom')?.invalid) {
+            <p class="mt-1 text-xs text-alerte">Nom requis (50 caractères max).</p>
+          }
+        </div>
+        <div>
+          <label for="email" class="block text-sm font-medium text-texte">Email</label>
+          <input id="email" type="email" formControlName="email"
+                 class="mt-1 w-full rounded-sm border border-bordure px-3 py-2 text-sm focus:border-primaire focus:outline-none" />
+          @if (form.get('email')?.touched && form.get('email')?.invalid) {
+            <p class="mt-1 text-xs text-alerte">Email valide requis.</p>
+          }
+        </div>
+        <div>
+          <label for="telephone" class="block text-sm font-medium text-texte">Téléphone</label>
+          <input id="telephone" type="tel" formControlName="telephone"
+                 class="mt-1 w-full rounded-sm border border-bordure px-3 py-2 text-sm focus:border-primaire focus:outline-none" />
+          @if (form.get('telephone')?.touched && form.get('telephone')?.invalid) {
+            <p class="mt-1 text-xs text-alerte">20 caractères max.</p>
+          }
+        </div>
+        <div class="flex gap-3 pt-2">
+          <button type="submit" [disabled]="form.invalid"
+                  class="rounded-sm bg-primaire px-4 py-2 text-sm font-medium text-blanc hover:opacity-90 disabled:opacity-50">
+            Enregistrer
+          </button>
+          <button type="button" (click)="annuler()"
+                  class="rounded-sm border border-bordure px-4 py-2 text-sm font-medium text-texte hover:bg-fond">
+            Annuler
+          </button>
+        </div>
+      </form>
+    }
+  </div>
+  <!-- Sécurité -->
+  <div class="mt-6 rounded-lg border border-bordure bg-blanc p-6">
+    <div class="flex items-center justify-between">
+      <h2 class="text-lg font-bold text-texte">Sécurité</h2>
+      @if (!changementMdp()) {
+        <button type="button" (click)="ouvrirChangementMdp()"
+                class="rounded-sm border border-bordure px-4 py-2 text-sm font-medium text-texte hover:bg-fond">
+          Changer mon mot de passe
+        </button>
+      }
+    </div>
+    @if (!changementMdp()) {
+      <p class="mt-3 text-sm text-muted">Mot de passe</p>
+    } @else {
+      <form [formGroup]="passwordForm" (ngSubmit)="onChangerMotDePasse()" class="mt-4 space-y-4">
+        <div>
+          <label for="ancienPassword" class="block text-sm font-medium text-texte">Mot de passe actuel</label>
+          <input id="ancienPassword" type="password" formControlName="ancienPassword"
+                 class="mt-1 w-full rounded-sm border border-bordure px-3 py-2 text-sm focus:border-primaire focus:outline-none" />
+          @if (passwordForm.get('ancienPassword')?.touched && passwordForm.get('ancienPassword')?.invalid) {
+            <p class="mt-1 text-xs text-alerte">Mot de passe actuel requis.</p>
+          }
+        </div>
+        <div>
+          <label for="nouveauPassword" class="block text-sm font-medium text-texte">Nouveau mot de passe</label>
+          <input id="nouveauPassword" type="password" formControlName="nouveauPassword"
+                 class="mt-1 w-full rounded-sm border border-bordure px-3 py-2 text-sm focus:border-primaire focus:outline-none" />
+          @if (passwordForm.get('nouveauPassword')?.touched && passwordForm.get('nouveauPassword')?.invalid) {
+            <p class="mt-1 text-xs text-alerte">8 caractères minimum.</p>
+          }
+        </div>
+
+        <div>
+          <label for="confirmation" class="block text-sm font-medium text-texte">Confirmer le nouveau mot de passe</label>
+          <input id="confirmation" type="password" formControlName="confirmation"
+                 class="mt-1 w-full rounded-sm border border-bordure px-3 py-2 text-sm focus:border-primaire focus:outline-none" />
+          @if (passwordForm.get('confirmation')?.touched && passwordForm.hasError('motsDePasseDifferents')) {
+            <p class="mt-1 text-xs text-alerte">Les mots de passe ne correspondent pas.</p>
+          }
+        </div>
+        <div class="flex gap-3 pt-2">
+          <button type="submit" [disabled]="passwordForm.invalid"
+                  class="rounded-sm bg-primaire px-4 py-2 text-sm font-medium text-blanc hover:opacity-90 disabled:opacity-50">
+            Enregistrer
+          </button>
+          <button type="button" (click)="annulerChangementMdp()"
+                  class="rounded-sm border border-bordure px-4 py-2 text-sm font-medium text-texte hover:bg-fond">
+            Annuler
+          </button>
+        </div>
+      </form>
+    }
+  </div>
+  <!-- Mes données (RGPD) -->
+  <div class="mt-6 rounded-lg border border-bordure bg-blanc p-6">
+    <h2 class="text-lg font-bold text-texte">Mes données</h2>
+    <div class="mt-4 flex items-center justify-between gap-3">
+      <div>
+        <p class="text-sm font-medium text-texte">Supprimer mon compte</p>
+        <p class="text-xs text-muted">Cette action est irréversible et supprimera toutes tes données.</p>
+      </div>
+      <button type="button" (click)="onSupprimerCompte()"
+              class="flex-shrink-0 rounded-sm border border-alerte px-4 py-2 text-sm font-bold text-alerte hover:bg-alerte hover:text-blanc">
+        Supprimer
+      </button>
+    </div>
+  </div>
+} @else {
+  <p class="text-muted">Chargement…</p>
+}
