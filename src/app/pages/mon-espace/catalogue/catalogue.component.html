@@ -58,11 +58,15 @@
         </p>
 
         <div class="mt-4 flex items-center justify-between border-t border-bordure pt-4">
+          <span [class]="badgeDispoClasses(seance)">
+            @if (seance.complet) { Complet } @else { {{ seance.nbInscrits }}/{{ seance.participantsMaximum }} places }
+          </span>
           @if (seance.complet) {
-            <span class="rounded-full bg-fond px-2.5 py-0.5 text-xs font-medium text-muted">Complet</span>
-            <span class="cursor-not-allowed rounded-sm bg-fond px-4 py-2 text-sm font-medium text-subtle">Complet</span>
+            <button type="button" disabled
+                    class="cursor-not-allowed rounded-sm bg-fond px-4 py-2 text-sm font-medium text-subtle">
+              S'inscrire
+            </button>
           } @else {
-            <span class="rounded-full bg-image-bg px-2.5 py-0.5 text-xs font-medium text-primaire">{{ seance.nbInscrits }}/{{ seance.participantsMaximum }} places</span>
             <a [routerLink]="['/mon-espace/seances', seance.id]"
                class="rounded-sm bg-primaire px-4 py-2 text-sm font-medium text-blanc hover:opacity-90">
               S'inscrire

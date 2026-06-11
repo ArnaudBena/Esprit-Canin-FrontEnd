@@ -8,6 +8,7 @@ import { Chien } from '../../../models/chien.model';
 import { Inscription } from '../../../models/inscription.model';
 import { StatutPresence } from '../../../models/statut-presence.model';
 import { ageAffichage, ageEnMois } from '../../../utils/age.utils';
+import { InscriptionService } from '../../../services/inscription.service';
 
 @Component({
   selector: 'app-chien-detail',
@@ -22,6 +23,7 @@ import { ageAffichage, ageEnMois } from '../../../utils/age.utils';
 export class ChienDetailComponent implements OnInit {
   private chienService = inject(ChienService);
   private dialog = inject(DialogService);
+  private inscriptionService = inject(InscriptionService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
 
@@ -34,6 +36,10 @@ export class ChienDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = Number(this.route.snapshot.paramMap.get('id'));
+    this.charger();
+  }
+
+  private charger(): void {
     this.chienService.getMonChien(this.id).subscribe({
       next: (chien) => this.chien.set(chien),
       error: (err) => console.error('Erreur de chargement', err),
@@ -70,6 +76,26 @@ export class ChienDetailComponent implements OnInit {
         next: () => this.router.navigate(['/mon-espace/mes-chiens']),
         // 409 (chien avec inscriptions) → toast automatique via errorInterceptor
         error: (err) => console.error('Suppression impossible', err),
+      });
+    });
+  }
+
+  onDesinscrire(insc: Inscription): void {
+    const chien = this.chien();
+    if (!chien) return;
+
+    this.dialog.confirm({
+      titre: 'Se désinscrire de cette séance ?',
+      message: `${chien.nom} sera désinscrit de « ${insc.seance.typeSeance.libelle} ». La place sera libérée pour un autre adhérent.`,
+      confirmationLabel: 'Se désinscrire',
+      danger: true,
+    }).subscribe((confirme) => {
+      if (!confirme) return;
+
+      this.inscriptionService.annulerMonInscription(this.id, insc.seance.id!).subscribe({
+        next: () => this.charger(),
+        // 409 (séance passée)
+        error: (err) => console.error('Désinscription impossible', err),
       });
     });
   }
