@@ -32,6 +32,7 @@ import { ChienDetailComponent } from './pages/mon-espace/chien-detail/chien-deta
 import { CatalogueComponent } from './pages/mon-espace/catalogue/catalogue.component';
 import { SeanceDetailComponent } from './pages/mon-espace/seance-detail/seance-detail.component';
 import { MonProfilComponent } from './pages/mon-espace/mon-profil/mon-profil.component';
+import { DashboardAdherentComponent } from './pages/mon-espace/dashboard-adherent/dashboard-adherent.component';
 
 export const routes: Routes = [
   {
@@ -49,7 +50,8 @@ export const routes: Routes = [
     component: AdherentLayoutComponent,
     canActivate: [adherentGuard],
     children: [
-      { path: '', redirectTo: 'mes-chiens', pathMatch: 'full' },
+      { path: '', redirectTo: 'tableau-de-bord', pathMatch: 'full' },
+      { path: 'tableau-de-bord', component: DashboardAdherentComponent },
       { path: 'mes-chiens', component: MesChiensComponent, data: { breadcrumb: 'Mes chiens' } },
       { path: 'mes-chiens/new', component: ChienCreateComponent, data: { breadcrumb: 'Ajouter un chien' } },
       { path: 'mes-chiens/:id', component: ChienDetailComponent },

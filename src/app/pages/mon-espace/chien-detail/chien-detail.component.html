@@ -32,28 +32,28 @@
       <div class="rounded-lg border border-bordure bg-blanc p-6">
         <h2 class="text-lg font-bold text-texte">Informations</h2>
         <dl class="mt-4 divide-y divide-bordure">
-          <div class="flex justify-between py-2.5">
-            <dt class="text-sm text-muted">Date de naissance</dt>
+          <div class="flex gap-4 py-2.5">
+            <dt class="w-40 flex-shrink-0 text-sm text-muted">Date de naissance</dt>
             <dd class="text-sm font-medium text-texte">{{ chien.dateNaissance | date:'d MMMM yyyy':'':'fr' }}</dd>
           </div>
-          <div class="flex justify-between py-2.5">
-            <dt class="text-sm text-muted">Sexe</dt>
+          <div class="flex gap-4 py-2.5">
+            <dt class="w-40 flex-shrink-0 text-sm text-muted">Sexe</dt>
             <dd class="text-sm font-medium text-texte">{{ chien.sexe === 'MALE' ? 'Mâle' : 'Femelle' }}</dd>
           </div>
-          <div class="flex justify-between py-2.5">
-            <dt class="text-sm text-muted">Race</dt>
+          <div class="flex gap-4 py-2.5">
+            <dt class="w-40 flex-shrink-0 text-sm text-muted">Race</dt>
             <dd class="text-sm font-medium text-texte">{{ chien.race.nom }}</dd>
           </div>
-          <div class="flex justify-between py-2.5">
-            <dt class="text-sm text-muted">Poids</dt>
+          <div class="flex gap-4 py-2.5">
+            <dt class="w-40 flex-shrink-0 text-sm text-muted">Poids</dt>
             <dd class="text-sm font-medium text-texte">{{ chien.poids }} kg</dd>
           </div>
-          <div class="flex justify-between py-2.5">
-            <dt class="text-sm text-muted">Taille</dt>
+          <div class="flex gap-4 py-2.5">
+            <dt class="w-40 flex-shrink-0 text-sm text-muted">Taille</dt>
             <dd class="text-sm font-medium text-texte">{{ chien.taille }} cm</dd>
           </div>
-          <div class="flex justify-between py-2.5">
-            <dt class="text-sm text-muted">N° de puce</dt>
+          <div class="flex gap-4 py-2.5">
+            <dt class="w-40 flex-shrink-0 text-sm text-muted">N° de puce</dt>
             <dd class="text-sm font-medium text-texte">{{ chien.numeroPuce || '—' }}</dd>
           </div>
         </dl>

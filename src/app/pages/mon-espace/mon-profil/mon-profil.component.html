@@ -18,20 +18,20 @@
     @if (!enEdition()) {
       <!-- Lecture -->
       <dl class="mt-4 divide-y divide-bordure">
-        <div class="flex justify-between py-2.5">
-          <dt class="text-sm text-muted">Prénom</dt>
+        <div class="flex gap-4 py-2.5">
+          <dt class="w-40 flex-shrink-0 text-sm text-muted">Prénom</dt>
           <dd class="text-sm font-medium text-texte">{{ profil.prenom }}</dd>
         </div>
-        <div class="flex justify-between py-2.5">
-          <dt class="text-sm text-muted">Nom</dt>
+        <div class="flex gap-4 py-2.5">
+          <dt class="w-40 flex-shrink-0 text-sm text-muted">Nom</dt>
           <dd class="text-sm font-medium text-texte">{{ profil.nom }}</dd>
         </div>
-        <div class="flex justify-between py-2.5">
-          <dt class="text-sm text-muted">Email</dt>
+        <div class="flex gap-4 py-2.5">
+          <dt class="w-40 flex-shrink-0 text-sm text-muted">Email</dt>
           <dd class="text-sm font-medium text-texte">{{ profil.email }}</dd>
         </div>
-        <div class="flex justify-between py-2.5">
-          <dt class="text-sm text-muted">Téléphone</dt>
+        <div class="flex gap-4 py-2.5">
+          <dt class="w-40 flex-shrink-0 text-sm text-muted">Téléphone</dt>
           <dd class="text-sm font-medium text-texte">{{ profil.telephone || '—' }}</dd>
         </div>
       </dl>
