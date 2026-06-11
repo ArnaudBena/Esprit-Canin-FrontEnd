@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { LucideAngularModule, ChartColumn, Users, BookOpen, Calendar, Shield, PawPrint, Bone } from 'lucide-angular';
+import { LucideAngularModule, ChartColumn, Users, BookOpen, Calendar, Shield, PawPrint, Bone, User } from 'lucide-angular';
 
 
 @Component({
@@ -17,4 +17,5 @@ export class AdminSidebarComponent {
   readonly iconRoles = Shield;
   readonly iconRaces = PawPrint;
   readonly iconBone = Bone;
+  readonly iconProfil = User;
 }

@@ -83,6 +83,7 @@ export const routes: Routes = [
       { path: 'seances', component: SeanceListComponent },
       { path: 'seances/new', component: SeanceCreateComponent },
       { path: 'seances/:id/edit', component: SeanceEditComponent },
+      { path: 'mon-profil', component: MonProfilComponent, data: { breadcrumb: 'Mon profil' } },
     ]
   },
 ];

@@ -57,6 +57,14 @@
       <lucide-icon [img]="iconRaces" class="w-5 h-5"></lucide-icon>
       Races
     </a>
+    <a
+      routerLink="/admin/mon-profil"
+      routerLinkActive="bg-primaire-light text-primaire font-semibold border-r-[3px] border-primaire"
+      class="flex items-center gap-3 px-6 py-3 text-sm font-medium text-muted hover:bg-fond transition-colors"
+    >
+      <lucide-icon [img]="iconProfil" class="w-5 h-5"></lucide-icon>
+      Mon profil
+    </a>
   </nav>
 </aside>
 
@@ -110,5 +118,12 @@
     class="flex-shrink-0 rounded-full bg-fond px-3 py-1.5 text-xs font-medium text-muted whitespace-nowrap transition-colors"
   >
     Races
+  </a>
+  <a
+    routerLink="/admin/mon-profil"
+    routerLinkActive="!bg-primaire !text-blanc"
+    class="flex-shrink-0 rounded-full bg-fond px-3 py-1.5 text-xs font-medium text-muted whitespace-nowrap transition-colors"
+  >
+    Mon profil
   </a>
 </nav>

@@ -136,6 +136,7 @@
       </form>
     }
   </div>
+  @if (!estAdmin) {
   <!-- Mes données (RGPD) -->
   <div class="mt-6 rounded-lg border border-bordure bg-blanc p-6">
     <h2 class="text-lg font-bold text-texte">Mes données</h2>
@@ -150,6 +151,7 @@
       </button>
     </div>
   </div>
+  }
 } @else {
   <p class="text-muted">Chargement…</p>
 }

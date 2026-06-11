@@ -29,6 +29,8 @@ export class MonProfilComponent implements OnInit {
   private toastService = inject(ToastService);
   private router = inject(Router);
   private dialog = inject(DialogService);
+  // L'admin n'est pas supprimable (back = 403) → on masque la carte RGPD pour lui
+  protected readonly estAdmin = this.authService.jwtInfo()?.role === 'ADMIN';
 
   profil = signal<Utilisateur | null>(null);
   enEdition = signal(false);
