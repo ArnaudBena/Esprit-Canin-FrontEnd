@@ -94,15 +94,35 @@
         <div class="h-full rounded-full bg-primaire"
              [style.width.%]="seance.participantsMaximum ? (seance.nbInscrits / seance.participantsMaximum) * 100 : 0"></div>
       </div>
+
+      @if (inscritsIci().length > 0) {
+        <div class="mt-5">
+          <h3 class="text-sm font-bold text-texte">Vos chiens inscrits</h3>
+          <ul class="mt-2 space-y-2">
+            @for (insc of inscritsIci(); track insc.chien.id) {
+              <li class="flex items-center justify-between gap-3 rounded-sm bg-fond px-3 py-2">
+                <span class="text-sm font-medium text-texte">{{ insc.chien.nom }}</span>
+                <button type="button" (click)="onDesinscrire(insc)"
+                        class="rounded-sm border border-alerte px-3 py-1 text-sm font-bold text-alerte hover:bg-alerte hover:text-blanc">
+                  Se désinscrire
+                </button>
+              </li>
+            }
+          </ul>
+        </div>
+      }
+
       @if (seance.complet) {
         <p class="mt-4 rounded-sm bg-fond p-3 text-center text-sm font-medium text-muted">Cette séance est complète.</p>
+      } @else if (chiensDisponibles().length === 0) {
+        <p class="mt-4 rounded-sm bg-fond p-3 text-center text-sm font-medium text-muted">Tous vos chiens sont déjà inscrits à cette séance.</p>
       } @else {
         <form [formGroup]="form" (ngSubmit)="onInscrire()" class="mt-4">
           <label for="chien" class="mb-1.5 block text-sm font-medium text-texte">Choisir un chien</label>
           <select id="chien" formControlName="chienId"
                   class="h-input w-full rounded-sm border border-input px-3 text-texte">
             <option [ngValue]="null" disabled>Sélectionnez un chien</option>
-            @for (chien of mesChiens(); track chien.id) {
+            @for (chien of chiensDisponibles(); track chien.id) {
               <option [ngValue]="chien.id">{{ chien.nom }} — {{ chien.race.nom }}</option>
             }
           </select>

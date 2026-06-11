@@ -72,7 +72,13 @@
                   <p class="text-sm font-semibold text-texte">{{ insc.seance.typeSeance.libelle }}</p>
                   <p class="text-xs text-muted">{{ insc.seance.date | date:'EEE d MMM yyyy':'':'fr' }} — {{ insc.seance.heureDebut.substring(0, 5) }}</p>
                 </div>
-                <span class="flex-shrink-0 rounded-full bg-image-bg px-2.5 py-0.5 text-xs font-medium text-primaire">Confirmé</span>
+                <div class="flex flex-shrink-0 items-center gap-3">
+                  <span class="rounded-full bg-image-bg px-2.5 py-0.5 text-xs font-medium text-primaire">Confirmé</span>
+                  <button type="button" (click)="onDesinscrire(insc)"
+                          class="rounded-sm border border-alerte px-3 py-1.5 text-sm font-bold text-alerte hover:bg-alerte hover:text-blanc">
+                    Se désinscrire
+                  </button>
+                </div>
               </div>
             }
           </div>

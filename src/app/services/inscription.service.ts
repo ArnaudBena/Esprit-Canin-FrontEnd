@@ -18,4 +18,8 @@ export class InscriptionService {
   getMesInscriptions(): Observable<Inscription[]> {
     return this.http.get<Inscription[]>(`${this.apiUrl}/mes-inscriptions`);
   }
+
+  annulerMonInscription(chienId: number, seanceId: number): Observable<void> {
+    return this.http.patch<void>(`${this.apiUrl}/mes-inscriptions/${chienId}/${seanceId}/annuler`, {});
+  }
 }

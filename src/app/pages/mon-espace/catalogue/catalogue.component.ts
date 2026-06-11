@@ -62,4 +62,10 @@ export class CatalogueComponent implements OnInit {
     this.filtres.reset({ typeSeanceId: '', date: '', disponible: '' });
     this.charger();
   }
+
+  // Badge de disponibilité : vert si dispo (comme la maquette), rouge plein si complet
+  badgeDispoClasses(s: SeanceCatalogue): string {
+    if (s.complet) return 'rounded-full px-2.5 py-0.5 text-sm font-bold bg-alerte text-blanc';
+    return 'rounded-full px-2.5 py-0.5 text-xs font-medium bg-image-bg text-primaire';
+  }
 }
