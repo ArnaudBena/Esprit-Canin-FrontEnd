@@ -31,4 +31,8 @@ export class InscriptionService {
   validerAcquisition(chienId: number, seanceId: number): Observable<void> {
     return this.http.patch<void>(`${this.apiUrl}/${chienId}/${seanceId}/acquisition`, {});
   }
+
+  commenter(chienId: number, seanceId: number, commentaire: string): Observable<void> {
+    return this.http.patch<void>(`${this.apiUrl}/${chienId}/${seanceId}/commentaire`, { commentaire });
+  }
 }
