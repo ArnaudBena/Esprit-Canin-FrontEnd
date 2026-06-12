@@ -1,6 +1,6 @@
 <nav class="flex h-navbar-mobile lg:h-navbar-desktop items-center justify-between bg-admin-nav px-4 lg:px-8 text-blanc">
   <div class="flex items-center gap-6 lg:gap-10 min-w-0">
-    <a routerLink="/" class="flex items-center flex-shrink-0" aria-label="Accueil Esprit Canin">
+    <a routerLink="/admin" class="flex items-center flex-shrink-0" aria-label="Accueil administration">
       <img src="/logo.svg" alt="" class="block h-9 lg:h-12 w-auto" />
     </a>
     <span class="hidden sm:inline-block rounded-md bg-white/10 px-2.5 py-1 text-xs font-semibold uppercase tracking-wider text-white/50">
@@ -33,6 +33,10 @@
           <p class="truncate text-sm font-medium">{{ jwtInfo()?.sub }}</p>
           <p class="text-xs text-muted">{{ jwtInfo()?.role }}</p>
         </div>
+        <a routerLink="/" role="menuitem" class="flex w-full items-center gap-2 px-4 py-3 text-left text-sm hover:bg-fond">
+          <lucide-icon [img]="iconGlobe" class="h-4 w-4"></lucide-icon>
+          Voir le site public
+        </a>
         <button
           type="button"
           role="menuitem"

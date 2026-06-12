@@ -1,8 +1,187 @@
-<section class="mx-auto max-w-3xl px-6 py-20 text-center">
-  <h1 class="text-texte">Bienvenue chez Esprit Canin</h1>
-  <p class="mt-4 text-muted">Le club canin qui éduque votre compagnon avec passion.</p>
-  <a routerLink="/seances"
-     class="mt-8 inline-block rounded-sm bg-primaire px-6 py-3 font-semibold text-blanc hover:opacity-90">
-    Découvrir les séances
-  </a>
+<!-- ===== HERO ===== -->
+<section class="bg-fond">
+  <div class="mx-auto grid max-w-7xl items-center gap-10 px-6 py-16 lg:grid-cols-2 lg:gap-16 lg:px-20 lg:py-24">
+    <div>
+      <span class="inline-block rounded-full bg-badge-dispo-bg px-3 py-1 text-sm font-medium text-badge-dispo-text">
+        Club canin Esprit Canin
+      </span>
+      <h1 class="mt-5 text-4xl font-bold leading-tight text-texte lg:text-5xl">
+        Éduquez votre chien <span class="text-primaire">avec passion</span>
+      </h1>
+      <p class="mt-5 max-w-xl text-lg text-muted">
+        Obéissance, agility, pistage et socialisation, encadrés par des coachs passionnés.
+        Pour tous les chiens, à tous les niveaux.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a routerLink="/inscription"
+           class="rounded-sm bg-primaire px-6 py-3 font-semibold text-blanc hover:opacity-90">
+          Rejoindre le club
+        </a>
+        <a href="#cours"
+           class="rounded-sm border border-bordure bg-blanc px-6 py-3 font-semibold text-texte hover:bg-fond">
+          Découvrir nos cours
+        </a>
+      </div>
+    </div>
+
+    <!-- Placeholder image héros (asset à venir) -->
+    <div class="flex aspect-[4/3] items-center justify-center rounded-2xl bg-image-bg">
+      <lucide-icon [img]="iconPatte" class="h-24 w-24 text-primaire/40"></lucide-icon>
+    </div>
+  </div>
 </section>
+
+<!-- ===== COMMENT ÇA MARCHE ===== -->
+<section class="bg-blanc">
+  <div class="mx-auto max-w-7xl px-6 py-16 lg:px-20 lg:py-20">
+    <div class="text-center">
+      <h2 class="text-3xl font-bold text-texte">Comment ça marche</h2>
+      <p class="mt-3 text-muted">Trois étapes simples pour commencer l’aventure avec votre compagnon.</p>
+    </div>
+    <div class="mt-12 grid gap-8 md:grid-cols-3">
+      @for (etape of etapes; track etape.titre) {
+        <div class="rounded-xl border border-bordure border-l-4 bg-blanc p-7 {{ etape.borderClass }}">
+          <div class="flex h-12 w-12 items-center justify-center rounded-[10px] {{ etape.iconClass }}">
+            <lucide-icon [img]="etape.icon" class="h-6 w-6"></lucide-icon>
+          </div>
+          <h3 class="mt-4 text-xl font-bold text-texte">{{ etape.titre }}</h3>
+          <p class="mt-2 text-sm text-subtle">{{ etape.texte }}</p>
+          <ul class="mt-4 space-y-2">
+            @for (point of etape.points; track point) {
+              <li class="flex items-center gap-2 text-sm text-texte">
+                <lucide-icon [img]="iconCheck" class="h-4 w-4 flex-shrink-0 text-secondaire"></lucide-icon>
+                {{ point }}
+              </li>
+            }
+          </ul>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ===== NOS TYPES DE COURS ===== -->
+<section id="cours" class="bg-fond">
+  <div class="mx-auto max-w-7xl px-6 py-16 lg:px-20 lg:py-20">
+    <div class="text-center">
+      <h2 class="text-3xl font-bold text-texte">Nos types de cours</h2>
+      <p class="mt-3 text-muted">Découvrez nos différentes activités adaptées à tous les niveaux.</p>
+    </div>
+    <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      @for (c of cours; track c.nom) {
+        <div class="flex flex-col rounded-xl border border-bordure bg-blanc p-6">
+          <div class="flex h-12 w-12 items-center justify-center rounded-[10px] bg-primaire-light text-primaire">
+            <lucide-icon [img]="c.icon" class="h-6 w-6"></lucide-icon>
+          </div>
+          <h3 class="mt-4 text-lg font-bold text-texte">{{ c.nom }}</h3>
+          <p class="mt-2 flex-1 text-sm text-subtle">{{ c.texte }}</p>
+        </div>
+      }
+    </div>
+    <div class="mt-10 text-center">
+      <a routerLink="/inscription"
+         class="inline-block rounded-sm bg-accent px-6 py-3 font-semibold text-accent-text hover:opacity-90">
+        Inscrivez-vous
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TÉMOIGNAGES ===== -->
+<section class="bg-blanc">
+  <div class="mx-auto max-w-7xl px-6 py-16 lg:px-20 lg:py-20">
+    <div class="text-center">
+      <h2 class="text-3xl font-bold text-texte">Ils nous font confiance</h2>
+      <p class="mt-3 text-muted">Découvrez les expériences de nos membres et de leurs compagnons.</p>
+    </div>
+    <div class="mt-12 grid gap-6 md:grid-cols-3">
+      @for (t of temoignages; track t.nom) {
+        <button type="button" (click)="ouvrir(t)"
+                class="flex flex-col rounded-xl border border-bordure bg-fond p-6 text-left transition hover:shadow-md">
+          <span class="flex items-center gap-1 text-accent">
+            @for (s of etoiles; track s) {
+              <lucide-icon [img]="iconStar" class="h-4 w-4 fill-accent" [class.opacity-30]="s > t.note"></lucide-icon>
+            }
+          </span>
+          <span class="mt-4 block flex-1 text-texte">« {{ t.texte }} »</span>
+          <span class="mt-5 flex items-center gap-3">
+            <span class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-primaire text-sm font-bold text-blanc">
+              {{ t.initiales }}
+            </span>
+            <span class="min-w-0">
+              <span class="block text-sm font-semibold text-texte">{{ t.nom }}</span>
+              <span class="block text-xs text-muted">{{ t.cours }}</span>
+            </span>
+          </span>
+        </button>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ===== MODALE TÉMOIGNAGE ===== -->
+@if (temoignageOuvert(); as t) {
+  <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4" (click)="fermer()">
+    <div class="w-full max-w-lg overflow-hidden rounded-xl bg-blanc shadow-xl"
+         role="dialog" aria-modal="true" [attr.aria-label]="'Témoignage de ' + t.nom"
+         (click)="$event.stopPropagation()">
+      <!-- En-tête -->
+      <div class="flex items-center justify-between bg-primaire px-6 py-4">
+        <div class="flex items-center gap-2 text-blanc">
+          <lucide-icon [img]="iconHeart" class="h-5 w-5"></lucide-icon>
+          <span class="text-lg font-bold">Témoignage</span>
+        </div>
+        <button type="button" (click)="fermer()" aria-label="Fermer"
+                class="flex h-8 w-8 items-center justify-center rounded-md bg-alerte text-blanc hover:opacity-90">
+          <lucide-icon [img]="iconClose" class="h-5 w-5"></lucide-icon>
+        </button>
+      </div>
+
+      <!-- Corps -->
+      <div class="px-6 py-6">
+        <h3 class="text-xl font-bold text-texte">{{ t.nom }} — {{ t.cours }}</h3>
+        <p class="mt-3 text-muted">{{ t.intro }}</p>
+
+        <!-- Citation mise en avant -->
+        <div class="mt-5 rounded-lg border-l-4 border-primaire bg-primaire-light p-5">
+          <span class="flex h-9 w-9 items-center justify-center rounded-full bg-primaire text-blanc">
+            <lucide-icon [img]="iconQuote" class="h-4 w-4"></lucide-icon>
+          </span>
+          <p class="mt-3 italic text-texte">{{ t.citation }}</p>
+          <div class="mt-4 flex items-center gap-3">
+            <span class="flex h-9 w-9 items-center justify-center rounded-full bg-primaire text-sm font-bold text-blanc">{{ t.initiales }}</span>
+            <span class="text-sm font-semibold text-texte">{{ t.auteur }}</span>
+          </div>
+        </div>
+
+        <!-- Infos 2x2 -->
+        <div class="mt-5 grid grid-cols-2 gap-3">
+          <div class="rounded-lg bg-fond p-4">
+            <p class="flex items-center gap-1.5 text-xs text-muted">
+              <lucide-icon [img]="iconClock" class="h-4 w-4"></lucide-icon> Durée programme
+            </p>
+            <p class="mt-1 font-bold text-texte">{{ t.duree }}</p>
+          </div>
+          <div class="rounded-lg bg-fond p-4">
+            <p class="flex items-center gap-1.5 text-xs text-muted">
+              <lucide-icon [img]="iconResultats" class="h-4 w-4"></lucide-icon> Résultats
+            </p>
+            <p class="mt-1 font-bold text-texte">{{ t.resultats }}</p>
+          </div>
+          <div class="rounded-lg bg-fond p-4">
+            <p class="flex items-center gap-1.5 text-xs text-muted">
+              <lucide-icon [img]="iconNiveau" class="h-4 w-4"></lucide-icon> Niveau
+            </p>
+            <p class="mt-1 font-bold text-texte">{{ t.niveau }}</p>
+          </div>
+          <div class="rounded-lg bg-fond p-4">
+            <p class="flex items-center gap-1.5 text-xs text-muted">
+              <lucide-icon [img]="iconRace" class="h-4 w-4"></lucide-icon> Race du chien
+            </p>
+            <p class="mt-1 font-bold text-texte">{{ t.race }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+}

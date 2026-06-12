@@ -38,6 +38,7 @@ import { coachGuard } from './guards/coach.guard';
 import { MesSeancesComponent } from './pages/coach/mes-seances/mes-seances.component';
 import { ParticipantsComponent } from './pages/coach/participants/participants.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { guestGuard } from './guards/guest.guard';
 
 export const routes: Routes = [
   {
@@ -47,9 +48,8 @@ export const routes: Routes = [
       { path: '', component: HomeComponent },
     ],
   },
-  { path: 'login',
-    component: LoginComponent },
-  { path: 'inscription', component: InscriptionComponent },
+  { path: 'login', component: LoginComponent, canActivate: [guestGuard] },
+  { path: 'inscription', component: InscriptionComponent, canActivate: [guestGuard] },
   {
     path: 'mon-espace',
     component: AdherentLayoutComponent,
