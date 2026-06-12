@@ -52,59 +52,77 @@
 } @else {
   <div class="mt-6 flex flex-col gap-3">
     @for (i of inscriptions(); track i.chien.id) {
-      <div class="flex flex-col gap-4 rounded-lg border border-bordure bg-blanc p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5">
-        <!-- Chien + propriétaire -->
-        <div class="min-w-0">
-          <p class="font-bold text-texte">{{ i.chien.nom }}</p>
-          @if (i.chien.utilisateur; as proprio) {
-            <p class="text-sm text-muted">{{ proprio.prenom }} {{ proprio.nom }}</p>
+      <div class="rounded-lg border border-bordure bg-blanc p-4 sm:p-5">
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <!-- Chien + propriétaire -->
+          <div class="min-w-0">
+            <p class="font-bold text-texte">{{ i.chien.nom }}</p>
+            @if (i.chien.utilisateur; as proprio) {
+              <p class="text-sm text-muted">{{ proprio.prenom }} {{ proprio.nom }}</p>
+            }
+          </div>
+
+          @if (appelDisponible()) {
+            <!-- Appel + acquisition (séance terminée) -->
+            <div class="flex flex-wrap items-center gap-3">
+              @if (i.acquisitionValidee) {
+                <!-- Acquisition validée : présence verrouillée -->
+                <span class="rounded-full bg-fond px-3 py-1 text-sm font-medium text-muted">Présent</span>
+                <span class="flex items-center gap-1.5 rounded-full bg-badge-dispo-bg px-3 py-1 text-sm font-medium text-badge-dispo-text">
+                  <lucide-icon [img]="iconCheck" class="h-4 w-4"></lucide-icon>
+                  Acquis validé
+                </span>
+              } @else {
+                <!-- Présence (modifiable tant que l'acquisition n'est pas validée) -->
+                <div class="inline-flex overflow-hidden rounded-md border border-bordure">
+                  <button type="button" (click)="choisirPresence(i, StatutPresence.PRESENT)"
+                          [class]="presenceAffichee(i) === StatutPresence.PRESENT
+                            ? 'bg-badge-dispo-bg px-4 py-1.5 text-sm font-medium text-badge-dispo-text'
+                            : 'px-4 py-1.5 text-sm font-medium text-muted hover:bg-fond'">
+                    Présent
+                  </button>
+                  <button type="button" (click)="choisirPresence(i, StatutPresence.ABSENT)"
+                          [class]="presenceAffichee(i) === StatutPresence.ABSENT
+                            ? 'bg-alerte px-4 py-1.5 text-sm font-bold text-blanc'
+                            : 'px-4 py-1.5 text-sm font-medium text-muted hover:bg-fond'">
+                    Absent
+                  </button>
+                </div>
+                <button type="button" (click)="validerAcquisition(i)"
+                        [disabled]="i.statutPresence !== StatutPresence.PRESENT"
+                        title="Le chien doit être marqué présent"
+                        class="rounded-sm bg-primaire px-4 py-1.5 text-sm font-medium text-blanc hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40">
+                  Valider l'acquisition
+                </button>
+              }
+            </div>
+          } @else {
+            <!-- Lecture seule : statut courant -->
+            <span class="flex-shrink-0 text-sm text-muted">
+              @switch (i.statutPresence) {
+                @case (StatutPresence.PRESENT) { Présent }
+                @case (StatutPresence.ABSENT) { Absent }
+                @default { Inscrit }
+              }
+            </span>
           }
         </div>
 
-        @if (appelDisponible()) {
-          <!-- Appel + acquisition (séance terminée) -->
-          <div class="flex flex-wrap items-center gap-3">
-            @if (i.acquisitionValidee) {
-              <!-- Acquisition validée : présence verrouillée -->
-              <span class="rounded-full bg-fond px-3 py-1 text-sm font-medium text-muted">Présent</span>
-              <span class="flex items-center gap-1.5 rounded-full bg-badge-dispo-bg px-3 py-1 text-sm font-medium text-badge-dispo-text">
-                <lucide-icon [img]="iconCheck" class="h-4 w-4"></lucide-icon>
-                Acquis validé
-              </span>
-            } @else {
-              <!-- Présence (modifiable tant que l'acquisition n'est pas validée) -->
-              <div class="inline-flex overflow-hidden rounded-md border border-bordure">
-                <button type="button" (click)="choisirPresence(i, StatutPresence.PRESENT)"
-                        [class]="presenceAffichee(i) === StatutPresence.PRESENT
-                          ? 'bg-badge-dispo-bg px-4 py-1.5 text-sm font-medium text-badge-dispo-text'
-                          : 'px-4 py-1.5 text-sm font-medium text-muted hover:bg-fond'">
-                  Présent
-                </button>
-                <button type="button" (click)="choisirPresence(i, StatutPresence.ABSENT)"
-                        [class]="presenceAffichee(i) === StatutPresence.ABSENT
-                          ? 'bg-alerte px-4 py-1.5 text-sm font-bold text-blanc'
-                          : 'px-4 py-1.5 text-sm font-medium text-muted hover:bg-fond'">
-                  Absent
-                </button>
-              </div>
-              <button type="button" (click)="validerAcquisition(i)"
-                      [disabled]="i.statutPresence !== StatutPresence.PRESENT"
-                      title="Le chien doit être marqué présent"
-                      class="rounded-sm bg-primaire px-4 py-1.5 text-sm font-medium text-blanc hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40">
-                Valider l'acquisition
-              </button>
-            }
+        <!-- Commentaire du coach (éditable à tout moment, visible coach/admin) -->
+        <div class="mt-4 border-t border-bordure pt-4">
+          <label [for]="'commentaire-' + i.chien.id" class="mb-1.5 block text-sm font-medium text-texte">Commentaire</label>
+          <textarea [id]="'commentaire-' + i.chien.id" rows="2" maxlength="500"
+                    [value]="commentaireAffiche(i)"
+                    (input)="setCommentaire(i, $any($event.target).value)"
+                    placeholder="Note sur ce chien (visible coach/admin uniquement)…"
+                    class="w-full rounded-sm border border-input px-3 py-2 text-sm text-texte placeholder:text-placeholder"></textarea>
+          <div class="mt-2 flex justify-end">
+            <button type="button" (click)="enregistrerCommentaire(i)" [disabled]="!commentaireModifie(i)"
+                    class="rounded-sm bg-primaire px-4 py-1.5 text-sm font-medium text-blanc hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40">
+              Enregistrer
+            </button>
           </div>
-        } @else {
-          <!-- Lecture seule : statut courant -->
-          <span class="flex-shrink-0 text-sm text-muted">
-            @switch (i.statutPresence) {
-              @case (StatutPresence.PRESENT) { Présent }
-              @case (StatutPresence.ABSENT) { Absent }
-              @default { Inscrit }
-            }
-          </span>
-        }
+        </div>
       </div>
     }
   </div>

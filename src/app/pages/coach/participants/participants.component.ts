@@ -39,6 +39,9 @@ export class ParticipantsComponent implements OnInit {
   // Sélection locale de présence (chienId -> statut) non encore enregistrée
   private presenceLocale = signal<Record<number, StatutPresence>>({});
 
+  // Édition locale du commentaire coach (chienId -> texte) non encore enregistrée
+  private commentaireLocal = signal<Record<number, string>>({});
+
   seance = computed(() => this.inscriptions()[0]?.seance ?? null);
 
   // Appel possible uniquement sur une séance terminée et non annulée
@@ -111,6 +114,41 @@ export class ParticipantsComponent implements OnInit {
       error: (err) => {
         console.error('Erreur acquisition', err);
         this.toast.show("Impossible de valider l'acquisition", 'error');
+      },
+    });
+  }
+
+  // Commentaire affiché = édition locale si présente, sinon valeur enregistrée
+  commentaireAffiche(inscription: Inscription): string {
+    const local = this.commentaireLocal()[inscription.chien.id!];
+    return local !== undefined ? local : (inscription.commentaireCoach ?? '');
+  }
+
+  setCommentaire(inscription: Inscription, valeur: string): void {
+    this.commentaireLocal.update((map) => ({ ...map, [inscription.chien.id!]: valeur }));
+  }
+
+  commentaireModifie(inscription: Inscription): boolean {
+    const local = this.commentaireLocal()[inscription.chien.id!];
+    return local !== undefined && local !== (inscription.commentaireCoach ?? '');
+  }
+
+  enregistrerCommentaire(inscription: Inscription): void {
+    const texte = this.commentaireLocal()[inscription.chien.id!] ?? '';
+    this.inscriptionService.commenter(inscription.chien.id!, this.id, texte).subscribe({
+      next: () => {
+        this.majInscription(inscription, { commentaireCoach: texte });
+        // la valeur serveur fait foi : on nettoie l'édition locale de ce chien
+        this.commentaireLocal.update((map) => {
+          const copie = { ...map };
+          delete copie[inscription.chien.id!];
+          return copie;
+        });
+        this.toast.show('Commentaire enregistré', 'success');
+      },
+      error: (err) => {
+        console.error('Erreur commentaire', err);
+        this.toast.show("Impossible d'enregistrer le commentaire", 'error');
       },
     });
   }
