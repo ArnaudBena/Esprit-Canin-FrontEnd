@@ -2,24 +2,23 @@
 <div
   class="fixed top-24 left-1/2 -translate-x-1/2 z-50 flex flex-col gap-2 w-[calc(100%-2rem)] sm:w-auto sm:min-w-sm sm:max-w-md"
   aria-live="polite"
-  aria-atomic="true"
->
+  aria-atomic="true">
   @for (t of list; track t.id) {
     <div
-      class="flex items-start gap-3 rounded-lg shadow-lg px-4 py-3 text-sm font-bold text-blanc"
+      class="relative overflow-hidden flex items-start gap-3 rounded-lg shadow-lg px-4 py-3 text-sm font-bold text-blanc"
       [class.bg-primaire]="t.type === 'success'"
       [class.bg-alerte]="t.type === 'error'"
-      role="alert"
-    >
+      role="alert">
       <span class="flex-1 break-words">{{ t.message }}</span>
       <button
         type="button"
         (click)="close(t.id)"
         class="flex-shrink-0 text-blanc/80 hover:text-blanc transition"
-        aria-label="Fermer la notification"
-      >
+        aria-label="Fermer la notification">
         ✕
       </button>
+      <!-- barre de progression : se vide en 5s -->
+      <div class="toast-progress absolute bottom-0 left-0 h-1 bg-white/40"></div>
     </div>
   }
 </div>

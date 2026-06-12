@@ -1,0 +1,9 @@
+/* Barre de progression du toast : se vide de 100% à 0% en 5s. */
+.toast-progress {
+  animation: toast-progress 5s linear forwards;
+}
+
+@keyframes toast-progress {
+  from { width: 100%; }
+  to   { width: 0%; }
+}

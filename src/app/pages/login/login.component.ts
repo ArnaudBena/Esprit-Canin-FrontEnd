@@ -36,7 +36,8 @@ export class LoginComponent {
       next: () => {
         this.toastService.show('Connexion réussie', 'success');
         const role = this.authService.jwtInfo()?.role;
-        this.router.navigateByUrl(role === 'ADMIN' ? '/admin' : '/mon-espace');
+        const cible = role === 'ADMIN' ? '/admin' : role === 'COACH' ? '/espace-coach' : '/mon-espace';
+        this.router.navigateByUrl(cible);
       },
       error: () => this.toastService.show('Email ou mot de passe incorrect', 'error'),
     });
