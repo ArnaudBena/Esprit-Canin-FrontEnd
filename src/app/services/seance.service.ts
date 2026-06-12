@@ -69,4 +69,15 @@ export class SeanceService {
   getPrerequis(id: number): Observable<Prerequis[]> {
     return this.http.get<Prerequis[]>(`${this.apiUrl}/catalogue/${id}/prerequis`);
   }
+
+  // --- Espace coach ---
+  getMesSeances(filtres: {
+    periode?: string;        // 'semaine' | 'mois' | undefined (= tout)
+    typeSeanceId?: string;
+  }): Observable<Seance[]> {
+    let params = new HttpParams();
+    if (filtres.periode) params = params.set('periode', filtres.periode);
+    if (filtres.typeSeanceId) params = params.set('typeSeanceId', filtres.typeSeanceId);
+    return this.http.get<Seance[]>(`${this.apiUrl}/mes-seances`, { params });
+  }
 }

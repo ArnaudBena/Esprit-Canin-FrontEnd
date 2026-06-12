@@ -35,6 +35,7 @@ import { MonProfilComponent } from './pages/mon-espace/mon-profil/mon-profil.com
 import { DashboardAdherentComponent } from './pages/mon-espace/dashboard-adherent/dashboard-adherent.component';
 import { CoachLayoutComponent } from './layouts/coach-layout/coach-layout.component';
 import { coachGuard } from './guards/coach.guard';
+import { MesSeancesComponent } from './pages/coach/mes-seances/mes-seances.component';
 
 export const routes: Routes = [
   {
@@ -68,7 +69,8 @@ export const routes: Routes = [
     component: CoachLayoutComponent,
     canActivate: [coachGuard],
     children: [
-      { path: '', redirectTo: 'mon-profil', pathMatch: 'full' },
+      { path: '', redirectTo: 'mes-seances', pathMatch: 'full' },
+      { path: 'mes-seances', component: MesSeancesComponent },
       { path: 'mon-profil', component: MonProfilComponent, data: { breadcrumb: 'Mon profil' } },
     ],
   },

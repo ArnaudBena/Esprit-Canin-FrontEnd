@@ -1,0 +1,81 @@
+<h1 class="text-2xl font-bold text-texte lg:text-4xl">Mes séances</h1>
+
+<!-- Filtres (appliqués côté serveur) -->
+<form [formGroup]="filtres" (ngSubmit)="charger()"
+      class="mt-6 flex flex-col gap-4 rounded-lg border border-bordure bg-blanc p-4 sm:flex-row sm:items-end">
+  <div class="flex-1">
+    <label for="periode" class="mb-1.5 block text-sm font-medium text-texte">Période</label>
+    <select id="periode" formControlName="periode"
+            class="h-input w-full rounded-sm border border-input px-3 text-texte">
+      <option value="">Tout</option>
+      <option value="semaine">Cette semaine</option>
+      <option value="mois">Ce mois</option>
+    </select>
+  </div>
+  <div class="flex-1">
+    <label for="type" class="mb-1.5 block text-sm font-medium text-texte">Type de cours</label>
+    <select id="type" formControlName="typeSeanceId"
+            class="h-input w-full rounded-sm border border-input px-3 text-texte">
+      <option value="">Tous les types</option>
+      @for (t of types; track t.id) {
+        <option [value]="t.id">{{ t.libelle }}</option>
+      }
+    </select>
+  </div>
+  <div class="flex flex-shrink-0 gap-2">
+    <button type="submit"
+            class="h-input rounded-sm bg-primaire px-6 font-medium text-blanc hover:opacity-90">
+      Filtrer
+    </button>
+    <button type="button" (click)="reinitialiser()"
+            class="h-input rounded-sm border border-bordure px-4 font-medium text-texte hover:bg-fond">
+      Réinitialiser
+    </button>
+  </div>
+</form>
+
+<!-- Résultats : liste verticale de lignes horizontales (maquette 13) -->
+@if (seances().length === 0) {
+  <p class="mt-8 text-muted">Vous n'avez aucune séance.</p>
+} @else {
+  <div class="mt-8 flex flex-col gap-4">
+    @for (seance of seances(); track seance.id) {
+      <div class="flex flex-col gap-4 rounded-lg border border-bordure bg-blanc p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
+        <!-- Gauche : tuile date + détails -->
+        <div class="flex items-center gap-5">
+          <div class="min-w-[72px] flex-shrink-0 rounded-md bg-fond px-4 py-3 text-center">
+            <p class="text-2xl font-bold leading-none text-primaire">{{ seance.date | date:'d':'':'fr' }}</p>
+            <p class="mt-1 text-xs font-semibold uppercase tracking-wider text-muted">{{ seance.date | date:'MMM':'':'fr' }}</p>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold text-texte">{{ seance.typeSeance.libelle }}</h3>
+            <p class="mt-1 flex items-center gap-1.5 text-sm text-muted">
+              <lucide-icon [img]="iconClock" class="h-4 w-4"></lucide-icon>
+              {{ seance.heureDebut.substring(0, 5) }} • {{ dureeAffichage(seance.dureeMinutes) }}
+            </p>
+          </div>
+        </div>
+
+        <!-- Droite : places + badge + action -->
+        <div class="flex flex-wrap items-center gap-4 sm:gap-5">
+          <div class="text-center">
+            <p class="flex items-center gap-1.5 text-xl font-bold leading-none text-primaire">
+              <lucide-icon [img]="iconUsers" class="h-4 w-4"></lucide-icon>
+              {{ nbInscrits(seance) }}/{{ seance.typeSeance.participantsMaximum }}
+            </p>
+            <p class="mt-1 text-xs text-muted">inscrits</p>
+          </div>
+          @if (estComplet(seance)) {
+            <span class="rounded-full bg-badge-complet-bg px-3 py-1 text-sm font-medium text-badge-complet-text">Complet</span>
+          } @else {
+            <span class="rounded-full bg-badge-dispo-bg px-3 py-1 text-sm font-medium text-badge-dispo-text">Places dispo</span>
+          }
+          <a [routerLink]="['/espace-coach/mes-seances', seance.id]"
+             class="flex-shrink-0 rounded-sm bg-primaire px-5 py-2 text-sm font-medium text-blanc hover:opacity-90">
+            Voir les participants
+          </a>
+        </div>
+      </div>
+    }
+  </div>
+}
