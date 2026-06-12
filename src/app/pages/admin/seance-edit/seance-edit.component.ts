@@ -13,6 +13,7 @@ import { Inscription } from '../../../models/inscription.model';
 import { StatutSeance } from '../../../models/statut-seance.model';
 import { forkJoin } from 'rxjs';
 import { timeRangeValidator } from '../../../validators/time-range.validator';
+import { StatutPresence } from '../../../models/statut-presence.model';
 
 @Component({
   selector: 'app-seance-edit',
@@ -123,5 +124,14 @@ export class SeanceEditComponent implements OnInit {
   onDesinscrire(inscription: Inscription): void {
     // TODO : à brancher quand on aura un inscription.service côté front (phase 2)
     console.log('Désinscription à venir', inscription);
+  }
+
+  // Inscrits actifs (hors annulés)
+  inscritsActifs(seance: Seance): Inscription[] {
+    return (seance.inscriptions ?? []).filter((i) => i.statutPresence !== StatutPresence.ANNULEE);
+  }
+
+  nbInscrits(seance: Seance): number {
+    return this.inscritsActifs(seance).length;
   }
 }

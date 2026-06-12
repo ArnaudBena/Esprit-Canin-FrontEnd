@@ -145,17 +145,17 @@
       <h2 class="text-base lg:text-lg font-bold text-texte mb-1">
         Inscrits
         <span class="text-sm font-normal text-muted">
-          ({{ s.inscriptions?.length ?? 0 }} / {{ s.typeSeance.participantsMaximum }})
+          ({{ nbInscrits(s) }} / {{ s.typeSeance.participantsMaximum }})
         </span>
       </h2>
       <p class="text-xs text-muted italic mb-4">
         Lecture seule — la gestion des inscriptions sera ajoutée plus tard.
       </p>
-      @if (!s.inscriptions || s.inscriptions.length === 0) {
+      @if (inscritsActifs(s).length === 0) {
         <p class="text-sm text-muted">Aucun chien inscrit pour le moment.</p>
       } @else {
         <ul class="flex flex-col gap-2">
-          @for (inscription of s.inscriptions; track inscription.chien.id) {
+          @for (inscription of inscritsActifs(s); track inscription.chien.id) {
             <li class="flex items-center justify-between gap-3 rounded-lg border border-bordure bg-fond p-3">
               <div class="min-w-0 flex-1">
                 <p class="text-sm font-semibold text-texte truncate">
