@@ -37,6 +37,7 @@ import { CoachLayoutComponent } from './layouts/coach-layout/coach-layout.compon
 import { coachGuard } from './guards/coach.guard';
 import { MesSeancesComponent } from './pages/coach/mes-seances/mes-seances.component';
 import { ParticipantsComponent } from './pages/coach/participants/participants.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 export const routes: Routes = [
   {
@@ -103,5 +104,6 @@ export const routes: Routes = [
       { path: 'mon-profil', component: MonProfilComponent, data: { breadcrumb: 'Mon profil' } },
     ]
   },
+  { path: '**', component: NotFoundComponent },
 ];
 
