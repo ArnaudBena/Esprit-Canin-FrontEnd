@@ -7,6 +7,8 @@ import { DialogService } from '../../../services/dialog.service';
 import { Chien } from '../../../models/chien.model';
 import { Inscription } from '../../../models/inscription.model';
 import { StatutPresence } from '../../../models/statut-presence.model';
+import { ChienCompetence } from '../../../models/chien-competence.model';
+import { NiveauCompetence } from '../../../models/niveau-competence.model';
 import { ageAffichage, ageEnMois } from '../../../utils/age.utils';
 import { InscriptionService } from '../../../services/inscription.service';
 
@@ -58,6 +60,23 @@ export class ChienDetailComponent implements OnInit {
     return (this.chien()?.inscriptions ?? [])
       .filter((i) => i.seance.terminee)
       .sort((a, b) => b.seance.date.localeCompare(a.seance.date));
+  }
+
+  private readonly niveauLabels: Record<NiveauCompetence, string> = {
+    [NiveauCompetence.DEBUTANT]: 'Débutant',
+    [NiveauCompetence.INTERMEDIAIRE]: 'Intermédiaire',
+    [NiveauCompetence.CONFIRME]: 'Confirmé',
+  };
+
+  niveauLabel(n: NiveauCompetence): string {
+    return this.niveauLabels[n] ?? n;
+  }
+
+  // Compétences acquises
+  competences(): ChienCompetence[] {
+    return (this.chien()?.chienCompetences ?? [])
+      .slice()
+      .sort((a, b) => a.competence.nom.localeCompare(b.competence.nom));
   }
 
   onSupprimer(): void {

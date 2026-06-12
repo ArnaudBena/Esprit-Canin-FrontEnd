@@ -108,7 +108,7 @@
               {{ seance.coach.prenom }} {{ seance.coach.nom }}
             </td>
             <td class="px-5 py-3.5 text-sm text-muted">
-              {{ seance.inscriptions?.length ?? 0 }} / {{ seance.typeSeance.participantsMaximum }}
+              {{ nbInscrits(seance) }} / {{ seance.typeSeance.participantsMaximum }}
             </td>
             <td class="px-5 py-3.5">
               <div class="flex flex-wrap gap-1.5">
@@ -204,7 +204,7 @@
           </p>
           <p>
             <span class="text-muted">Inscrits :</span>
-            {{ seance.inscriptions?.length ?? 0 }} / {{ seance.typeSeance.participantsMaximum }}
+            {{ nbInscrits(seance) }} / {{ seance.typeSeance.participantsMaximum }}
           </p>
         </div>
         <div class="flex flex-wrap gap-2 pt-3 border-t border-bordure">

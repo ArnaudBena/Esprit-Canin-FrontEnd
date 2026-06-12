@@ -1,6 +1,7 @@
 import { Race } from './race.model';
 import { Utilisateur } from './utilisateur.model';
 import { Inscription } from './inscription.model';
+import { ChienCompetence } from './chien-competence.model';
 
 export enum Sexe {
   MALE = 'MALE',
@@ -18,4 +19,5 @@ export interface Chien {
   race: Race;
   utilisateur?: Utilisateur;
   inscriptions?: Inscription[];
+  chienCompetences?: ChienCompetence[];
 }

@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { Inscription } from '../models/inscription.model';
+import { StatutPresence } from '../models/statut-presence.model';
 
 @Injectable({
   providedIn: 'root',
@@ -21,5 +22,13 @@ export class InscriptionService {
 
   annulerMonInscription(chienId: number, seanceId: number): Observable<void> {
     return this.http.patch<void>(`${this.apiUrl}/mes-inscriptions/${chienId}/${seanceId}/annuler`, {});
+  }
+
+  faireAppel(chienId: number, seanceId: number, statutPresence: StatutPresence): Observable<void> {
+    return this.http.patch<void>(`${this.apiUrl}/${chienId}/${seanceId}/presence`, { statutPresence });
+  }
+
+  validerAcquisition(chienId: number, seanceId: number): Observable<void> {
+    return this.http.patch<void>(`${this.apiUrl}/${chienId}/${seanceId}/acquisition`, {});
   }
 }

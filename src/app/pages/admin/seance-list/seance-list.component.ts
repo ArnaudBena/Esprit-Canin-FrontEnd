@@ -11,6 +11,7 @@ import { TypeSeance } from '../../../models/type-seance.model';
 import { StatutSeance } from '../../../models/statut-seance.model';
 import { dureeAffichage } from '../../../utils/duree.utils';
 import { RouterLink } from '@angular/router';
+import { StatutPresence } from '../../../models/statut-presence.model';
 
 @Component({
   selector: 'app-seance-list',
@@ -106,5 +107,10 @@ export class SeanceListComponent implements OnInit {
         error: (err) => console.error('Erreur de suppression', err),
       });
     });
+  }
+
+  // Inscrits actifs (hors annulés)
+  nbInscrits(seance: Seance): number {
+    return (seance.inscriptions ?? []).filter((i) => i.statutPresence !== StatutPresence.ANNULEE).length;
   }
 }

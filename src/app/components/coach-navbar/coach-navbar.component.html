@@ -2,20 +2,20 @@
 <header class="bg-primaire">
   <div class="flex h-[72px] items-center justify-between px-6 lg:h-[90px] lg:px-20">
     <!-- Logo -->
-    <a routerLink="/mon-espace" class="flex flex-shrink-0 items-center" aria-label="Accueil espace adhérent">
+    <a routerLink="/espace-coach" class="flex flex-shrink-0 items-center" aria-label="Accueil espace coach">
       <img src="/logo.svg" alt="" class="h-9 w-auto lg:h-11" />
     </a>
 
     <!-- Liens (desktop) -->
     <nav class="hidden items-center gap-8 md:flex">
-      <a routerLink="/mon-espace/tableau-de-bord" routerLinkActive="!text-blanc !border-blanc" class="border-b-2 border-transparent pb-1 text-white/85 hover:text-blanc">Tableau de bord</a>
-      <a routerLink="/mon-espace/seances" routerLinkActive="!text-blanc !border-blanc" class="border-b-2 border-transparent pb-1 text-white/85 hover:text-blanc">Séances</a>
-      <a routerLink="/mon-espace/mes-chiens" routerLinkActive="!text-blanc !border-blanc" class="border-b-2 border-transparent pb-1 text-white/85 hover:text-blanc">Mes chiens</a>
-      <a routerLink="/mon-espace/mon-profil" routerLinkActive="!text-blanc !border-blanc" class="border-b-2 border-transparent pb-1 text-white/85 hover:text-blanc">Mon profil</a>
+      <a routerLink="/espace-coach/mes-seances" routerLinkActive="!text-blanc !border-blanc" class="border-b-2 border-transparent pb-1 text-white/85 hover:text-blanc">Mes séances</a>
+      <a routerLink="/espace-coach/mon-profil" routerLinkActive="!text-blanc !border-blanc" class="border-b-2 border-transparent pb-1 text-white/85 hover:text-blanc">Mon profil</a>
     </nav>
 
-    <!-- Avatar + menu (toujours visible) -->
-    <div class="relative">
+    <!-- Badge rôle + avatar + menu (toujours visible) -->
+    <div class="flex items-center gap-3">
+      <span class="rounded-full bg-white/15 px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wider text-blanc">Coach</span>
+      <div class="relative">
       <button type="button" (click)="toggleMenu($event)" aria-haspopup="menu" [attr.aria-expanded]="menuOuvert()"
               class="flex items-center gap-2 rounded-full py-1 pl-1 pr-2 text-blanc hover:bg-white/10">
         <span class="flex h-9 w-9 items-center justify-center rounded-full bg-accent text-sm font-bold text-accent-text">
@@ -27,7 +27,7 @@
         <div role="menu" class="absolute right-0 mt-2 w-56 overflow-hidden rounded-md border border-bordure bg-blanc text-texte shadow-lg">
           <div class="border-b border-bordure px-4 py-3">
             <p class="truncate text-sm font-medium">{{ jwtInfo()?.sub }}</p>
-            <p class="text-xs text-muted">Adhérent</p>
+            <p class="text-xs text-muted">Coach</p>
           </div>
           <button type="button" role="menuitem" (click)="logout()" class="flex w-full items-center gap-2 px-4 py-3 text-left text-sm hover:bg-fond">
             <lucide-icon [img]="iconLogout" class="h-4 w-4"></lucide-icon>
@@ -35,18 +35,15 @@
           </button>
         </div>
       }
+      </div>
     </div>
   </div>
 </header>
 
 <!-- Onglets horizontaux défilables (mobile uniquement) -->
 <nav class="flex gap-1 overflow-x-auto border-b border-bordure bg-blanc px-3 py-2 md:hidden [&::-webkit-scrollbar]:hidden">
-  <a routerLink="/mon-espace/tableau-de-bord" routerLinkActive="!bg-primaire !text-blanc"
-     class="flex-shrink-0 whitespace-nowrap rounded-full bg-fond px-3 py-1.5 text-xs font-medium text-muted transition-colors">Tableau de bord</a>
-  <a routerLink="/mon-espace/seances" routerLinkActive="!bg-primaire !text-blanc"
-     class="flex-shrink-0 whitespace-nowrap rounded-full bg-fond px-3 py-1.5 text-xs font-medium text-muted transition-colors">Séances</a>
-  <a routerLink="/mon-espace/mes-chiens" routerLinkActive="!bg-primaire !text-blanc"
-     class="flex-shrink-0 whitespace-nowrap rounded-full bg-fond px-3 py-1.5 text-xs font-medium text-muted transition-colors">Mes chiens</a>
-  <a routerLink="/mon-espace/mon-profil" routerLinkActive="!bg-primaire !text-blanc"
+  <a routerLink="/espace-coach/mes-seances" routerLinkActive="!bg-primaire !text-blanc"
+     class="flex-shrink-0 whitespace-nowrap rounded-full bg-fond px-3 py-1.5 text-xs font-medium text-muted transition-colors">Mes séances</a>
+  <a routerLink="/espace-coach/mon-profil" routerLinkActive="!bg-primaire !text-blanc"
      class="flex-shrink-0 whitespace-nowrap rounded-full bg-fond px-3 py-1.5 text-xs font-medium text-muted transition-colors">Mon profil</a>
 </nav>

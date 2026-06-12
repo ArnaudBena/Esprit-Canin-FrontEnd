@@ -33,6 +33,10 @@ import { CatalogueComponent } from './pages/mon-espace/catalogue/catalogue.compo
 import { SeanceDetailComponent } from './pages/mon-espace/seance-detail/seance-detail.component';
 import { MonProfilComponent } from './pages/mon-espace/mon-profil/mon-profil.component';
 import { DashboardAdherentComponent } from './pages/mon-espace/dashboard-adherent/dashboard-adherent.component';
+import { CoachLayoutComponent } from './layouts/coach-layout/coach-layout.component';
+import { coachGuard } from './guards/coach.guard';
+import { MesSeancesComponent } from './pages/coach/mes-seances/mes-seances.component';
+import { ParticipantsComponent } from './pages/coach/participants/participants.component';
 
 export const routes: Routes = [
   {
@@ -58,6 +62,17 @@ export const routes: Routes = [
       { path: 'mes-chiens/:id/edit', component: ChienEditComponent, data: { breadcrumb: 'Modifier un chien' } },
       { path: 'seances', component: CatalogueComponent, data: { breadcrumb: 'Séances' } },
       { path: 'seances/:id', component: SeanceDetailComponent },
+      { path: 'mon-profil', component: MonProfilComponent, data: { breadcrumb: 'Mon profil' } },
+    ],
+  },
+  {
+    path: 'espace-coach',
+    component: CoachLayoutComponent,
+    canActivate: [coachGuard],
+    children: [
+      { path: '', redirectTo: 'mes-seances', pathMatch: 'full' },
+      { path: 'mes-seances', component: MesSeancesComponent },
+      { path: 'mes-seances/:id', component: ParticipantsComponent, data: { breadcrumb: 'Participants' } },
       { path: 'mon-profil', component: MonProfilComponent, data: { breadcrumb: 'Mon profil' } },
     ],
   },

@@ -17,7 +17,7 @@ export class ToastService {
   show(message: string, type: 'success' | 'error'): void {
     const id = this.nextId++;
     this._toasts.update(list => [...list, {id, message, type}]);
-    setTimeout(() => this.remove(id), 4000);
+    setTimeout(() => this.remove(id), 5000);
   }
 
   remove(id: number): void {
