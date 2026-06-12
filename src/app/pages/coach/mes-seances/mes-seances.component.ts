@@ -8,6 +8,7 @@ import { TypeSeanceService } from '../../../services/type-seance.service';
 import { Seance } from '../../../models/seance.model';
 import { TypeSeance } from '../../../models/type-seance.model';
 import { StatutPresence } from '../../../models/statut-presence.model';
+import { StatutSeance } from '../../../models/statut-seance.model';
 import { dureeAffichage } from '../../../utils/duree.utils';
 
 @Component({
@@ -30,12 +31,13 @@ export class MesSeancesComponent implements OnInit {
   protected readonly iconClock = Clock;
   protected readonly iconUsers = Users;
   protected readonly dureeAffichage = dureeAffichage;
+  protected readonly StatutSeance = StatutSeance;
 
   seances = signal<Seance[]>([]);
   types: TypeSeance[] = [];
 
   filtres = this.formBuilder.nonNullable.group({
-    periode: [''],          // '' = tout | 'semaine' | 'mois'
+    periode: ['avenir'],    // 'avenir' (défaut) | 'passees' | 'toutes'
     typeSeanceId: [''],
   });
 
@@ -59,7 +61,7 @@ export class MesSeancesComponent implements OnInit {
   }
 
   reinitialiser(): void {
-    this.filtres.reset({ periode: '', typeSeanceId: '' });
+    this.filtres.reset({ periode: 'avenir', typeSeanceId: '' });
     this.charger();
   }
 

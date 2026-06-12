@@ -7,9 +7,9 @@
     <label for="periode" class="mb-1.5 block text-sm font-medium text-texte">Période</label>
     <select id="periode" formControlName="periode"
             class="h-input w-full rounded-sm border border-input px-3 text-texte">
-      <option value="">Tout</option>
-      <option value="semaine">Cette semaine</option>
-      <option value="mois">Ce mois</option>
+      <option value="avenir">À venir</option>
+      <option value="passees">Passées</option>
+      <option value="toutes">Toutes</option>
     </select>
   </div>
   <div class="flex-1">
@@ -65,10 +65,14 @@
             </p>
             <p class="mt-1 text-xs text-muted">inscrits</p>
           </div>
-          @if (estComplet(seance)) {
-            <span class="rounded-full bg-badge-complet-bg px-3 py-1 text-sm font-medium text-badge-complet-text">Complet</span>
+          @if (seance.statut === StatutSeance.ANNULEE) {
+            <span class="inline-block min-w-[7.5rem] rounded-full bg-badge-complet-bg px-3 py-1 text-center text-sm font-medium text-badge-complet-text">Annulée</span>
+          } @else if (seance.terminee) {
+            <span class="inline-block min-w-[7.5rem] rounded-full bg-fond px-3 py-1 text-center text-sm font-medium text-muted">Terminée</span>
+          } @else if (estComplet(seance)) {
+            <span class="inline-block min-w-[7.5rem] rounded-full bg-badge-complet-bg px-3 py-1 text-center text-sm font-medium text-badge-complet-text">Complet</span>
           } @else {
-            <span class="rounded-full bg-badge-dispo-bg px-3 py-1 text-sm font-medium text-badge-dispo-text">Places dispo</span>
+            <span class="inline-block min-w-[7.5rem] rounded-full bg-badge-dispo-bg px-3 py-1 text-center text-sm font-medium text-badge-dispo-text">Places dispo</span>
           }
           <a [routerLink]="['/espace-coach/mes-seances', seance.id]"
              class="flex-shrink-0 rounded-sm bg-primaire px-5 py-2 text-sm font-medium text-blanc hover:opacity-90">

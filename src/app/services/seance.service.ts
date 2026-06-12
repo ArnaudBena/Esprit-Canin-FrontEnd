@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Seance } from '../models/seance.model';
 import { SeanceCatalogue } from '../models/seance-catalogue.model';
 import { Prerequis } from '../models/prerequis.model';
+import { Inscription } from '../models/inscription.model';
 
 @Injectable({
   providedIn: 'root',
@@ -79,5 +80,9 @@ export class SeanceService {
     if (filtres.periode) params = params.set('periode', filtres.periode);
     if (filtres.typeSeanceId) params = params.set('typeSeanceId', filtres.typeSeanceId);
     return this.http.get<Seance[]>(`${this.apiUrl}/mes-seances`, { params });
+  }
+
+  getParticipants(id: number): Observable<Inscription[]> {
+    return this.http.get<Inscription[]>(`${this.apiUrl}/${id}/participants`);
   }
 }

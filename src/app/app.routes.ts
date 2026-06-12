@@ -36,6 +36,7 @@ import { DashboardAdherentComponent } from './pages/mon-espace/dashboard-adheren
 import { CoachLayoutComponent } from './layouts/coach-layout/coach-layout.component';
 import { coachGuard } from './guards/coach.guard';
 import { MesSeancesComponent } from './pages/coach/mes-seances/mes-seances.component';
+import { ParticipantsComponent } from './pages/coach/participants/participants.component';
 
 export const routes: Routes = [
   {
@@ -71,6 +72,7 @@ export const routes: Routes = [
     children: [
       { path: '', redirectTo: 'mes-seances', pathMatch: 'full' },
       { path: 'mes-seances', component: MesSeancesComponent },
+      { path: 'mes-seances/:id', component: ParticipantsComponent, data: { breadcrumb: 'Participants' } },
       { path: 'mon-profil', component: MonProfilComponent, data: { breadcrumb: 'Mon profil' } },
     ],
   },
