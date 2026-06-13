@@ -22,6 +22,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { adminGuard } from './guards/admin.guard';
 import { PublicLayoutComponent } from './layouts/public-layout/public-layout.component';
 import { HomeComponent } from './pages/home/home.component';
+import { AproposComponent } from './pages/apropos/apropos.component';
 import { InscriptionComponent } from './pages/inscription/inscription.component';
 import { AdherentLayoutComponent } from './layouts/adherent-layout/adherent-layout.component';
 import { adherentGuard } from './guards/adherent.guard';
@@ -46,6 +47,7 @@ export const routes: Routes = [
     component: PublicLayoutComponent,
     children: [
       { path: '', component: HomeComponent },
+      { path: 'a-propos', component: AproposComponent },
     ],
   },
   { path: 'login', component: LoginComponent, canActivate: [guestGuard] },

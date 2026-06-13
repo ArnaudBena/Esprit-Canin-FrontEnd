@@ -36,7 +36,10 @@ interface Temoignage {
 
 @Component({
   selector: 'app-home',
-  imports: [RouterLink, LucideAngularModule],
+  imports: [
+    RouterLink,
+    LucideAngularModule
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
