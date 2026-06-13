@@ -1,0 +1,76 @@
+<!-- ===== HERO À PROPOS ===== -->
+<section class="bg-fond">
+  <div class="mx-auto max-w-4xl px-6 py-16 text-center lg:px-20 lg:py-24">
+    <span class="inline-block rounded-full bg-badge-dispo-bg px-3 py-1 text-sm font-medium text-badge-dispo-text">
+      Club canin Esprit Canin
+    </span>
+    <h1 class="mt-5 text-4xl font-bold leading-tight text-texte lg:text-5xl">
+      À propos du <span class="text-primaire">Club Canin</span>
+    </h1>
+    <p class="mt-6 text-lg text-muted">
+      Depuis plus de 10 ans, le Club Canin accompagne les propriétaires et leurs compagnons à
+      quatre pattes dans une aventure d’éducation et de complicité. Notre mission : créer des
+      liens forts entre les maîtres et leurs chiens grâce à des méthodes positives et bienveillantes.
+    </p>
+    <p class="mt-4 text-lg text-muted">
+      Notre équipe de coachs certifiés propose des programmes adaptés à tous les niveaux, des
+      chiots aux chiens adultes, dans un cadre naturel et convivial.
+    </p>
+  </div>
+</section>
+
+<!-- ===== NOTRE ÉQUIPE ===== -->
+<section class="bg-blanc">
+  <div class="mx-auto max-w-7xl px-6 py-16 lg:px-20 lg:py-20">
+    <div class="text-center">
+      <h2 class="text-3xl font-bold text-texte">Notre équipe</h2>
+      <p class="mt-3 text-muted">Des coachs passionnés et certifiés pour vous accompagner.</p>
+    </div>
+    <div class="mt-12 grid gap-6 md:grid-cols-3">
+      @for (coach of coachs; track coach.nom) {
+        <div class="flex flex-col items-center rounded-xl border border-bordure bg-blanc p-7 text-center">
+          <!-- Photo coach (asset à venir) -->
+          <div class="flex h-24 w-24 items-center justify-center rounded-full bg-image-bg">
+            <lucide-icon [img]="iconCoach" class="h-10 w-10 text-primaire/50"></lucide-icon>
+          </div>
+          <h3 class="mt-4 text-xl font-bold text-texte">{{ coach.nom }}</h3>
+          <p class="mt-1 text-sm font-medium text-secondaire">{{ coach.specialite }}</p>
+          <p class="mt-3 text-sm text-subtle">{{ coach.texte }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ===== NOS VALEURS ===== -->
+<section class="bg-fond">
+  <div class="mx-auto max-w-7xl px-6 py-16 lg:px-20 lg:py-20">
+    <div class="text-center">
+      <h2 class="text-3xl font-bold text-texte">Nos valeurs</h2>
+      <p class="mt-3 text-muted">Les principes qui guident chacune de nos actions au quotidien.</p>
+    </div>
+    <div class="mt-12 grid gap-8 md:grid-cols-3">
+      @for (valeur of valeurs; track valeur.titre) {
+        <div class="text-center">
+          <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-primaire-light text-primaire">
+            <lucide-icon [img]="valeur.icon" class="h-6 w-6"></lucide-icon>
+          </div>
+          <h3 class="mt-4 text-xl font-bold text-texte">{{ valeur.titre }}</h3>
+          <p class="mt-2 text-sm text-subtle">{{ valeur.texte }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<section class="bg-blanc">
+  <div class="mx-auto max-w-3xl px-6 py-16 text-center lg:px-20">
+    <h2 class="text-3xl font-bold text-texte">Prêt à rejoindre l’aventure ?</h2>
+    <p class="mt-3 text-muted">Offrez à votre compagnon une expérience enrichissante au sein de notre communauté.</p>
+    <a routerLink="/inscription"
+       class="mt-8 inline-block rounded-sm bg-primaire px-6 py-3 font-semibold text-blanc hover:opacity-90">
+      Rejoindre le club
+    </a>
+  </div>
+</section>

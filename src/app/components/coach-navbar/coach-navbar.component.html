@@ -29,6 +29,10 @@
             <p class="truncate text-sm font-medium">{{ jwtInfo()?.sub }}</p>
             <p class="text-xs text-muted">Coach</p>
           </div>
+          <a routerLink="/" role="menuitem" class="flex w-full items-center gap-2 px-4 py-3 text-left text-sm hover:bg-fond">
+            <lucide-icon [img]="iconGlobe" class="h-4 w-4"></lucide-icon>
+            Voir le site public
+          </a>
           <button type="button" role="menuitem" (click)="logout()" class="flex w-full items-center gap-2 px-4 py-3 text-left text-sm hover:bg-fond">
             <lucide-icon [img]="iconLogout" class="h-4 w-4"></lucide-icon>
             Déconnexion

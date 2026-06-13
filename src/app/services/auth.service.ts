@@ -40,6 +40,16 @@ export class AuthService {
     this.jwtInfo.set(null);
   }
 
+  // URL de l'espace selon le rôle courant (non connecté → home publique)
+  espaceUrl(): string {
+    switch (this.jwtInfo()?.role) {
+      case 'ADMIN': return '/admin';
+      case 'COACH': return '/espace-coach';
+      case 'ADHERENT': return '/mon-espace';
+      default: return '/';
+    }
+  }
+
   private decodeJwt(): void {
     const jwt = localStorage.getItem('jwt');
     if (!jwt) {

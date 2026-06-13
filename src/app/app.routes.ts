@@ -22,6 +22,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { adminGuard } from './guards/admin.guard';
 import { PublicLayoutComponent } from './layouts/public-layout/public-layout.component';
 import { HomeComponent } from './pages/home/home.component';
+import { AproposComponent } from './pages/apropos/apropos.component';
 import { InscriptionComponent } from './pages/inscription/inscription.component';
 import { AdherentLayoutComponent } from './layouts/adherent-layout/adherent-layout.component';
 import { adherentGuard } from './guards/adherent.guard';
@@ -38,6 +39,7 @@ import { coachGuard } from './guards/coach.guard';
 import { MesSeancesComponent } from './pages/coach/mes-seances/mes-seances.component';
 import { ParticipantsComponent } from './pages/coach/participants/participants.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { guestGuard } from './guards/guest.guard';
 
 export const routes: Routes = [
   {
@@ -45,11 +47,11 @@ export const routes: Routes = [
     component: PublicLayoutComponent,
     children: [
       { path: '', component: HomeComponent },
+      { path: 'a-propos', component: AproposComponent },
     ],
   },
-  { path: 'login',
-    component: LoginComponent },
-  { path: 'inscription', component: InscriptionComponent },
+  { path: 'login', component: LoginComponent, canActivate: [guestGuard] },
+  { path: 'inscription', component: InscriptionComponent, canActivate: [guestGuard] },
   {
     path: 'mon-espace',
     component: AdherentLayoutComponent,

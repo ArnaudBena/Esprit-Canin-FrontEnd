@@ -1,7 +1,7 @@
 import { Component, HostListener, inject, signal } from '@angular/core';
 import { RouterLink, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { ChevronDown, LogOut, LucideAngularModule } from 'lucide-angular';
+import { ChevronDown, LogOut, LucideAngularModule, Globe } from 'lucide-angular';
 
 @Component({
   selector: 'app-navbar',
@@ -19,6 +19,7 @@ export class NavbarComponent {
   readonly jwtInfo = this.authService.jwtInfo;
   readonly iconLogout = LogOut;
   readonly iconChevron = ChevronDown;
+  readonly iconGlobe = Globe;
 
   menuOuvert = signal(false);
 

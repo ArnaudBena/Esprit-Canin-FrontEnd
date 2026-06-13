@@ -1,6 +1,6 @@
 import { Component, HostListener, inject, signal } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { LucideAngularModule, LogOut, ChevronDown } from 'lucide-angular';
+import { LucideAngularModule, LogOut, ChevronDown, Globe } from 'lucide-angular';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -20,6 +20,7 @@ export class CoachNavbarComponent {
   readonly jwtInfo = this.authService.jwtInfo;
   readonly iconLogout = LogOut;
   readonly iconChevron = ChevronDown;
+  readonly iconGlobe = Globe;
 
   menuOuvert = signal(false);
 
