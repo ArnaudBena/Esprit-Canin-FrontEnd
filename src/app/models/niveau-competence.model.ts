@@ -1,0 +1,5 @@
+export enum NiveauCompetence {
+  DEBUTANT = 'DEBUTANT',
+  INTERMEDIAIRE = 'INTERMEDIAIRE',
+  CONFIRME = 'CONFIRME',
+}

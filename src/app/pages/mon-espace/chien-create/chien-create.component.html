@@ -1,0 +1,96 @@
+<h1 class="text-2xl font-bold text-texte lg:text-4xl">Ajouter un chien</h1>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()"
+      class="mt-6 max-w-2xl space-y-5 rounded-lg border border-bordure bg-blanc p-6 lg:p-8">
+  <!-- Nom -->
+  <div>
+    <label for="nom" class="mb-1.5 block text-sm font-medium text-texte">Nom du chien</label>
+    <input id="nom" type="text" formControlName="nom" placeholder="Ex : Rex, Luna..."
+           class="h-input w-full rounded-sm border border-input px-3.5 text-texte placeholder:text-placeholder" />
+    @if (form.get('nom')?.touched && form.get('nom')?.invalid) {
+      <p class="mt-1 text-sm text-alerte">Nom obligatoire (50 caractères max)</p>
+    }
+  </div>
+
+  <!-- Race + Date de naissance -->
+  <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+    <div>
+      <label for="race" class="mb-1.5 block text-sm font-medium text-texte">Race</label>
+      <select id="race" formControlName="raceId"
+              class="h-input w-full rounded-sm border border-input px-3 text-texte">
+        <option [ngValue]="null" disabled>Sélectionner une race</option>
+        @for (race of races; track race.id) {
+          <option [ngValue]="race.id">{{ race.nom }}</option>
+        }
+      </select>
+      @if (form.get('raceId')?.touched && form.get('raceId')?.invalid) {
+        <p class="mt-1 text-sm text-alerte">Race obligatoire</p>
+      }
+    </div>
+    <div>
+      <label for="dateNaissance" class="mb-1.5 block text-sm font-medium text-texte">Date de naissance</label>
+      <input id="dateNaissance" type="date" formControlName="dateNaissance" [max]="today"
+             class="h-input w-full rounded-sm border border-input px-3.5 text-texte" />
+      @if (form.get('dateNaissance')?.touched && form.get('dateNaissance')?.invalid) {
+        <p class="mt-1 text-sm text-alerte">Date de naissance obligatoire</p>
+      }
+    </div>
+  </div>
+
+  <!-- Poids + Taille -->
+  <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+    <div>
+      <label for="poids" class="mb-1.5 block text-sm font-medium text-texte">Poids (kg)</label>
+      <input id="poids" type="number" step="0.1" formControlName="poids" placeholder="Ex : 12.5"
+             class="h-input w-full rounded-sm border border-input px-3.5 text-texte placeholder:text-placeholder" />
+      @if (form.get('poids')?.touched && form.get('poids')?.invalid) {
+        <p class="mt-1 text-sm text-alerte">Poids obligatoire (positif)</p>
+      }
+    </div>
+    <div>
+      <label for="taille" class="mb-1.5 block text-sm font-medium text-texte">Taille (cm)</label>
+      <input id="taille" type="number" step="0.1" formControlName="taille" placeholder="Ex : 45"
+             class="h-input w-full rounded-sm border border-input px-3.5 text-texte placeholder:text-placeholder" />
+      @if (form.get('taille')?.touched && form.get('taille')?.invalid) {
+        <p class="mt-1 text-sm text-alerte">Taille obligatoire (positive)</p>
+      }
+    </div>
+  </div>
+
+  <!-- Sexe (radios) -->
+  <div>
+    <span class="mb-1.5 block text-sm font-medium text-texte">Sexe</span>
+    <div class="flex gap-6">
+      <label class="flex items-center gap-2 text-sm text-texte">
+        <input type="radio" formControlName="sexe" value="MALE" class="h-4 w-4 accent-primaire" /> Mâle
+      </label>
+      <label class="flex items-center gap-2 text-sm text-texte">
+        <input type="radio" formControlName="sexe" value="FEMELLE" class="h-4 w-4 accent-primaire" /> Femelle
+      </label>
+    </div>
+  </div>
+
+  <!-- Numéro de puce -->
+  <div>
+    <label for="numeroPuce" class="mb-1.5 block text-sm font-medium text-texte">
+      Numéro de puce <span class="text-muted">(optionnel)</span>
+    </label>
+    <input id="numeroPuce" type="text" formControlName="numeroPuce" placeholder="250 269 XXX XXX XXX"
+           class="h-input w-full rounded-sm border border-input px-3.5 text-texte placeholder:text-placeholder" />
+    @if (form.get('numeroPuce')?.touched && form.get('numeroPuce')?.invalid) {
+      <p class="mt-1 text-sm text-alerte">30 caractères maximum</p>
+    }
+  </div>
+
+  <!-- Actions -->
+  <div class="flex gap-3 pt-2">
+    <button type="submit" [disabled]="form.invalid"
+            class="rounded-sm bg-primaire px-5 py-2.5 font-medium text-blanc hover:opacity-90 disabled:opacity-50">
+      Enregistrer
+    </button>
+    <a routerLink="/mon-espace/mes-chiens"
+       class="rounded-sm border border-bordure px-5 py-2.5 font-medium text-texte hover:bg-fond">
+      Annuler
+    </a>
+  </div>
+</form>

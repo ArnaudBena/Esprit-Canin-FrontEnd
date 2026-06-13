@@ -1,0 +1,79 @@
+<h1 class="text-2xl font-bold text-texte lg:text-4xl">Les séances disponibles</h1>
+
+<!-- Filtres (appliqués côté serveur) -->
+<form [formGroup]="filtres" (ngSubmit)="charger()"
+      class="mt-6 grid grid-cols-1 gap-4 rounded-lg border border-bordure bg-blanc p-4 sm:grid-cols-2 lg:grid-cols-4 lg:items-end">
+  <div>
+    <label for="type" class="mb-1.5 block text-sm font-medium text-texte">Type de cours</label>
+    <select id="type" formControlName="typeSeanceId"
+            class="h-input w-full rounded-sm border border-input px-3 text-texte">
+      <option value="">Tous les types</option>
+      @for (t of types; track t.id) {
+        <option [value]="t.id">{{ t.libelle }}</option>
+      }
+    </select>
+  </div>
+  <div>
+    <label for="date" class="mb-1.5 block text-sm font-medium text-texte">Date</label>
+    <input id="date" type="date" formControlName="date"
+           class="h-input w-full rounded-sm border border-input px-3.5 text-texte" />
+  </div>
+  <div>
+    <label for="dispo" class="mb-1.5 block text-sm font-medium text-texte">Disponibilité</label>
+    <select id="dispo" formControlName="disponible"
+            class="h-input w-full rounded-sm border border-input px-3 text-texte">
+      <option value="">Toutes</option>
+      <option value="true">Disponibles</option>
+      <option value="false">Complètes</option>
+    </select>
+  </div>
+  <div class="flex gap-2">
+    <button type="submit"
+            class="h-input flex-1 rounded-sm bg-primaire px-4 font-medium text-blanc hover:opacity-90">
+      Filtrer
+    </button>
+    <button type="button" (click)="reinitialiser()"
+            class="h-input rounded-sm border border-bordure px-4 font-medium text-texte hover:bg-fond">
+      Réinitialiser
+    </button>
+  </div>
+</form>
+
+<!-- Résultats -->
+@if (seances().length === 0) {
+  <p class="mt-8 text-muted">Aucune séance ne correspond à ces critères.</p>
+} @else {
+  <div class="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    @for (seance of seances(); track seance.id) {
+      <div class="flex flex-col rounded-lg border border-bordure bg-blanc p-5">
+        <h3 class="text-lg font-bold text-texte">{{ seance.typeLibelle }}</h3>
+
+        <p class="mt-2 flex items-center gap-1.5 text-sm text-muted">
+          <lucide-icon [img]="iconCalendar" class="h-4 w-4"></lucide-icon>
+          {{ seance.date | date:'EEE d MMM yyyy':'':'fr' }} — {{ seance.heureDebut.substring(0, 5) }}
+        </p>
+        <p class="mt-1 flex items-center gap-1.5 text-sm text-muted">
+          <lucide-icon [img]="iconClock" class="h-4 w-4"></lucide-icon>
+          {{ dureeAffichage(seance.dureeMinutes) }} • Coach : {{ seance.coachPrenom }} {{ seance.coachNom }}
+        </p>
+
+        <div class="mt-4 flex items-center justify-between border-t border-bordure pt-4">
+          <span [class]="badgeDispoClasses(seance)">
+            @if (seance.complet) { Complet } @else { {{ seance.nbInscrits }}/{{ seance.participantsMaximum }} places }
+          </span>
+          @if (seance.complet) {
+            <button type="button" disabled
+                    class="cursor-not-allowed rounded-sm bg-fond px-4 py-2 text-sm font-medium text-subtle">
+              S'inscrire
+            </button>
+          } @else {
+            <a [routerLink]="['/mon-espace/seances', seance.id]"
+               class="rounded-sm bg-primaire px-4 py-2 text-sm font-medium text-blanc hover:opacity-90">
+              S'inscrire
+            </a>
+          }
+        </div>
+      </div>
+    }
+  </div>
+}

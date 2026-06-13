@@ -45,4 +45,22 @@ export class UtilisateurService {
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
+
+  // ----- Espace adhérent : mon profil (identité déduite du JWT côté back) -----
+
+  getProfil(): Observable<Utilisateur> {
+    return this.http.get<Utilisateur>(`${this.apiUrl}/profil`);
+  }
+
+  updateProfil(profil: Utilisateur): Observable<void> {
+    return this.http.put<void>(`${this.apiUrl}/profil`, profil);
+  }
+
+  updateMonPassword(ancienPassword: string, nouveauPassword: string): Observable<void> {
+    return this.http.patch<void>(`${this.apiUrl}/profil/password`, { ancienPassword, nouveauPassword });
+  }
+
+  deleteMonCompte(): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/profil`);
+  }
 }

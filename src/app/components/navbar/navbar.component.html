@@ -1,16 +1,52 @@
 <nav class="flex h-navbar-mobile lg:h-navbar-desktop items-center justify-between bg-admin-nav px-4 lg:px-8 text-blanc">
   <div class="flex items-center gap-6 lg:gap-10 min-w-0">
-    <a routerLink="/" class="flex items-center flex-shrink-0" aria-label="Accueil Esprit Canin">
+    <a routerLink="/admin" class="flex items-center flex-shrink-0" aria-label="Accueil administration">
       <img src="/logo.svg" alt="" class="block h-9 lg:h-12 w-auto" />
     </a>
     <span class="hidden sm:inline-block rounded-md bg-white/10 px-2.5 py-1 text-xs font-semibold uppercase tracking-wider text-white/50">
       Administration
     </span>
   </div>
-  <div class="flex items-center gap-2.5 text-sm">
-    <span class="hidden sm:inline">Admin</span>
-    <div class="flex h-9 w-9 items-center justify-center rounded-full bg-alerte text-sm font-bold text-blanc">
-      A
-    </div>
+
+  <!-- Menu utilisateur -->
+  <div class="relative">
+    <button
+      type="button"
+      (click)="toggleMenu($event)"
+      aria-haspopup="menu"
+      [attr.aria-expanded]="menuOuvert()"
+      class="flex items-center gap-2 rounded-full py-1 pl-1 pr-2 hover:bg-white/10"
+    >
+      <span class="flex h-9 w-9 items-center justify-center rounded-full bg-alerte text-sm font-bold text-blanc">
+        {{ jwtInfo()?.sub?.charAt(0)?.toUpperCase() }}
+      </span>
+      <span class="hidden text-sm sm:inline">{{ jwtInfo()?.role }}</span>
+      <lucide-icon [img]="iconChevron" class="h-4 w-4"></lucide-icon>
+    </button>
+
+    @if (menuOuvert()) {
+      <div
+        role="menu"
+        class="absolute right-0 mt-2 w-56 overflow-hidden rounded-md border border-bordure bg-blanc text-texte shadow-lg"
+      >
+        <div class="border-b border-bordure px-4 py-3">
+          <p class="truncate text-sm font-medium">{{ jwtInfo()?.sub }}</p>
+          <p class="text-xs text-muted">{{ jwtInfo()?.role }}</p>
+        </div>
+        <a routerLink="/" role="menuitem" class="flex w-full items-center gap-2 px-4 py-3 text-left text-sm hover:bg-fond">
+          <lucide-icon [img]="iconGlobe" class="h-4 w-4"></lucide-icon>
+          Voir le site public
+        </a>
+        <button
+          type="button"
+          role="menuitem"
+          (click)="logout()"
+          class="flex w-full items-center gap-2 px-4 py-3 text-left text-sm hover:bg-fond"
+        >
+          <lucide-icon [img]="iconLogout" class="h-4 w-4"></lucide-icon>
+          Déconnexion
+        </button>
+      </div>
+    }
   </div>
 </nav>

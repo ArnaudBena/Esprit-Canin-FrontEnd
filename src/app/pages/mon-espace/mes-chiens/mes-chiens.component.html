@@ -1,0 +1,32 @@
+<div class="flex items-center justify-between gap-3">
+  <h1 class="text-2xl font-bold text-texte lg:text-4xl">Mes chiens</h1>
+  <a routerLink="/mon-espace/mes-chiens/new"
+     class="inline-flex flex-shrink-0 items-center whitespace-nowrap rounded-sm bg-accent px-4 py-2.5 font-medium text-accent-text hover:opacity-90">
+    <span class="sm:hidden">+ Ajouter</span>
+    <span class="hidden sm:inline">+ Ajouter un chien</span>
+  </a>
+</div>
+@if (chiens().length === 0) {
+  <p class="mt-8 text-muted">Vous n'avez pas encore de chien. Ajoutez-en un pour l'inscrire à des séances.</p>
+} @else {
+  <div class="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    @for (chien of chiens(); track chien.id) {
+      <div class="overflow-hidden rounded-md border border-bordure bg-blanc">
+        <!-- Emplacement photo (icône en attendant une vraie photo) -->
+        <div class="flex h-44 items-center justify-center bg-image-bg text-primaire">
+          <lucide-icon [img]="iconPatte" class="h-12 w-12"></lucide-icon>
+        </div>
+        <div class="p-5">
+          <h3 class="text-lg font-bold text-texte">{{ chien.nom }}</h3>
+          <p class="text-sm text-muted">{{ chien.race.nom }} • {{ ageAffichage(ageEnMois(chien.dateNaissance)) }}</p>
+          @let nb = nbSeancesRealisees(chien);
+          <p class="mt-0.5 text-sm text-subtle">{{ nb }} séance{{ nb > 1 ? 's' : '' }} réalisée{{ nb > 1 ? 's' : '' }}</p>
+          <a [routerLink]="['/mon-espace/mes-chiens', chien.id]"
+             class="mt-3 inline-block rounded-sm bg-primaire px-4 py-2 text-sm font-medium text-blanc hover:opacity-90">
+            Voir le profil
+          </a>
+        </div>
+      </div>
+    }
+  </div>
+}

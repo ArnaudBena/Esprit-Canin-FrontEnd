@@ -1,0 +1,16 @@
+<div class="flex min-h-screen flex-col bg-fond">
+  <app-coach-navbar />
+  <main class="flex-1 px-6 py-8 lg:px-20 lg:py-10">
+    <div class="mx-auto w-full max-w-5xl">
+    @if (filAriane()) {
+      <nav aria-label="Fil d'Ariane" class="mb-4 flex items-center gap-1.5 text-sm text-subtle">
+        <a routerLink="/espace-coach/mes-seances" class="font-medium text-primaire hover:underline">Mes séances</a>
+        <span aria-hidden="true">›</span>
+        <span class="text-texte">{{ filAriane() }}</span>
+      </nav>
+    }
+    <router-outlet />
+    </div>
+  </main>
+  <app-confirm-dialog />
+</div>

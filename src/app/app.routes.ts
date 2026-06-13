@@ -18,11 +18,71 @@ import { SeanceListComponent } from './pages/admin/seance-list/seance-list.compo
 import { SeanceCreateComponent } from './pages/admin/seance-create/seance-create.component';
 import { SeanceEditComponent } from './pages/admin/seance-edit/seance-edit.component';
 import { DashboardComponent } from './pages/admin/dashboard/dashboard.component';
+import { LoginComponent } from './pages/login/login.component';
+import { adminGuard } from './guards/admin.guard';
+import { PublicLayoutComponent } from './layouts/public-layout/public-layout.component';
+import { HomeComponent } from './pages/home/home.component';
+import { AproposComponent } from './pages/apropos/apropos.component';
+import { InscriptionComponent } from './pages/inscription/inscription.component';
+import { AdherentLayoutComponent } from './layouts/adherent-layout/adherent-layout.component';
+import { adherentGuard } from './guards/adherent.guard';
+import { MesChiensComponent } from './pages/mon-espace/mes-chiens/mes-chiens.component';
+import { ChienCreateComponent } from './pages/mon-espace/chien-create/chien-create.component';
+import { ChienEditComponent } from './pages/mon-espace/chien-edit/chien-edit.component';
+import { ChienDetailComponent } from './pages/mon-espace/chien-detail/chien-detail.component';
+import { CatalogueComponent } from './pages/mon-espace/catalogue/catalogue.component';
+import { SeanceDetailComponent } from './pages/mon-espace/seance-detail/seance-detail.component';
+import { MonProfilComponent } from './pages/mon-espace/mon-profil/mon-profil.component';
+import { DashboardAdherentComponent } from './pages/mon-espace/dashboard-adherent/dashboard-adherent.component';
+import { CoachLayoutComponent } from './layouts/coach-layout/coach-layout.component';
+import { coachGuard } from './guards/coach.guard';
+import { MesSeancesComponent } from './pages/coach/mes-seances/mes-seances.component';
+import { ParticipantsComponent } from './pages/coach/participants/participants.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { guestGuard } from './guards/guest.guard';
 
 export const routes: Routes = [
   {
+    path: '',
+    component: PublicLayoutComponent,
+    children: [
+      { path: '', component: HomeComponent },
+      { path: 'a-propos', component: AproposComponent },
+    ],
+  },
+  { path: 'login', component: LoginComponent, canActivate: [guestGuard] },
+  { path: 'inscription', component: InscriptionComponent, canActivate: [guestGuard] },
+  {
+    path: 'mon-espace',
+    component: AdherentLayoutComponent,
+    canActivate: [adherentGuard],
+    children: [
+      { path: '', redirectTo: 'tableau-de-bord', pathMatch: 'full' },
+      { path: 'tableau-de-bord', component: DashboardAdherentComponent },
+      { path: 'mes-chiens', component: MesChiensComponent, data: { breadcrumb: 'Mes chiens' } },
+      { path: 'mes-chiens/new', component: ChienCreateComponent, data: { breadcrumb: 'Ajouter un chien' } },
+      { path: 'mes-chiens/:id', component: ChienDetailComponent },
+      { path: 'mes-chiens/:id/edit', component: ChienEditComponent, data: { breadcrumb: 'Modifier un chien' } },
+      { path: 'seances', component: CatalogueComponent, data: { breadcrumb: 'Séances' } },
+      { path: 'seances/:id', component: SeanceDetailComponent },
+      { path: 'mon-profil', component: MonProfilComponent, data: { breadcrumb: 'Mon profil' } },
+    ],
+  },
+  {
+    path: 'espace-coach',
+    component: CoachLayoutComponent,
+    canActivate: [coachGuard],
+    children: [
+      { path: '', redirectTo: 'mes-seances', pathMatch: 'full' },
+      { path: 'mes-seances', component: MesSeancesComponent },
+      { path: 'mes-seances/:id', component: ParticipantsComponent, data: { breadcrumb: 'Participants' } },
+      { path: 'mon-profil', component: MonProfilComponent, data: { breadcrumb: 'Mon profil' } },
+    ],
+  },
+  {
     path: 'admin',
     component: AdminLayoutComponent,
+    canActivate: [adminGuard],
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: DashboardComponent },
@@ -43,7 +103,9 @@ export const routes: Routes = [
       { path: 'seances', component: SeanceListComponent },
       { path: 'seances/new', component: SeanceCreateComponent },
       { path: 'seances/:id/edit', component: SeanceEditComponent },
+      { path: 'mon-profil', component: MonProfilComponent, data: { breadcrumb: 'Mon profil' } },
     ]
   },
+  { path: '**', component: NotFoundComponent },
 ];
 
