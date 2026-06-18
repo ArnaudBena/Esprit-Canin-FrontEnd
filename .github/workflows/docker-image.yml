@@ -32,3 +32,20 @@ jobs:
         run: |
           docker tag arnaudbena/esprit-canin-frontend arnaudbena/esprit-canin-frontend:${{ env.VERSION }}
           docker push arnaudbena/esprit-canin-frontend:${{ env.VERSION }}
+
+      - name: Tag and push image with commit SHA
+        run: |
+          docker tag arnaudbena/esprit-canin-frontend arnaudbena/esprit-canin-frontend:${{ github.sha }}
+          docker push arnaudbena/esprit-canin-frontend:${{ github.sha }}
+
+  deploy:
+    needs: build
+    runs-on: self-hosted
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    steps:
+      - name: Deploy sur la VM MNS
+        run: |
+          cd ~/esprit-canin
+          sed -i "s#^FRONT_IMAGE=.*#FRONT_IMAGE=arnaudbena/esprit-canin-frontend:${{ github.sha }}#" .env
+          docker compose -f compose.prod.yml pull
+          docker compose -f compose.prod.yml up -d

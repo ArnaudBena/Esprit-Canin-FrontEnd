@@ -37,6 +37,13 @@ export class DashboardAdherentComponent implements OnInit {
   chiens = signal<Chien[]>([]);
   inscriptions = signal<Inscription[]>([]);
 
+  // Races dont l'image a échoué → on retombe sur l'icône patte
+  protected readonly racesSansImage = signal(new Set<string>());
+
+  onImageError(nomRace: string): void {
+    this.racesSansImage.update((set) => new Set(set).add(nomRace));
+  }
+
   ngOnInit(): void {
     forkJoin({
       profil: this.utilisateurService.getProfil(),

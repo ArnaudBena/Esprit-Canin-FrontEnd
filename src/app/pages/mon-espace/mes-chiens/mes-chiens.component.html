@@ -12,10 +12,18 @@
   <div class="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
     @for (chien of chiens(); track chien.id) {
       <div class="overflow-hidden rounded-md border border-bordure bg-blanc">
-        <!-- Emplacement photo (icône en attendant une vraie photo) -->
-        <div class="flex h-44 items-center justify-center bg-image-bg text-primaire">
-          <lucide-icon [img]="iconPatte" class="h-12 w-12"></lucide-icon>
-        </div>
+        <!-- Photo illustrative de la race (fallback : icône patte si l'image échoue) -->
+        @if (racesSansImage().has(chien.race.nom)) {
+          <div class="flex h-44 items-center justify-center bg-image-bg text-primaire">
+            <lucide-icon [img]="iconPatte" class="h-12 w-12"></lucide-icon>
+          </div>
+        } @else {
+          <img [src]="'/assets/races/' + chien.race.nom + '.webp'"
+               [alt]="'Photo illustrative de race ' + chien.race.nom"
+               loading="lazy" width="800" height="533"
+               (error)="onImageError(chien.race.nom)"
+               class="h-44 w-full object-cover">
+        }
         <div class="p-5">
           <h3 class="text-lg font-bold text-texte">{{ chien.nom }}</h3>
           <p class="text-sm text-muted">{{ chien.race.nom }} • {{ ageAffichage(ageEnMois(chien.dateNaissance)) }}</p>

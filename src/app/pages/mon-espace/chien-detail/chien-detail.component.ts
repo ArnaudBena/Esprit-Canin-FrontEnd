@@ -36,6 +36,9 @@ export class ChienDetailComponent implements OnInit {
 
   chien = signal<Chien | null>(null);
 
+  // Bascule sur l'icône patte si l'image de race n'existe pas
+  protected readonly imageRaceEnErreur = signal(false);
+
   ngOnInit(): void {
     this.id = Number(this.route.snapshot.paramMap.get('id'));
     this.charger();

@@ -65,7 +65,7 @@
         <ul class="mt-2 list-disc space-y-1 pl-5 text-sm text-muted">
           <li>Âge du chien : {{ seance.ageMinimumMois ?? 0 }} – {{ seance.ageMaximumMois ?? '∞' }} mois</li>
           @for (p of prerequis(); track p.competence) {
-            <li>Compétence : <span class="font-medium text-texte">{{ p.competence }}</span> — niveau {{ niveauLabel(p.niveauMinimumRequis) }}</li>
+            <li>Compétence : <span class="font-medium text-texte">{{ p.competence }}</span> - niveau {{ niveauLabel(p.niveauMinimumRequis) }}</li>
           }
           @if (prerequis().length === 0) {
             <li>Aucune compétence prérequise</li>
@@ -114,6 +114,12 @@
 
       @if (seance.complet) {
         <p class="mt-4 rounded-sm bg-fond p-3 text-center text-sm font-medium text-muted">Cette séance est complète.</p>
+      } @else if (mesChiens().length === 0) {
+        <div class="mt-4 rounded-sm bg-fond p-3 text-center">
+          <p class="text-sm font-medium text-muted">Vous n'avez pas encore de chien à inscrire.</p>
+          <a routerLink="/mon-espace/mes-chiens/new"
+             class="mt-2 inline-block text-sm font-medium text-primaire hover:underline">Ajouter un chien →</a>
+        </div>
       } @else if (chiensDisponibles().length === 0) {
         <p class="mt-4 rounded-sm bg-fond p-3 text-center text-sm font-medium text-muted">Tous vos chiens sont déjà inscrits à cette séance.</p>
       } @else {
@@ -123,7 +129,7 @@
                   class="h-input w-full rounded-sm border border-input px-3 text-texte">
             <option [ngValue]="null" disabled>Sélectionnez un chien</option>
             @for (chien of chiensDisponibles(); track chien.id) {
-              <option [ngValue]="chien.id">{{ chien.nom }} — {{ chien.race.nom }}</option>
+              <option [ngValue]="chien.id">{{ chien.nom }} - {{ chien.race.nom }}</option>
             }
           </select>
           <button type="submit" [disabled]="form.invalid"

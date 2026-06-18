@@ -50,7 +50,7 @@
 
         <p class="mt-2 flex items-center gap-1.5 text-sm text-muted">
           <lucide-icon [img]="iconCalendar" class="h-4 w-4"></lucide-icon>
-          {{ seance.date | date:'EEE d MMM yyyy':'':'fr' }} — {{ seance.heureDebut.substring(0, 5) }}
+          {{ seance.date | date:'EEE d MMM yyyy':'':'fr' }} - {{ seance.heureDebut.substring(0, 5) }}
         </p>
         <p class="mt-1 flex items-center gap-1.5 text-sm text-muted">
           <lucide-icon [img]="iconClock" class="h-4 w-4"></lucide-icon>
