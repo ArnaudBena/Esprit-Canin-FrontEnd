@@ -28,14 +28,15 @@
     </div>
     <div class="mt-12 grid gap-6 md:grid-cols-3">
       @for (coach of coachs; track coach.nom) {
-        <div class="flex flex-col items-center rounded-xl border border-bordure bg-blanc p-7 text-center">
-          <!-- Photo coach (asset à venir) -->
-          <div class="flex h-24 w-24 items-center justify-center rounded-full bg-image-bg">
-            <lucide-icon [img]="iconCoach" class="h-10 w-10 text-primaire/50"></lucide-icon>
+        <div class="flex flex-col overflow-hidden rounded-xl border border-bordure bg-blanc text-center">
+          <img [src]="coach.photo" [alt]="'Photo de ' + coach.nom"
+               loading="lazy" width="800" height="533"
+               class="h-48 w-full object-cover">
+          <div class="p-7">
+            <h3 class="text-xl font-bold text-texte">{{ coach.nom }}</h3>
+            <p class="mt-1 text-sm font-medium text-secondaire">{{ coach.specialite }}</p>
+            <p class="mt-3 text-sm text-subtle">{{ coach.texte }}</p>
           </div>
-          <h3 class="mt-4 text-xl font-bold text-texte">{{ coach.nom }}</h3>
-          <p class="mt-1 text-sm font-medium text-secondaire">{{ coach.specialite }}</p>
-          <p class="mt-3 text-sm text-subtle">{{ coach.texte }}</p>
         </div>
       }
     </div>

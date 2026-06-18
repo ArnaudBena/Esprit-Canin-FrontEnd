@@ -54,7 +54,7 @@
             <div class="mt-3 space-y-1.5 text-sm text-muted">
               <p class="flex items-center gap-2">
                 <lucide-icon [img]="iconCalendar" class="h-4 w-4 flex-shrink-0"></lucide-icon>
-                {{ insc.seance.date | date:'EEE d MMM yyyy':'':'fr' }} — {{ insc.seance.heureDebut.substring(0, 5) }}
+                {{ insc.seance.date | date:'EEE d MMM yyyy':'':'fr' }} - {{ insc.seance.heureDebut.substring(0, 5) }}
               </p>
               <p class="flex items-center gap-2">
                 <lucide-icon [img]="iconUser" class="h-4 w-4 flex-shrink-0"></lucide-icon>
@@ -88,9 +88,17 @@
         @for (chien of chiens(); track chien.id) {
           @let nb = nbSeancesRealisees(chien.id!);
           <div class="flex items-center gap-4 rounded-lg border border-bordure bg-blanc p-5">
-            <div class="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-full bg-image-bg text-primaire">
-              <lucide-icon [img]="iconChien" class="h-7 w-7"></lucide-icon>
-            </div>
+            @if (racesSansImage().has(chien.race.nom)) {
+              <div class="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-full bg-image-bg text-primaire">
+                <lucide-icon [img]="iconChien" class="h-7 w-7"></lucide-icon>
+              </div>
+            } @else {
+              <img [src]="'/assets/races/' + chien.race.nom + '.webp'"
+                   [alt]="'Photo illustrative de race ' + chien.race.nom"
+                   loading="lazy" width="300" height="300"
+                   (error)="onImageError(chien.race.nom)"
+                   class="h-16 w-16 flex-shrink-0 rounded-full object-cover">
+            }
             <div class="min-w-0">
               <h3 class="font-bold text-texte">{{ chien.nom }}</h3>
               <p class="text-sm text-muted">{{ chien.race.nom }} • {{ ageAffichage(ageEnMois(chien.dateNaissance)) }}</p>

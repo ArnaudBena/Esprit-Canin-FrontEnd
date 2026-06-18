@@ -9,9 +9,17 @@
   <div class="grid grid-cols-1 gap-6 lg:grid-cols-[300px_1fr]">
     <!-- Colonne gauche : identité + actions -->
     <div class="flex flex-col items-center rounded-lg border border-bordure bg-blanc p-6 text-center">
-      <div class="flex h-36 w-36 items-center justify-center rounded-full bg-image-bg text-primaire">
-        <lucide-icon [img]="iconPatte" class="h-14 w-14"></lucide-icon>
-      </div>
+      @if (imageRaceEnErreur()) {
+        <div class="flex h-36 w-36 items-center justify-center rounded-full bg-image-bg text-primaire">
+          <lucide-icon [img]="iconPatte" class="h-14 w-14"></lucide-icon>
+        </div>
+      } @else {
+        <img [src]="'/assets/races/' + chien.race.nom + '.webp'"
+             [alt]="'Photo illustrative de race ' + chien.race.nom"
+             loading="lazy" width="300" height="300"
+             (error)="imageRaceEnErreur.set(true)"
+             class="h-36 w-36 rounded-full object-cover">
+      }
       <h1 class="mt-4 text-2xl font-bold text-texte">{{ chien.nom }}</h1>
       <p class="mt-1 text-sm text-muted">{{ chien.race.nom }} • {{ ageAffichage(ageEnMois(chien.dateNaissance)) }}</p>
       <div class="mt-5 flex w-full gap-3">
@@ -54,7 +62,7 @@
           </div>
           <div class="flex gap-4 py-2.5">
             <dt class="w-40 flex-shrink-0 text-sm text-muted">N° de puce</dt>
-            <dd class="text-sm font-medium text-texte">{{ chien.numeroPuce || '—' }}</dd>
+            <dd class="text-sm font-medium text-texte">{{ chien.numeroPuce || '-' }}</dd>
           </div>
         </dl>
       </div>
@@ -92,7 +100,7 @@
               <div class="flex items-center justify-between gap-3 rounded-sm bg-fond px-4 py-3">
                 <div>
                   <p class="text-sm font-semibold text-texte">{{ insc.seance.typeSeance.libelle }}</p>
-                  <p class="text-xs text-muted">{{ insc.seance.date | date:'EEE d MMM yyyy':'':'fr' }} — {{ insc.seance.heureDebut.substring(0, 5) }}</p>
+                  <p class="text-xs text-muted">{{ insc.seance.date | date:'EEE d MMM yyyy':'':'fr' }} - {{ insc.seance.heureDebut.substring(0, 5) }}</p>
                 </div>
                 <div class="flex flex-shrink-0 items-center gap-3">
                   <span class="rounded-full bg-image-bg px-2.5 py-0.5 text-xs font-medium text-primaire">Confirmé</span>

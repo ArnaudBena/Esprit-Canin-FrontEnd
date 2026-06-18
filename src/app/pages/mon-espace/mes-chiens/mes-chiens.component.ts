@@ -24,6 +24,13 @@ export class MesChiensComponent implements OnInit {
   protected readonly ageAffichage = ageAffichage;
   protected readonly ageEnMois = ageEnMois;
 
+  // Races dont l'image a échoué → on retombe sur l'icône patte
+  protected readonly racesSansImage = signal(new Set<string>());
+
+  onImageError(nomRace: string): void {
+    this.racesSansImage.update((set) => new Set(set).add(nomRace));
+  }
+
   ngOnInit(): void {
     this.chienService.getMesChiens().subscribe({
       next: (data) => this.chiens.set(data),

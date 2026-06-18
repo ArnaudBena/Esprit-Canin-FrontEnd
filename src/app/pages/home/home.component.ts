@@ -1,5 +1,6 @@
-import { Component, HostListener, signal } from '@angular/core';
+import { Component, HostListener, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 import {
   LucideAngularModule,
   UserPlus,
@@ -32,6 +33,7 @@ interface Temoignage {
   resultats: string;
   niveau: string;
   race: string;
+  photo: string;
 }
 
 @Component({
@@ -44,7 +46,12 @@ interface Temoignage {
   styleUrl: './home.component.css',
 })
 export class HomeComponent {
-  protected readonly iconPatte = PawPrint;
+  private auth = inject(AuthService);
+  protected readonly estConnecte = computed(() => this.auth.jwtInfo() !== null);
+  protected espaceUrl(): string {
+    return this.auth.espaceUrl();
+  }
+
   protected readonly iconStar = Star;
   protected readonly iconCheck = Check;
   protected readonly iconHeart = Heart;
@@ -98,6 +105,7 @@ export class HomeComponent {
       intro: 'Après 6 mois de cours d’agility, Max est passé d’un chien craintif à un compagnon épanoui et confiant.',
       citation: 'Le Club Canin a transformé notre quotidien. Les coachs sont exceptionnels et vraiment à l’écoute.',
       duree: '6 mois', resultats: 'Excellents', niveau: 'Intermédiaire', race: 'Border Collie',
+      photo: '/assets/temoignages/SophieMax.webp',
     },
     {
       nom: 'Pierre et Luna', cours: 'Obéissance', note: 5,
@@ -106,6 +114,7 @@ export class HomeComponent {
       intro: 'Luna tirait sans cesse en laisse. Après 3 mois d’obéissance, les promenades sont enfin un vrai plaisir.',
       citation: 'Un encadrement patient et bienveillant. Je recommande les yeux fermés.',
       duree: '3 mois', resultats: 'Très bons', niveau: 'Débutant', race: 'Berger Australien',
+      photo: '/assets/temoignages/PierreLuna.webp',
     },
     {
       nom: 'Marie et Rex', cours: 'Pistage', note: 5,
@@ -114,6 +123,7 @@ export class HomeComponent {
       intro: 'Rex débordait d’énergie. Le pistage lui a donné un vrai exutoire et nous a beaucoup rapprochés.',
       citation: 'Voir Rex aussi concentré et heureux pendant les exercices, ça n’a pas de prix.',
       duree: '4 mois', resultats: 'Excellents', niveau: 'Intermédiaire', race: 'Beauceron',
+      photo: '/assets/temoignages/MarieRex.webp',
     },
   ];
 
