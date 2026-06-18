@@ -2,11 +2,9 @@ import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {
   LucideAngularModule,
-  User,
   Heart,
   GraduationCap,
   Users,
-  PawPrint,
 } from 'lucide-angular';
 
 @Component({
@@ -19,22 +17,22 @@ import {
   styleUrl: './apropos.component.css',
 })
 export class AproposComponent {
-  protected readonly iconPatte = PawPrint;
-  protected readonly iconCoach = User;
-
   protected readonly coachs = [
     {
       nom: 'Lucas Bernard',
+      photo: '/assets/coachs/LucasBernard.webp',
       specialite: 'Spécialiste Agility',
       texte: "15 ans d'expérience en éducation canine. Certifié en méthodes positives et comportement animal.",
     },
     {
       nom: 'Thomas Garcia',
+      photo: '/assets/coachs/ThomasGarcia.webp',
       specialite: 'Spécialiste Obéissance',
       texte: 'Formateur certifié depuis 10 ans. Expert en éducation de base et comportements complexes.',
     },
     {
       nom: 'Camille Petit',
+      photo: '/assets/coachs/CamillePetit.webp',
       specialite: 'Spécialiste Pistage & Socialisation',
       texte: "Passionnée par le travail olfactif et les dynamiques de groupe. 8 ans d'expérience.",
     },

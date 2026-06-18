@@ -12,22 +12,24 @@
         Obéissance, agility, pistage et socialisation, encadrés par des coachs passionnés.
         Pour tous les chiens, à tous les niveaux.
       </p>
-      <div class="mt-8 flex flex-wrap gap-3">
-        <a routerLink="/inscription"
-           class="rounded-sm bg-primaire px-6 py-3 font-semibold text-blanc hover:opacity-90">
-          Rejoindre le club
+      <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+        <a [routerLink]="estConnecte() ? espaceUrl() : '/inscription'"
+           class="rounded-sm bg-primaire px-6 py-3 text-center font-semibold text-blanc hover:opacity-90 sm:flex-1">
+          {{ estConnecte() ? 'Accéder à mon espace' : 'Rejoindre le club' }}
         </a>
         <a href="#cours"
-           class="rounded-sm border border-bordure bg-blanc px-6 py-3 font-semibold text-texte hover:bg-fond">
+           class="rounded-sm border border-bordure bg-blanc px-6 py-3 text-center font-semibold text-texte hover:bg-fond sm:flex-1">
           Découvrir nos cours
         </a>
       </div>
     </div>
 
-    <!-- Placeholder image héros (asset à venir) -->
-    <div class="flex aspect-[4/3] items-center justify-center rounded-2xl bg-image-bg">
-      <lucide-icon [img]="iconPatte" class="h-24 w-24 text-primaire/40"></lucide-icon>
-    </div>
+    <!-- Image héros (au-dessus de la flottaison : priorisée, pas de lazy) -->
+    <img src="/assets/heros/hero.webp"
+         alt="Chien en séance d'éducation au club Esprit Canin"
+         width="1200" height="900" fetchpriority="high"
+         class="aspect-[4/3] w-full rounded-2xl object-cover">
+
   </div>
 </section>
 
@@ -79,9 +81,9 @@
       }
     </div>
     <div class="mt-10 text-center">
-      <a routerLink="/inscription"
+      <a [routerLink]="estConnecte() ? espaceUrl() : '/inscription'"
          class="inline-block rounded-sm bg-accent px-6 py-3 font-semibold text-accent-text hover:opacity-90">
-        Inscrivez-vous
+        {{ estConnecte() ? 'Accéder à mon espace' : 'Inscrivez-vous' }}
       </a>
     </div>
   </div>
@@ -94,25 +96,30 @@
       <h2 class="text-3xl font-bold text-texte">Ils nous font confiance</h2>
       <p class="mt-3 text-muted">Découvrez les expériences de nos membres et de leurs compagnons.</p>
     </div>
-    <div class="mt-12 grid gap-6 md:grid-cols-3">
+    <div class="mt-12 grid gap-8 md:grid-cols-3">
       @for (t of temoignages; track t.nom) {
         <button type="button" (click)="ouvrir(t)"
-                class="flex flex-col rounded-xl border border-bordure bg-fond p-6 text-left transition hover:shadow-md">
-          <span class="flex items-center gap-1 text-accent">
-            @for (s of etoiles; track s) {
-              <lucide-icon [img]="iconStar" class="h-4 w-4 fill-accent" [class.opacity-30]="s > t.note"></lucide-icon>
-            }
-          </span>
-          <span class="mt-4 block flex-1 text-texte">« {{ t.texte }} »</span>
-          <span class="mt-5 flex items-center gap-3">
-            <span class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-primaire text-sm font-bold text-blanc">
-              {{ t.initiales }}
+                class="flex flex-col overflow-hidden rounded-2xl border border-bordure bg-fond text-left shadow-sm transition hover:shadow-lg">
+          <img [src]="t.photo" [alt]="'Photo de ' + t.nom"
+               loading="lazy" width="800" height="533"
+               class="h-52 w-full object-cover">
+          <div class="flex flex-1 flex-col p-6">
+            <span class="flex items-center gap-1 text-accent">
+              @for (s of etoiles; track s) {
+                <lucide-icon [img]="iconStar" class="h-5 w-5 fill-accent" [class.opacity-30]="s > t.note"></lucide-icon>
+              }
             </span>
-            <span class="min-w-0">
-              <span class="block text-sm font-semibold text-texte">{{ t.nom }}</span>
-              <span class="block text-xs text-muted">{{ t.cours }}</span>
+            <span class="mt-4 block flex-1 text-base text-texte">« {{ t.texte }} »</span>
+            <span class="mt-6 flex items-center gap-3">
+              <span class="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-primaire text-sm font-bold text-blanc">
+                {{ t.initiales }}
+              </span>
+              <span class="min-w-0">
+                <span class="block font-semibold text-texte">{{ t.nom }}</span>
+                <span class="block text-sm text-muted">{{ t.cours }}</span>
+              </span>
             </span>
-          </span>
+          </div>
         </button>
       }
     </div>
@@ -122,7 +129,7 @@
 <!-- ===== MODALE TÉMOIGNAGE ===== -->
 @if (temoignageOuvert(); as t) {
   <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4" (click)="fermer()">
-    <div class="w-full max-w-lg overflow-hidden rounded-xl bg-blanc shadow-xl"
+    <div class="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-xl bg-blanc shadow-xl"
          role="dialog" aria-modal="true" [attr.aria-label]="'Témoignage de ' + t.nom"
          (click)="$event.stopPropagation()">
       <!-- En-tête -->
@@ -137,9 +144,14 @@
         </button>
       </div>
 
+      <!-- Photo du témoignage -->
+      <img [src]="t.photo" [alt]="'Photo de ' + t.nom"
+           width="800" height="533"
+           class="h-64 w-full object-cover">
+
       <!-- Corps -->
-      <div class="px-6 py-6">
-        <h3 class="text-xl font-bold text-texte">{{ t.nom }} — {{ t.cours }}</h3>
+      <div class="px-6 py-6 sm:px-8">
+        <h3 class="text-xl font-bold text-texte">{{ t.nom }} - {{ t.cours }}</h3>
         <p class="mt-3 text-muted">{{ t.intro }}</p>
 
         <!-- Citation mise en avant -->
