@@ -69,9 +69,9 @@
   <div class="mx-auto max-w-3xl px-6 py-16 text-center lg:px-20">
     <h2 class="text-3xl font-bold text-texte">Prêt à rejoindre l’aventure ?</h2>
     <p class="mt-3 text-muted">Offrez à votre compagnon une expérience enrichissante au sein de notre communauté.</p>
-    <a routerLink="/inscription"
+    <a [routerLink]="estConnecte() ? espaceUrl() : '/inscription'"
        class="mt-8 inline-block rounded-sm bg-primaire px-6 py-3 font-semibold text-blanc hover:opacity-90">
-      Rejoindre le club
+      {{ estConnecte() ? 'Accéder à mon espace' : 'Rejoindre le club' }}
     </a>
   </div>
 </section>

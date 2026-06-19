@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 import {
   LucideAngularModule,
   Heart,
@@ -17,6 +18,12 @@ import {
   styleUrl: './apropos.component.css',
 })
 export class AproposComponent {
+  private auth = inject(AuthService);
+  protected readonly estConnecte = computed(() => this.auth.jwtInfo() !== null);
+  protected espaceUrl(): string {
+    return this.auth.espaceUrl();
+  }
+
   protected readonly coachs = [
     {
       nom: 'Lucas Bernard',

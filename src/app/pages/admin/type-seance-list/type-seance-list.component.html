@@ -24,7 +24,7 @@
               Âge :
               <strong class="text-texte">
                 @if (type.ageMinimumMois != null && type.ageMaximumMois != null) {
-                  {{ ageAffichage(type.ageMinimumMois) }} – {{ ageAffichage(type.ageMaximumMois) }}
+                  {{ ageAffichage(type.ageMinimumMois) }} - {{ ageAffichage(type.ageMaximumMois) }}
                 } @else if (type.ageMinimumMois != null) {
                   {{ ageAffichage(type.ageMinimumMois) }} minimum
                 } @else {
@@ -33,7 +33,7 @@
               </strong>
             </span>
           }
-          <span>Durée : <strong class="text-texte">{{ dureeAffichage(type.dureeMinimale) }} – {{ dureeAffichage(type.dureeMaximale) }}</strong></span>
+          <span>Durée : <strong class="text-texte">{{ dureeAffichage(type.dureeMinimale) }} - {{ dureeAffichage(type.dureeMaximale) }}</strong></span>
           <span>Places max : <strong class="text-texte">{{ type.participantsMaximum }}</strong></span>
         </div>
         <div class="mt-auto flex gap-2 pt-4 border-t border-bordure">

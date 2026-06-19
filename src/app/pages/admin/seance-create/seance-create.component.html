@@ -20,7 +20,7 @@
         <label for="heureDebut" class="text-sm font-medium text-texte">Heure de début</label>
         <input id="heureDebut" type="time" formControlName="heureDebut" min="09:00" max="19:00"
                class="rounded-md border border-bordure bg-blanc px-3 py-2 text-sm text-texte outline-none transition focus:border-primaire" />
-        <p class="text-xs text-muted">Horaires du club : 09h00 – 19h00</p>
+        <p class="text-xs text-muted">Horaires du club : 09h00 - 19h00</p>
         @if (form.controls.heureDebut.invalid && form.controls.heureDebut.touched) {
           <p class="text-sm font-bold text-alerte">
             @if (form.controls.heureDebut.errors?.['required']) {
@@ -40,7 +40,7 @@
           <option [ngValue]="null" disabled>-- Sélectionner un type --</option>
           @for (type of typeSeances; track type.id) {
             <option [ngValue]="type.id">
-              {{ type.libelle }} ({{ type.dureeMinimale }}–{{ type.dureeMaximale }} min)
+              {{ type.libelle }} ({{ type.dureeMinimale }}-{{ type.dureeMaximale }} min)
             </option>
           }
         </select>
